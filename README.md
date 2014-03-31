@@ -19,6 +19,6 @@ Extended features / products:
 
 ## Version Strategy
 
-1.0 - Local tool for deploying a new instance of the BMS (eg, on heroku).
-2.0 - Give clients access to a simple back-end for versioning assets.
-3.0 - Web based application for creating new BMS instances.
+1. Local tool for deploying a new instance of the BMS (eg, on heroku).
+2. Give clients access to a simple back-end for versioning assets.
+3. Web based application for creating new BMS instances.
