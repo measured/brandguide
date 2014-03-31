@@ -14,8 +14,12 @@ Core features:
 - Presentation to stakeholders
 
 Extended features / products:
-- Copydeck
-- ...
+- Copydeck (write copy and export data for use in websites/apps/print/etc.
+
+Technology:
+- Heroku rails app
+- Sass & simple js front-end (display brand)
+- react application? (complex user interface)
 
 ## Version Strategy
 
