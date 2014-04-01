@@ -19,3 +19,7 @@ gem 'puma'
 group :development do
   gem 'rerun'
 end
+
+group :production do
+  gem 'rails_12factor'
+end
