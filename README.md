@@ -35,3 +35,11 @@ How to set up your local development environment, after cloning the repository.
 2. `rake db:schema:load`
 3. `rails server`
 4. `open http://localhost:3000`
+
+## Production
+
+First, add the Heroku remote repository
+
+`git remote add heroku git@heroku.com:idealogue-bms.git`
+
+When ready to push changes to the production site, just `git push heroku master`
