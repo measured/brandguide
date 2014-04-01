@@ -12,6 +12,12 @@
     <div class="alert"><%= alert %></div>
   </div>
 
+  <% if user_signed_in? %>
+    <div id="current_user">
+      Signed in as <%= current_user.email %>. <%= link_to 'Sign out', destroy_user_session_path, method: :delete %>
+    </div>
+  <% end %>
+
   <div id="yield">
     <%= yield %>
   </div>
