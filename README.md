@@ -26,3 +26,12 @@ Technology:
 1. Local tool for deploying a new instance of the BMS (eg, on heroku).
 2. Give clients access to a simple back-end for versioning assets.
 3. Web based application for creating new BMS instances.
+
+## Development
+
+How to set up your local development environment, after cloning the repository.
+
+1. `bundle install`
+2. `rake db:schema:load`
+3. `rails server`
+4. `open http://localhost:3000`
