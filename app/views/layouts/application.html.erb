@@ -2,13 +2,18 @@
 <html>
 <head>
   <title>BMS</title>
-  <%= stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true %>
-  <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
+  <%= stylesheet_link_tag    :application, media: :all, "data-turbolinks-track" => true %>
+  <%= javascript_include_tag :application, "data-turbolinks-track" => true %>
   <%= csrf_meta_tags %>
 </head>
 <body>
+  <div id="flash">
+    <div class="notice"><%= notice %></div>
+    <div class="alert"><%= alert %></div>
+  </div>
 
-<%= yield %>
-
+  <div id="yield">
+    <%= yield %>
+  </div>
 </body>
 </html>
