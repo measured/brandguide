@@ -15,3 +15,7 @@ gem 'devise'
 
 gem 'foreman'
 gem 'puma'
+
+group :development do
+  gem 'rerun'
+end
