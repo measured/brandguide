@@ -33,8 +33,8 @@ How to set up your local development environment, after cloning the repository.
 
 1. `bundle install`
 2. `rake db:schema:load`
-3. `rails server`
-4. `open http://localhost:3000`
+3. `foreman start`
+4. `open http://localhost:5000`
 
 ## Production
 
