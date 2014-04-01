@@ -10,3 +10,5 @@ gem 'jquery-rails'
 gem 'turbolinks'
 gem 'jbuilder', '~> 1.2'
 gem 'bcrypt', '~> 3.1.7'
+
+gem 'devise'
