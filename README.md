@@ -3,29 +3,41 @@ bms
 
 Brand Management System - it's basecamp for ya brand.
 
-## Overview
+### Outcomes 
 
-A web based platform for creating and managing client brand projects.
+1. Better tool for scaffolding & deploying client brandguides
+2. Sales brochure for sending to prospective clients
 
-Core features:
-- Asset hosting and versioning
-- Approval system
-- Guidlines for brand rollout
-- Presentation to stakeholders
 
-Extended features / products:
-- Copydeck (write copy and export data for use in websites/apps/print/etc.
+### Schedule
 
-Technology:
-- Heroku rails app
-- Sass & simple js front-end (display brand)
-- react application? (complex user interface)
+Sunday 6th April - Prototype for new server setup + functionality complete.
 
-## Version Strategy
+Sunday 27th April - Design work, example brandguides & brochure site complete.
 
-1. Local tool for deploying a new instance of the BMS (eg, on heroku).
-2. Give clients access to a simple back-end for versioning assets.
-3. Web based application for creating new BMS instances.
+
+### Who's it for?
+
+The initial product is really just a nice to have deliverable for our branding clients & prospective clients. The app at this stage is _for us_, helping make our process more efficient and impressive to clients.
+
+
+### Technology / functionality
+
+Deployment:
+- Single heroku server 
+- deployed via git
+
+Access:
+- Brandguides on simple urls eg: `brandguide.io/brand`
+- Login required to access each guide (password), OR…
+- Login to account, access to multiple guides
+
+Features:
+- Download files + bundled zips
+- Email a unique url to a file, or bundle of files
+- Update text content via admin panel?
+- Upload files via admin panel?
+
 
 ## Development
 
