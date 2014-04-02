@@ -3,7 +3,7 @@ bms
 
 Brand Management System - it's basecamp for ya brand.
 
-### Outcomes 
+### v1.0 outcomes 
 
 1. Better tool for scaffolding & deploying client brandguides
 2. Sales brochure for sending to prospective clients
