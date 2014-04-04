@@ -45,8 +45,8 @@ How to set up your local development environment, after cloning the repository.
 
 1. `bundle install`
 2. `rake db:create`
-3. `bundle exec rake db:schema:load`
-4. `bundle exec rerun foreman start`
+3. `rake db:schema:load`
+4. `foreman start`
 5. `open http://localhost:5000`
 
 ## Production
