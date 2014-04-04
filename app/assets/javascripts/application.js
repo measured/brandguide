@@ -10,7 +10,13 @@
 // Read Sprockets README (https://github.com/sstephenson/sprockets#sprockets-directives) for details
 // about supported directives.
 //
-//= require jquery
-//= require jquery_ujs
-//= require turbolinks
-//= require_tree .
+// Tree example: require_tree ./scripts/_multiform
+//
+//
+//= require libs/01-fastclick
+//= require libs/02-jquery
+//= require libs/03-transit
+//= require scripts/00-vars
+//= require scripts/01-events
+//= require scripts/02-utilities
+//= require scripts/03-breakpoints
