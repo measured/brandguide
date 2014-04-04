@@ -6,7 +6,7 @@
 <body>
   <%# pipe breakpoints to javascript %>
   <div id="js__media-check"></div>
-
+  
   <div id="flash">
     <div class="notice"><%= notice %></div>
     <div class="alert"><%= alert %></div>
@@ -17,6 +17,10 @@
       Signed in as <%= current_user.email %>. <%= link_to 'Sign out', destroy_user_session_path, method: :delete %>
     </div>
   <% end %>
+
+  <nav>
+    <%= link_to 'New Brand Guide', new_admin_brand_guide_path %>
+  </nav>
 
   <div id="yield">
     <%= yield %>
