@@ -20,7 +20,7 @@ gem 'foreman'
 gem 'puma'
 
 group :development do
-  gem 'rerun'
+  gem 'powder'
 end
 
 group :production do
