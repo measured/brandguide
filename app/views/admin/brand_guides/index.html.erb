@@ -1,0 +1,6 @@
+<h1>Brand Guides</h1>
+
+<%- @brand_guides.each do |brand_guide| %>
+  <h2><%= link_to brand_guide.title, [:edit, :admin, brand_guide] %></h2>
+  <code><%= brand_guide.public_url %></code>
+<%- end %>

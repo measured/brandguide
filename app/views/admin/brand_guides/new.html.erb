@@ -1,0 +1,10 @@
+<h1>New Brand Guide</h1>
+
+<%= simple_form_for [:admin, @brand_guide] do |f| %>
+  <%= f.error_notification %>
+
+  <%= f.input :title %>
+  <%= f.input :subdomain %>
+
+  <%= f.button :submit %>
+<% end %>
