@@ -13,6 +13,7 @@ gem 'bcrypt', '~> 3.1.7'
 
 gem 'devise'
 gem 'ancestry'
+gem 'simple_form'
 
 gem 'foreman'
 gem 'puma'

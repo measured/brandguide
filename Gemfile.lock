@@ -115,6 +115,9 @@ GEM
       sass (~> 3.2.0)
       sprockets (~> 2.8, <= 2.11.0)
       sprockets-rails (~> 2.0.0)
+    simple_form (3.0.1)
+      actionpack (>= 4.0.0, < 4.1)
+      activemodel (>= 4.0.0, < 4.1)
     sprockets (2.11.0)
       hike (~> 1.2)
       multi_json (~> 1.0)
@@ -158,5 +161,6 @@ DEPENDENCIES
   rails_12factor
   rerun
   sass-rails (~> 4.0.2)
+  simple_form
   turbolinks
   uglifier (>= 1.3.0)
