@@ -5,12 +5,18 @@ class Admin::SectionsController < Admin::AdminController
 
   def update
     if files = section_params[:files]
+      asset_group = AssetGroup.new
+
       files.each do |file|
         asset = Asset.new
-        asset.upload = file
+        asset.file = file
 
         asset.save!
+
+        asset_group.assets << asset
       end
+
+      @section.asset_groups << asset_group
     end
 
     if @section.update(section_params)

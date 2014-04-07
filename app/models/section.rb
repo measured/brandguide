@@ -5,6 +5,8 @@ class Section < ActiveRecord::Base
 
   has_ancestry
 
+  has_many :asset_groups
+
   attr_accessor :files
 
   def self.default_sections
