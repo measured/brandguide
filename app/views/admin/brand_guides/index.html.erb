@@ -2,6 +2,8 @@
 
 <ul>
   <% @brand_guides.each do |brand_guide| %>
-    <li><%= link_to brand_guide.title, [:edit, :admin, brand_guide] %></li>
+    <li><%= link_to brand_guide.title, edit_admin_brand_guide_path(brand_guide) %></li>
   <% end %>
 </ul>
+
+<%= link_to 'Create Brand Guide', new_admin_brand_guide_path %>
