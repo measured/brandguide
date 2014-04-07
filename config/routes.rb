@@ -4,7 +4,7 @@ BMS::Application.routes.draw do
   root 'application#index'
 
   namespace :admin do
-    root to: 'admin#index'
+    root to: 'brand_guides#index'
 
     resources :brand_guides
   end
