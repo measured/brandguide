@@ -1,10 +1,14 @@
 BMS::Application.routes.draw do
   devise_for :users
 
+  constraints subdomain: /.+/ do
+    get '/', to: 'brand_guides#show'
+  end
+
   root 'application#index'
 
   namespace :admin do
-    root to: 'brand_guides#index'
+    root 'brand_guides#index'
 
     resources :brand_guides do
       resources :sections
