@@ -26,7 +26,7 @@ class Admin::BrandGuidesController < Admin::AdminController
     @brand_guide = BrandGuide.find(params[:id])
 
     if @brand_guide.update(brand_guide_params)
-      redirect_to [:admin, :brand_guides]
+      redirect_to [:edit, :admin, @brand_guide]
     else
       render :edit
     end

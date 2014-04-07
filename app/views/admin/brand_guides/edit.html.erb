@@ -1,25 +1,10 @@
-<h1>Edit Brand Guide</h1>
+<h1>Edit <%= @brand_guide.title %></h1>
 
 <%= simple_form_for [:admin, @brand_guide] do |f| %>
   <%= f.error_notification %>
 
   <%= f.input :title %>
   <%= f.input :subdomain %>
-
-    <h2>Sections</h2>
-
-    <%= f.simple_fields_for :sections do |ff| %>
-      <%- if ff.object.new_record? %>
-        <h3 rel="add_section">Add a Section</h3>
-      <% end %>
-
-      <fieldset <%= :disabled if ff.object.new_record? %>>
-        <%= ff.input :title %>
-        <%= ff.input :content, as: :text %>
-        
-        <%= ff.input :_destroy, as: :boolean, label: 'Remove' if ff.object.persisted? %>
-      </fieldset>
-    <% end %>
 
   <%= f.button :submit %>
 <% end %>
