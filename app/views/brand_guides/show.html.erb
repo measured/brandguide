@@ -1,1 +1,6 @@
-<%= debug @brand_guide %>
+<h1><%= @brand_guide.title %></h1>
+
+<% @brand_guide.sections.each do |section| %>
+  <h2><%= section.title %></h2>
+  <%= raw section.content_html %>
+<% end %>

@@ -5,6 +5,8 @@ class Section < ActiveRecord::Base
 
   has_ancestry
 
+  attr_accessor :files
+
   def self.default_sections
     [
       { title: 'Logos' },
@@ -14,5 +16,9 @@ class Section < ActiveRecord::Base
     ].collect do |attrs|
       Section.new(attrs)
     end
+  end
+
+  def content_html
+    Redcarpet::Markdown.new(Redcarpet::Render::HTML, autolink: true).render(content || '')
   end
 end

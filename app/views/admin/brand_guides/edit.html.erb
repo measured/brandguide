@@ -6,5 +6,11 @@
   <%= f.input :title %>
   <%= f.input :subdomain %>
 
+  <ul>
+    <% @brand_guide.sections.each do |section| %>
+      <li><%= link_to section.title, [:edit, :admin, @brand_guide, section] %></li>
+    <% end %>
+  </ul>
+
   <%= f.button :submit %>
 <% end %>

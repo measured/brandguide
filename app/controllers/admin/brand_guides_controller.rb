@@ -1,4 +1,6 @@
 class Admin::BrandGuidesController < Admin::AdminController
+  before_action :find_brand_guide, only: [:edit, :update]
+
   def index
     @brand_guides = BrandGuide.all
   end
@@ -17,14 +19,9 @@ class Admin::BrandGuidesController < Admin::AdminController
     end
   end
 
-  def edit
-    @brand_guide = BrandGuide.find(params[:id])
-    @brand_guide.sections.build
-  end
+  def edit; end
 
   def update
-    @brand_guide = BrandGuide.find(params[:id])
-
     if @brand_guide.update(brand_guide_params)
       redirect_to [:edit, :admin, @brand_guide]
     else
@@ -33,6 +30,10 @@ class Admin::BrandGuidesController < Admin::AdminController
   end
 
   private
+
+  def find_brand_guide
+    @brand_guide = BrandGuide.find(params[:id])
+  end
 
   def brand_guide_params
     params.require(:brand_guide).permit(:title, :subdomain, sections_attributes: [:id, :title, :content, :_destroy])
