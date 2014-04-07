@@ -20,3 +20,5 @@
 //= require scripts/01-events
 //= require scripts/02-utilities
 //= require scripts/03-breakpoints
+
+//= require jquery_ujs
