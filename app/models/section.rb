@@ -11,10 +11,12 @@ class Section < ActiveRecord::Base
 
   def self.default_sections
     [
-      { title: 'Logos' },
+      { title: 'Introduction' }
+      { title: 'Brand Assets' },
       { title: 'Colours' },
-      { title: 'Typography' },
-      { title: 'Do\'s and don\'ts' }
+      { title: 'Usage' },
+      { title: 'Clearspace' },
+      { title: 'Typography' }
     ].collect do |attrs|
       Section.new(attrs)
     end
