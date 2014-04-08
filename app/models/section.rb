@@ -11,7 +11,7 @@ class Section < ActiveRecord::Base
 
   def self.default_sections
     [
-      { title: 'Introduction' }
+      { title: 'Introduction' },
       { title: 'Brand Assets' },
       { title: 'Colours' },
       { title: 'Usage' },
