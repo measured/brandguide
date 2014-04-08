@@ -15,4 +15,7 @@
   </ul>
 
   <%= f.button :submit, 'Save Changes' %>
+  <%= link_to 'Delete', admin_brand_guide_path(@brand_guide), method: :delete, confirm: 'Are you sure?' %>
 <% end %>
+
+<%= link_to 'Back to Dashboard', admin_root_path %>

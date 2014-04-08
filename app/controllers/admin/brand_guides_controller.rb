@@ -1,5 +1,5 @@
 class Admin::BrandGuidesController < Admin::AdminController
-  before_action :find_brand_guide, only: [:edit, :update]
+  before_action :find_brand_guide, only: %w(edit update destroy)
 
   def index
     @brand_guides = BrandGuide.all
@@ -27,6 +27,12 @@ class Admin::BrandGuidesController < Admin::AdminController
     else
       render :edit
     end
+  end
+
+  def destroy
+    @brand_guide.destroy
+
+    redirect_to [:admin, :brand_guides]
   end
 
   private
