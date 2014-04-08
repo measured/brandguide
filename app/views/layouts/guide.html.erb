@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>brandguide.io</title>
+
+  <%= stylesheet_link_tag :guide, media: :all %>
+  <%= csrf_meta_tags %>
+</head>
+<body>
+  <div id="js__opacity-hack"></div>
+  <div id="js__media-check"></div>
+  <div id="outside_translate" class="grid-container"></div>
+
+  <div id="yield">
+    <%= yield %>
+  </div>
+
+  <%= javascript_include_tag 'http://fast.fonts.net/jsapi/6d26050f-56a3-496d-829f-4d24e6be9cff.js' %>
+  <%= javascript_include_tag :guide %>
+</body>
+</html>

@@ -1,6 +1,49 @@
-<h1><%= @brand_guide.title %></h1>
+<div class="js__outside-drawer">
+  <section class="content">
+    <div class="banner">
+      <section class="grid-container">
+        <h2 class="banner__title__secondary"><%= @brand_guide.title %></h2>
+        <h1 class="banner__title__primary">Styleguide</h1>
+      </section>
+    </div>
 
-<% @brand_guide.sections.each do |section| %>
-  <h2><%= section.title %></h2>
-  <%= raw section.content_html %>
-<% end %>
+    <section id="inner__nav" class="grid-container content__main">
+      <div class="sub-navigation">
+        <ul>
+          <% @brand_guide.sections.each do |section| %>
+            <li>
+              <a class="js__submenu-item" data-func="scroll_to" href="#section-<%= section.id %>"><%= section.title %></a>
+            </li>
+          <% end %>
+        </ul>
+      </div>
+
+      <div class="column__content">
+        <% @brand_guide.sections.each do |section| %>
+          <article id="section-<%= section.id %>" class="content__article js__article-item">
+            <h2 class="content__title"><%= section.title %></h2>
+            <%= raw section.content_html %>
+
+            <div class="floater">
+              <% section.asset_groups.each do |asset_group| %>
+                <figure class="media__image">
+                  <div class="media__asset" style="background-image: url('<%= asset_group.thumb('108x108').url if asset_group.has_thumb? %>')">
+                    <% unless asset_group.has_thumb? %>
+                      <i>File</i>
+                    <% end %>
+                  </div>
+                  <figcaption class="media__caption"><%= asset_group.title %></figcaption>
+                  <div class="links">
+                    <% asset_group.assets.each do |asset| %>
+                      <span><%= link_to asset.file.name, asset.file.url %></span><br />
+                    <% end %>
+                  </div>
+                </figure>
+              <% end %>
+            </div>
+          </article>
+        <% end %>
+      </div>
+    </section>
+  </section>
+</div>
