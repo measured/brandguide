@@ -9,13 +9,15 @@
   <%= f.input :files, label: 'Add Assets', as: :file, input_html: { multiple: true } %>
 
   <div>
-    <% @section.asset_groups.each do |asset_group| %>
-      <%= image_tag asset_group.thumb('120x120').url if asset_group.has_thumb? %>
-      <ul>
-        <% asset_group.assets.each do |asset| %>
-          <li><%= asset.file_name %></li>
-        <% end %>
-      </ul>
+    <%= f.simple_fields_for :asset_groups do |ff| %>
+      <% asset_group = ff.object %>
+      <%= ff.input :title %>
+      <%= image_tag asset_group.thumb('260x260#').url if asset_group.has_thumb? %>
+        <ul>
+          <% asset_group.assets.each do |asset| %>
+            <li><%= asset.file_name %></li>
+          <% end %>
+        </ul>
     <% end %>
   </div>
 
