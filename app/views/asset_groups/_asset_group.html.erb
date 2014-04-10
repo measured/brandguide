@@ -1,22 +1,24 @@
-<figure class="media__image">
-  <figcaption class="media__caption">
+<figure class="asset-group">
+  <figcaption class="asset-group__caption">
     <%= asset_group.title %>
   </figcaption>
 
-  <div class="media__asset" style="background-image: url('<%= asset_group.thumb('108x108').url if asset_group.has_thumb? %>')">
+  <div class="asset-group__asset" style="background-image: url('<%= asset_group.thumb('108x108').url if asset_group.has_thumb? %>')">
     <% unless asset_group.has_thumb? %>
       <i>File</i>
     <% end %>
   </div>
 
-  <div class="links">
-    <%= simple_form_for [:download, @brand_guide, asset_group], method: :post do |f| %>
-      <%= f.simple_fields_for :assets do |ff| %>
-        <% asset = ff.object %>
-        <%= asset.file.name %>
-        <%= ff.input :download, as: :boolean, label: false %>
+  <div class="asset-group__downloads">
+    <ul>
+      <% asset_group.assets.each do |asset| %>
+        <li class="asset" data-id="<%= asset.id %>">
+          <input type="checkbox" id="select-asset-<%= asset.id %>" />
+          <label for="select-asset-<%= asset.id %>"><%= asset.file.name %></label>
+        </li>
       <% end %>
-      <%= f.submit 'Download' %>
-    <% end %>
+    </ul>
+
+    <%= link_to 'Download', download_brand_guide_asset_group_path(@brand_guide, asset_group), rel: :download, class: :button %>
   </div>
 </figure>

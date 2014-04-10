@@ -1,19 +1,23 @@
 /*
 *= require_self
-*= require legacy
 */
 
-.media__image {
-  .media__caption {
-    text-align: left;
-  }
-  
-  .media__asset {
+@import "sass/application";
+@import "legacy";
+
+html {
+  max-width: 100%!important;
+  padding: 0!important;
+}
+
+.asset-group {
+  .asset-group__asset {
     width: 216px;
     height: 216px;
     background-repeat: no-repeat;
     background-position: center;
     background-color: #eee;
+    border-radius: 50%;
     display: flex;
 
     i {
@@ -24,5 +28,13 @@
       position: relative;
       top: 6px;
     }
+  }
+
+  ul {
+    list-style: none;
+    padding: 0;
+  }
+  label {
+    display: inline;
   }
 }

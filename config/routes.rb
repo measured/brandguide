@@ -7,7 +7,7 @@ BMS::Application.routes.draw do
 
   resources :brand_guides do
     resources :asset_groups do
-      post :download, on: :member
+      get :download, on: :member
     end
   end
 
