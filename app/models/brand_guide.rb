@@ -7,6 +7,8 @@ class BrandGuide < ActiveRecord::Base
   has_many :sections, dependent: :destroy
   accepts_nested_attributes_for :sections, allow_destroy: true
 
+  has_many :asset_groups, through: :sections
+
   before_create :add_default_sections
 
   def public_url

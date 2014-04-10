@@ -25,21 +25,7 @@
             <%= raw section.content_html %>
 
             <div class="floater">
-              <% section.asset_groups.each do |asset_group| %>
-                <figure class="media__image">
-                  <div class="media__asset" style="background-image: url('<%= asset_group.thumb('108x108').url if asset_group.has_thumb? %>')">
-                    <% unless asset_group.has_thumb? %>
-                      <i>File</i>
-                    <% end %>
-                  </div>
-                  <figcaption class="media__caption"><%= asset_group.title %></figcaption>
-                  <div class="links">
-                    <% asset_group.assets.each do |asset| %>
-                      <span><%= link_to asset.file.name, asset.file.url %></span><br />
-                    <% end %>
-                  </div>
-                </figure>
-              <% end %>
+              <%= render section.asset_groups %>
             </div>
           </article>
         <% end %>

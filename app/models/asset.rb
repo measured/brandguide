@@ -3,4 +3,6 @@ class Asset < ActiveRecord::Base
   belongs_to :asset_group
 
   scope :images, -> { where(file_image: true) }
+
+  attr_accessor :download
 end

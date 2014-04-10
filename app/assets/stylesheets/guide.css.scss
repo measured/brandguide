@@ -1,0 +1,28 @@
+/*
+*= require_self
+*= require legacy
+*/
+
+.media__image {
+  .media__caption {
+    text-align: left;
+  }
+  
+  .media__asset {
+    width: 216px;
+    height: 216px;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-color: #eee;
+    display: flex;
+
+    i {
+      font-style: normal;
+      font-size: 48px;
+      margin: auto;
+      color: white;
+      position: relative;
+      top: 6px;
+    }
+  }
+}

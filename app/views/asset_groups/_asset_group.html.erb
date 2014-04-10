@@ -1,0 +1,22 @@
+<figure class="media__image">
+  <figcaption class="media__caption">
+    <%= asset_group.title %>
+  </figcaption>
+
+  <div class="media__asset" style="background-image: url('<%= asset_group.thumb('108x108').url if asset_group.has_thumb? %>')">
+    <% unless asset_group.has_thumb? %>
+      <i>File</i>
+    <% end %>
+  </div>
+
+  <div class="links">
+    <%= simple_form_for [:download, @brand_guide, asset_group], method: :post do |f| %>
+      <%= f.simple_fields_for :assets do |ff| %>
+        <% asset = ff.object %>
+        <%= asset.file.name %>
+        <%= ff.input :download, as: :boolean, label: false %>
+      <% end %>
+      <%= f.submit 'Download' %>
+    <% end %>
+  </div>
+</figure>

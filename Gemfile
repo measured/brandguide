@@ -18,6 +18,7 @@ gem 'simple_form'
 gem 'redcarpet'
 gem 'awesome_print'
 gem 'dragonfly'
+gem 'rubyzip', require: 'zip'
 
 gem 'foreman'
 gem 'puma'
