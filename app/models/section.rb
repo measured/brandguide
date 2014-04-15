@@ -10,6 +10,9 @@ class Section < ActiveRecord::Base
 
   attr_accessor :files
 
+  include RankedModel
+  ranks :row_order, with_same: :brand_guide_id
+
   def self.default_sections
     [
       { title: 'Introduction' },

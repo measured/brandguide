@@ -5,12 +5,17 @@
 @import "sass/application";
 @import "legacy";
 
+// TODO: Not this
 html {
   max-width: 100%!important;
   padding: 0!important;
 }
 
 .asset-group {
+  width: 50%;
+  float: left;
+  margin-bottom: 30px;
+  
   .asset-group__asset {
     width: 216px;
     height: 216px;

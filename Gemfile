@@ -19,6 +19,7 @@ gem 'redcarpet'
 gem 'awesome_print'
 gem 'dragonfly'
 gem 'rubyzip', require: 'zip'
+gem 'ranked-model'
 
 gem 'foreman'
 gem 'puma'
