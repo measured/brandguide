@@ -1,5 +1,5 @@
 class Admin::BrandGuidesController < Admin::AdminController
-  before_action :find_brand_guide, only: %w(edit update destroy)
+  before_action :find_brand_guide, only: %w(edit update destroy sort)
 
   def index
     @brand_guides = BrandGuide.all
@@ -35,10 +35,21 @@ class Admin::BrandGuidesController < Admin::AdminController
     redirect_to [:admin, :brand_guides]
   end
 
+  def sort
+    if params[:sort]
+      params[:sort].each_with_index do |id, index|
+        section = @brand_guide.sections.find(id)
+        section.update_attribute(:row_order, index)
+      end
+    end
+
+    head :ok
+  end
+
   private
 
   def find_brand_guide
-    @brand_guide = BrandGuide.find(params[:id])
+    @brand_guide = BrandGuide.find(params[:id] || params[:brand_guide_id])
   end
 
   def brand_guide_params

@@ -4,7 +4,7 @@ class BrandGuide < ActiveRecord::Base
 
   before_validation :clean_subdomain
 
-  has_many :sections, dependent: :destroy
+  has_many :sections, -> { order('row_order ASC') }, dependent: :destroy
   accepts_nested_attributes_for :sections, allow_destroy: true
 
   has_many :asset_groups, through: :sections

@@ -8,9 +8,9 @@
 
   Sections
 
-  <ul>
+  <ul class="sections--order" data-sort-path="<%= admin_brand_guide_sort_path(@brand_guide) %>">
     <% @brand_guide.sections.each do |section| %>
-      <li><%= link_to section.title, [:edit, :admin, @brand_guide, section] %></li>
+      <li data-id="<%= section.id %>"><%= link_to section.title, [:edit, :admin, @brand_guide, section] %></li>
     <% end %>
   </ul>
 

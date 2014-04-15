@@ -17,6 +17,7 @@ BMS::Application.routes.draw do
     root 'brand_guides#index'
 
     resources :brand_guides do
+      post :sort 
       resources :sections
     end
   end
