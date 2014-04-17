@@ -24,3 +24,5 @@ config/secrets.yml
 .rvmrc
 
 .DS_Store
+
+node_modules/
