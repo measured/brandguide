@@ -4,19 +4,19 @@ class AssetGroupsController < ApplicationController
     # also, that the assets truly belong to that BrandGuide
     @asset_group = AssetGroup.find(params[:id])
 
-    if params[:asset_ids]
+    if params[:asset_ids].present?
       asset_ids = params[:asset_ids].split(',').map(&:to_i)
       assets = @asset_group.assets.find(asset_ids)
     else
       assets = @asset_group.assets
     end
 
-    zip_name = [
-      @asset_group.brand_guide.title,
-      @asset_group.title || 'Assets'
-      ].map(&:parameterize).join('--')
+    group_name = @asset_group.title.present? ? @asset_group.title : 'Assets'
 
-    tempfile = Tempfile.new("zipball-#{Time.now}")
+    zip_name = [@asset_group.brand_guide.title, group_name]
+    zip_name = zip_name.map(&:parameterize).join('_')
+
+    tempfile = Tempfile.new("zipball-#{Time.now.to_i}")
 
     Zip::OutputStream.open(tempfile.path) do |zipfile|
       assets.each do |asset|

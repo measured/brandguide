@@ -3,7 +3,7 @@
 <head>
   <title>brandguide.io</title>
 
-  <%= stylesheet_link_tag :guide, media: :all %>
+  <%= stylesheet_link_tag :guide %>
   <%= csrf_meta_tags %>
 </head>
 <body>
@@ -15,7 +15,6 @@
     <%= yield %>
   </div>
 
-  <%= javascript_include_tag 'http://fast.fonts.net/jsapi/6d26050f-56a3-496d-829f-4d24e6be9cff.js' %>
-  <%= javascript_include_tag :guide %>
+  <%= javascript_include_tag 'http://fast.fonts.net/jsapi/6d26050f-56a3-496d-829f-4d24e6be9cff.js', :guide %>
 </body>
 </html>

@@ -19,13 +19,15 @@
       </div>
 
       <div class="column__content">
-        <% @brand_guide.sections.each do |section| %>
+        <% @brand_guide.sections.each_with_index do |section| %>
           <article id="section-<%= section.id %>" class="content__article js__article-item">
             <h2 class="content__title"><%= section.title %></h2>
             <%= raw section.content_html %>
 
             <div class="floater">
-              <%= render section.asset_groups %>
+              <% section.asset_groups.each_with_index do |asset_group, index| %>
+                <%= render asset_group, index: index %>
+              <% end %>
             </div>
           </article>
         <% end %>

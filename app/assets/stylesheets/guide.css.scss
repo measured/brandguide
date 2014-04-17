@@ -1,9 +1,13 @@
 /*
 *= require_self
+*= require ss-standard
 */
 
 @import "sass/application";
 @import "legacy";
+
+$button-radius: 3px;
+$margin-space: 15px;
 
 // TODO: Not this
 html {
@@ -11,35 +15,120 @@ html {
   padding: 0!important;
 }
 
-.asset-group {
-  width: 50%;
-  float: left;
-  margin-bottom: 30px;
-  
-  .asset-group__asset {
-    width: 216px;
-    height: 216px;
-    background-repeat: no-repeat;
-    background-position: center;
-    background-color: #eee;
-    border-radius: 50%;
-    display: flex;
+ul {
+  padding: 0;
+}
 
-    i {
-      font-style: normal;
-      font-size: 48px;
-      margin: auto;
-      color: white;
-      position: relative;
-      top: 6px;
-    }
+.Btn {
+  border-radius: $button-radius;
+  background: $light-silver;
+  padding: 6px 9px 3px;
+  display: inline-block;
+  text-align: center;
+
+  > * {
+    display: inline-block;
+  }
+
+  i {
+    font-size: 11px;
+    margin-right: 6px;
+  }
+}
+
+.AssetList {
+  overflow: hidden;
+  height: 0;
+
+  &.opened {
+    height: auto;
+  }
+
+  .inner {
+   padding: $margin-space;
   }
 
   ul {
-    list-style: none;
-    padding: 0;
+    margin-bottom: $margin-space;
+  }
+
+  .buttons {
+    text-align: center;
+    .Btn {
+      display: block;
+    }
+  }
+}
+
+.AssetListItem {
+  display: flex;
+  list-style: none;
+
+  input[type="checkbox"] {
+    position: relative;
+    top: 3px;
   }
   label {
-    display: inline;
+    flex: 1;
+    margin-top: 0;
+    padding-left: 6px;
+    cursor: pointer;
   }
+}
+
+.AssetGroup {
+  width: 360px;
+  background: white;
+  border-radius: 6px;
+  overflow: hidden;
+  box-shadow: 0 0 10px rgba(0,0,0,0.15);
+  margin-bottom: 30px;
+}
+.AssetGroupThumbnail {
+  width: 360px;
+  height: 360px;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-color: $light-silver;
+}
+.AssetGroupHeader {
+  padding: $margin-space;
+  padding-bottom: $margin-space/2;
+  position: relative;
+
+  .buttons {
+    position: absolute;
+    top: 0; right: 0;
+    margin: $margin-space;
+    a {
+      margin-left: 10px;
+      opacity: 0.25;
+      &.active {
+        color: black;
+        opacity: 1;
+      }
+    }
+  }
+}
+
+.EmailForm {
+  .input {
+    border: 1px solid $light-silver;
+    border-color: $light-silver;
+  }
+  .input:focus, .input:active {
+    outline: none;
+    border: 1px solid $light-silver;
+  }
+  .input:first-child {
+    border-radius: $button-radius $button-radius 0 0;
+  }
+  .input:last-child {
+    border-radius: 0 0 $button-radius $button-radius;
+  }
+  .input:not(:last-child) {
+    border-bottom: none;
+  }
+
+  margin-bottom: $margin-space;
 }

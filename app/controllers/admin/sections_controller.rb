@@ -34,6 +34,6 @@ class Admin::SectionsController < Admin::AdminController
   end
 
   def section_params
-    params.require(:section).permit(:title, :content, asset_groups_attributes: [:id, :title], files: [])
+    params.require(:section).permit(:title, :content, asset_groups_attributes: [:id, :title, :_destroy], files: [])
   end
 end

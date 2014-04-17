@@ -6,7 +6,7 @@ class Section < ActiveRecord::Base
   has_ancestry
 
   has_many :asset_groups
-  accepts_nested_attributes_for :asset_groups
+  accepts_nested_attributes_for :asset_groups, allow_destroy: true
 
   attr_accessor :files
 
