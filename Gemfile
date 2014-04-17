@@ -10,6 +10,7 @@ gem 'coffee-rails', '~> 4.0.0'
 gem 'jquery-rails'
 gem 'jquery-ui-rails'
 gem 'turbolinks'
+gem 'react-rails', '1.0.0.pre', github: 'reactjs/react-rails'
 gem 'jbuilder', '~> 1.2'
 gem 'bcrypt', '~> 3.1.7'
 

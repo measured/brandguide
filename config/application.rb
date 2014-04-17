@@ -21,5 +21,7 @@ module BMS
     # config.i18n.default_locale = :de
 
     config.autoload_paths << "#{config.root}/app/validators"
+
+    config.react.addons = true
   end
 end
