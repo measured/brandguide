@@ -1,0 +1,27 @@
+<h1>Edit <%= @brand_guide.title %> / <%= @section.title %></h1>
+
+<%= simple_form_for [:admin, @brand_guide, @section], html: { multipart: true } do |f| %>
+  <%= f.error_notification %>
+
+  <%= f.input :title %>
+  <%= f.input :content %>
+
+  <%= f.input :files, label: 'Add Assets', as: :file, input_html: { multiple: true } %>
+
+  <div>
+    <%= f.simple_fields_for :asset_groups do |ff| %>
+      <% asset_group = ff.object %>
+      <%= ff.input :title %>
+      <%= image_tag asset_group.thumb('260x260#').url if asset_group.has_thumb? %>
+        <ul>
+          <% asset_group.assets.each do |asset| %>
+            <li><%= asset.file_name %></li>
+          <% end %>
+        </ul>
+    <% end %>
+  </div>
+
+  <%= f.button :submit %>
+<% end %>
+
+<%= link_to "Back to #{@brand_guide.title}", edit_admin_brand_guide_path(@brand_guide) %>

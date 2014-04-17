@@ -1,0 +1,35 @@
+<div class="js__outside-drawer">
+  <section class="content">
+    <div class="banner">
+      <section class="grid-container">
+        <h2 class="banner__title__secondary"><%= @brand_guide.title %></h2>
+        <h1 class="banner__title__primary">Styleguide</h1>
+      </section>
+    </div>
+
+    <section id="inner__nav" class="grid-container content__main">
+      <div class="sub-navigation">
+        <ul>
+          <% @brand_guide.sections.each do |section| %>
+            <li>
+              <a class="js__submenu-item" data-func="scroll_to" href="#section-<%= section.id %>"><%= section.title %></a>
+            </li>
+          <% end %>
+        </ul>
+      </div>
+
+      <div class="column__content">
+        <% @brand_guide.sections.each do |section| %>
+          <article id="section-<%= section.id %>" class="content__article js__article-item">
+            <h2 class="content__title"><%= section.title %></h2>
+            <%= raw section.content_html %>
+
+            <div class="floater">
+              <%= render section.asset_groups %>
+            </div>
+          </article>
+        <% end %>
+      </div>
+    </section>
+  </section>
+</div>

@@ -11,10 +11,29 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140404033200) do
+ActiveRecord::Schema.define(version: 20140415010335) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "asset_groups", force: true do |t|
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "section_id"
+    t.string   "title"
+  end
+
+  create_table "assets", force: true do |t|
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "asset_group_id"
+    t.string   "file_uid"
+    t.string   "file_name"
+    t.boolean  "file_image"
+    t.integer  "file_width"
+    t.integer  "file_height"
+    t.string   "file_format"
+  end
 
   create_table "brand_guides", force: true do |t|
     t.datetime "created_at"
@@ -26,10 +45,11 @@ ActiveRecord::Schema.define(version: 20140404033200) do
   create_table "sections", force: true do |t|
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "title",          null: false
+    t.string   "title",                      null: false
     t.string   "ancestry"
     t.integer  "brand_guide_id"
     t.text     "content"
+    t.integer  "row_order",      default: 0, null: false
   end
 
   add_index "sections", ["ancestry"], name: "index_sections_on_ancestry", using: :btree

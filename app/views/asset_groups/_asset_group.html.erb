@@ -1,0 +1,24 @@
+<figure class="asset-group">
+  <figcaption class="asset-group__caption">
+    <%= asset_group.title %>
+  </figcaption>
+
+  <div class="asset-group__asset" style="background-image: url('<%= asset_group.thumb('108x108').url if asset_group.has_thumb? %>')">
+    <% unless asset_group.has_thumb? %>
+      <i>File</i>
+    <% end %>
+  </div>
+
+  <div class="asset-group__downloads">
+    <ul>
+      <% asset_group.assets.each do |asset| %>
+        <li class="asset" data-id="<%= asset.id %>">
+          <input type="checkbox" id="select-asset-<%= asset.id %>" />
+          <label for="select-asset-<%= asset.id %>"><%= asset.file.name %></label>
+        </li>
+      <% end %>
+    </ul>
+
+    <%= link_to 'Download', download_brand_guide_asset_group_path(@brand_guide, asset_group), rel: :download, class: :button %>
+  </div>
+</figure>

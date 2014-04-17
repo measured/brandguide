@@ -1,4 +1,4 @@
-<h1>Edit Brand Guide</h1>
+<h1>Edit <%= @brand_guide.title %></h1>
 
 <%= simple_form_for [:admin, @brand_guide] do |f| %>
   <%= f.error_notification %>
@@ -6,20 +6,16 @@
   <%= f.input :title %>
   <%= f.input :subdomain %>
 
-    <h2>Sections</h2>
+  Sections
 
-    <%= f.simple_fields_for :sections do |ff| %>
-      <%- if ff.object.new_record? %>
-        <h3 rel="add_section">Add a Section</h3>
-      <% end %>
-
-      <fieldset <%= :disabled if ff.object.new_record? %>>
-        <%= ff.input :title %>
-        <%= ff.input :content, as: :text %>
-        
-        <%= ff.input :_destroy, as: :boolean, label: 'Remove' if ff.object.persisted? %>
-      </fieldset>
+  <ul class="sections--order" data-sort-path="<%= admin_brand_guide_sort_path(@brand_guide) %>">
+    <% @brand_guide.sections.each do |section| %>
+      <li data-id="<%= section.id %>"><%= link_to section.title, [:edit, :admin, @brand_guide, section] %></li>
     <% end %>
+  </ul>
 
-  <%= f.button :submit %>
+  <%= f.button :submit, 'Save Changes' %>
+  <%= link_to 'Delete', admin_brand_guide_path(@brand_guide), method: :delete, confirm: 'Are you sure?' %>
 <% end %>
+
+<%= link_to 'Back to Dashboard', admin_root_path %>

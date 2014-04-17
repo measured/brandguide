@@ -45,8 +45,8 @@ How to set up your local development environment, after cloning the repository.
 
 1. `bundle`
 2. `rake db:reset`
-3. `foreman start`
-4. `open http://localhost:5000`
+
+If `pow` has been installed and linked (try `powder link`), the server will be running and accessible at `http://bms.dev/`.
 
 ## Production
 
