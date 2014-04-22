@@ -1,8 +1,7 @@
 class AssetGroupsController < ApplicationController
   def download
-    # TODO: Check that the user has permission to download these assets
-    # also, that the assets truly belong to that BrandGuide
-    @asset_group = AssetGroup.find(params[:id])
+    @brand_guide = BrandGuide.find_by_subdomain!(request.subdomain)
+    @asset_group = @brand_guide.asset_groups.find(params[:id])
 
     if params[:asset_ids].present?
       asset_ids = params[:asset_ids].split(',').map(&:to_i)
