@@ -11,14 +11,6 @@ class BrandGuide < ActiveRecord::Base
 
   before_create :add_default_sections
 
-  def public_url
-    if subdomain.present?
-      "http://#{subdomain}.brandguide.io/"
-    else
-      "http://brandguide.io/#{id}"
-    end
-  end
-
   private
 
   def clean_subdomain

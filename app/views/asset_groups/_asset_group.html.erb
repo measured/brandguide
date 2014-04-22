@@ -8,6 +8,6 @@
       extension: asset.file.name.split('.').pop,
       selected: true
     } end,
-    download_url: download_brand_guide_asset_group_path(@brand_guide, asset_group)
+    download_url: download_asset_group_url(asset_group, subdomain: @brand_guide.subdomain)
   }, { prerender: true }
 %>
