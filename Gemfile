@@ -11,6 +11,7 @@ gem 'jquery-rails'
 gem 'jquery-ui-rails'
 gem 'turbolinks'
 gem 'react-rails', '1.0.0.pre', github: 'reactjs/react-rails'
+gem 'therubyracer'
 gem 'jbuilder', '~> 1.2'
 gem 'bcrypt', '~> 3.1.7'
 
