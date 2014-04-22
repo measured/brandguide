@@ -9,6 +9,8 @@
 $button-radius: 3px;
 $margin-space: 15px;
 
+$asset-group-border: 1px solid darken($light-silver, 5%);
+
 ul {
   padding: 0;
 }
@@ -31,11 +33,11 @@ ul {
 }
 
 .AssetList {
-  overflow: hidden;
-  height: 0;
+  display: none;
+  border-top: $asset-group-border;
 
   &.opened {
-    height: auto;
+    display: block;
   }
 
   .inner {
@@ -74,22 +76,29 @@ ul {
   width: 360px;
   background: white;
   border-radius: 6px;
+  border: $asset-group-border;
   overflow: hidden;
-  box-shadow: 0 0 10px rgba(0,0,0,0.15);
+  box-shadow: 0 0 1px rgba(0,0,0,0);
   margin-bottom: 30px;
 }
+.AssetGroupThumbnailContainer,
 .AssetGroupThumbnail {
-  width: 360px;
+   width: 360px;
   height: 360px;
+}
+.AssetGroupThumbnail {
   background-repeat: no-repeat;
   background-position: center;
-  background-color: $light-silver;
   background-size: 50%;
+}
+.AssetGroupThumbnailContainer {
+  background: url(asset_path('checkerboard.png'))
 }
 .AssetGroupHeader {
   padding: $margin-space;
   padding-bottom: $margin-space/2;
   position: relative;
+  border-bottom: $asset-group-border;
 
   .buttons {
     position: absolute;

@@ -19,7 +19,9 @@ var AssetGroup = React.createClass({
     
     return <figure className="AssetGroup">
       <AssetGroupHeader title={this.props.title} buttons={this.state.buttons} onButtonClick={this.handleButtonClick} />
-      <div className="AssetGroupThumbnail" style={thumbStyle} />
+      <div className="AssetGroupThumbnailContainer">
+        <div className="AssetGroupThumbnail" style={thumbStyle} />
+      </div>
       <AssetList assets={this.props.assets} downloadUrl={this.props.download_url} buttons={this.state.buttons} />
     </figure>;
   }
