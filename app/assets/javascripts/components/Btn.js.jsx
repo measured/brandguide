@@ -1,5 +1,7 @@
 /** @jsx React.DOM */
 
+// I wanted to call this "<Button/>", but the name clashes with an existing HTML tag
+
 var Btn = React.createClass({
   onClick: function(event) {
     event.preventDefault();
