@@ -13,8 +13,10 @@ var AssetGroup = React.createClass({
     this.setState({ buttons: buttonState });
   },
   render: function() {
-    var thumbStyle = {
-      backgroundImage: 'url('+this.props.thumb+')'
+    var thumbStyle = {};
+
+    if(this.props.thumb) {
+      thumbStyle.backgroundImage = 'url('+this.props.thumb+')';
     }
     
     return <figure className="AssetGroup">

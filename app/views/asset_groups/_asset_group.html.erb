@@ -1,11 +1,11 @@
 <%=
   react_component 'AssetGroup', {
     title: asset_group.title,
-    thumb: asset_group.try(:thumb, '360x360').try(:url),
+    thumb: (asset_group.thumb('360x360').url if asset_group.has_thumb?),
     assets: asset_group.assets.map do |asset| {
       id: asset.id,
       name: asset.file.name,
-      extension: asset.file.name.split('.').pop,
+      format: asset.file.format,
       selected: true
     } end,
     download_url: download_asset_group_url(asset_group, subdomain: @brand_guide.subdomain)

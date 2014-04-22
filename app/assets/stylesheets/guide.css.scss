@@ -92,24 +92,28 @@ ul {
   background-size: 50%;
 }
 .AssetGroupThumbnailContainer {
-  background: url(asset_path('checkerboard.png'))
+  background: url(asset_path('checkerboard.png'));
 }
 .AssetGroupHeader {
   padding: $margin-space;
   padding-bottom: $margin-space/2;
   position: relative;
   border-bottom: $asset-group-border;
+  overflow: hidden;
 
   .buttons {
     position: absolute;
     top: 0; right: 0;
-    margin: $margin-space;
     a {
-      margin-left: 10px;
-      opacity: 0.25;
+      border-left: $asset-group-border;
+      color: $light-silver;
+      padding: 15px;
+      display: inline-block;
+      &:hover {
+        color: darken($light-silver, 20%);
+      }
       &.active {
-        color: black;
-        opacity: 1;
+        color: darken($light-silver, 50%);
       }
     }
   }
