@@ -1,14 +1,9 @@
 BMS::Application.routes.draw do
   devise_for :users
 
-  # constraints subdomain: /.+/ do
-  #   get '/', to: 'brand_guides#show'
-  # end
-
-  resources :brand_guides do
-    resources :asset_groups do
-      get :download, on: :member
-    end
+  constraints subdomain: /.+/ do
+    get '/', to: 'brand_guides#show', as: 'brand_guide'
+    get '/asset_groups/:id/download', to: 'asset_groups#download', as: 'download_asset_group'
   end
 
   root 'application#index'
