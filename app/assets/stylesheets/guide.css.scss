@@ -9,12 +9,6 @@
 $button-radius: 3px;
 $margin-space: 15px;
 
-// TODO: Not this
-html {
-  max-width: 100%!important;
-  padding: 0!important;
-}
-
 ul {
   padding: 0;
 }
@@ -90,6 +84,7 @@ ul {
   background-repeat: no-repeat;
   background-position: center;
   background-color: $light-silver;
+  background-size: 50%;
 }
 .AssetGroupHeader {
   padding: $margin-space;

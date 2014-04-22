@@ -1,7 +1,7 @@
 <%=
   react_component 'AssetGroup', {
     title: asset_group.title,
-    thumb: asset_group.try(:thumb, '108x108').try(:url),
+    thumb: asset_group.try(:thumb, '360x360').try(:url),
     assets: asset_group.assets.map do |asset| {
       id: asset.id,
       name: asset.file.name,
