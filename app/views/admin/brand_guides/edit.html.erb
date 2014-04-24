@@ -7,11 +7,7 @@
 
   <code><%= link_to brand_guide_url(@brand_guide, subdomain: @brand_guide.slug), brand_guide_url(@brand_guide, subdomain: @brand_guide.slug) %></code>
 
-  <ul>
-    <% @brand_guide.sections.each do |section| %>
-      <li data-id="<%= section.id %>"><%= link_to section.title, [:edit, :admin, @brand_guide, section] %></li>
-    <% end %>
-  </ul>
+  <%= render 'sections', sections: @brand_guide.sections.roots %>
 
   <%= link_to 'Add Section', new_admin_brand_guide_section_path(@brand_guide) %>
 
