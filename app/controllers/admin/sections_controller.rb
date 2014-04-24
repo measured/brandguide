@@ -4,6 +4,7 @@ class Admin::SectionsController < Admin::AdminController
 
   def new
     @section = Section.new
+    @section.brand_guide = @brand_guide
   end
 
   def edit; end

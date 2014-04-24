@@ -3,7 +3,7 @@
 
   <%= f.input :title %>
 
-  <%= f.input :parent_id, collection: ancestry_collection(@brand_guide.sections.arrange) %>
+  <%= f.input :parent_id, collection: ancestry_collection(@section.brand_guide.sections), disabled: @section.id %>
 
   <%= f.input :content %>
 
