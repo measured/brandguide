@@ -14,7 +14,10 @@ Dragonfly.app.configure do
     datastore :s3,
       bucket_name: ENV['AWS_S3_BUCKET'],
       access_key_id: ENV['AWS_ACCESS_KEY_ID'],
-      secret_access_key: ENV['AWS_SECRET_ACCESS_KEY']
+      secret_access_key: ENV['AWS_SECRET_ACCESS_KEY'],
+      fog_storage_options: {
+        path_style: true
+      }
   else
     datastore :file,
       root_path: Rails.root.join('public/system/dragonfly', Rails.env),
