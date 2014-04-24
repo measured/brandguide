@@ -5,7 +5,7 @@ BMS::Application.routes.draw do
     namespace :admin, path: '/' do
       root 'brand_guides#index'
 
-      resources :brand_guides do
+      resources :brand_guides, path: '/' do
         post :sort 
         resources :sections
       end

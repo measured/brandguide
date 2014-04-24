@@ -49,10 +49,10 @@ class Admin::BrandGuidesController < Admin::AdminController
   private
 
   def find_brand_guide
-    @brand_guide = BrandGuide.find(params[:id] || params[:brand_guide_id])
+    @brand_guide = BrandGuide.friendly.find(params[:id] || params[:brand_guide_id])
   end
 
   def brand_guide_params
-    params.require(:brand_guide).permit(:title, :subdomain, sections_attributes: [:id, :title, :content, :_destroy])
+    params.require(:brand_guide).permit(:title, sections_attributes: [:id, :title, :content, :_destroy])
   end
 end

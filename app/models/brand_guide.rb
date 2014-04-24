@@ -1,17 +1,13 @@
 class BrandGuide < ActiveRecord::Base
-  validates :title, presence: true
-  validates :subdomain, subdomain: true, uniqueness: { case_sensitive: false }
+  extend FriendlyId
 
-  before_validation :clean_subdomain
+  validates :title, presence: true
+  validates :slug, presence: true, uniqueness: true
 
   has_many :sections, -> { order('row_order ASC') }, dependent: :destroy
   accepts_nested_attributes_for :sections, allow_destroy: true
 
   has_many :asset_groups, through: :sections
 
-  private
-
-  def clean_subdomain
-    self.subdomain = self.subdomain.parameterize
-  end
+  friendly_id :title, use: :slugged
 end

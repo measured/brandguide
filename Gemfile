@@ -23,6 +23,7 @@ gem 'awesome_print'
 gem 'dragonfly'
 gem 'rubyzip', require: 'zip'
 gem 'ranked-model'
+gem 'friendly_id', '~> 5.0.0'
 
 gem 'foreman'
 gem 'puma'

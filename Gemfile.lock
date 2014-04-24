@@ -68,6 +68,8 @@ GEM
     foreman (0.63.0)
       dotenv (>= 0.7)
       thor (>= 0.13.6)
+    friendly_id (5.0.3)
+      activerecord (>= 4.0.0)
     hike (1.2.3)
     i18n (0.6.9)
     jbuilder (1.5.3)
@@ -172,6 +174,7 @@ DEPENDENCIES
   devise
   dragonfly
   foreman
+  friendly_id (~> 5.0.0)
   jbuilder (~> 1.2)
   jquery-rails
   jquery-ui-rails
