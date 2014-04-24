@@ -5,7 +5,7 @@
 
   <%= f.input :title %>
 
-  Sections
+  <code><%= link_to brand_guide_url(@brand_guide, subdomain: @brand_guide.slug), brand_guide_url(@brand_guide, subdomain: @brand_guide.slug) %></code>
 
   <ul class="sections--order" data-sort-path="<%= admin_brand_guide_sort_path(@brand_guide) %>">
     <% @brand_guide.sections.each do |section| %>
@@ -13,8 +13,12 @@
     <% end %>
   </ul>
 
-  <%= f.button :submit, 'Save Changes' %>
-  <%= link_to 'Delete', admin_brand_guide_path(@brand_guide), method: :delete, confirm: 'Are you sure?' %>
+  <%= link_to 'Add Section', new_admin_brand_guide_section_path(@brand_guide) %>
+
+  <div class="buttons">
+    <%= f.button :submit, 'Save Changes' %>
+    <%= link_to 'Delete', admin_brand_guide_path(@brand_guide), method: :delete, confirm: 'Are you sure?' %>
+  </div>
 <% end %>
 
 <%= link_to 'Back to Dashboard', admin_root_path %>

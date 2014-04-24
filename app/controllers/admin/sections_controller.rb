@@ -1,6 +1,8 @@
 class Admin::SectionsController < Admin::AdminController
   before_action :find_section, only: [:edit, :update]
 
+  def new; end
+
   def edit; end
 
   def update
