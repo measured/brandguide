@@ -1,7 +1,7 @@
 BMS::Application.routes.draw do
   devise_for :users
 
-  constraints subdomain: /admin/ do
+  constraints subdomain: /^admin$/ do
     namespace :admin, path: '/' do
       root 'brand_guides#index'
 
@@ -12,7 +12,7 @@ BMS::Application.routes.draw do
     end
   end
 
-  constraints subdomain: /.+/ do
+  constraints subdomain: /^((?!www).).+$/ do
     get '/', to: 'brand_guides#show', as: 'brand_guide'
     get '/asset_groups/:id/download', to: 'asset_groups#download', as: 'download_asset_group'
   end
