@@ -7,7 +7,7 @@
 
   <code><%= link_to brand_guide_url(@brand_guide, subdomain: @brand_guide.slug), brand_guide_url(@brand_guide, subdomain: @brand_guide.slug) %></code>
 
-  <ul class="sections--order" data-sort-path="<%= admin_brand_guide_sort_path(@brand_guide) %>">
+  <ul>
     <% @brand_guide.sections.each do |section| %>
       <li data-id="<%= section.id %>"><%= link_to section.title, [:edit, :admin, @brand_guide, section] %></li>
     <% end %>

@@ -35,17 +35,6 @@ class Admin::BrandGuidesController < Admin::AdminController
     redirect_to [:admin, :brand_guides]
   end
 
-  def sort
-    if params[:sort]
-      params[:sort].each_with_index do |id, index|
-        section = @brand_guide.sections.find(id)
-        section.update_attribute(:row_order, index)
-      end
-    end
-
-    head :ok
-  end
-
   private
 
   def find_brand_guide
