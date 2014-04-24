@@ -25,7 +25,6 @@ gem 'awesome_print'
 gem 'dragonfly'
 gem 'dragonfly-s3_data_store'
 gem 'rubyzip', require: 'zip'
-gem 'ranked-model'
 gem 'friendly_id', '~> 5.0.0'
 
 gem 'foreman'
