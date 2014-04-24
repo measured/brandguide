@@ -9,15 +9,9 @@ class BrandGuide < ActiveRecord::Base
 
   has_many :asset_groups, through: :sections
 
-  before_create :add_default_sections
-
   private
 
   def clean_subdomain
     self.subdomain = self.subdomain.parameterize
-  end
-
-  def add_default_sections
-    self.sections += Section.default_sections
   end
 end
