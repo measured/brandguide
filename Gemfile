@@ -32,6 +32,7 @@ gem 'puma'
 
 group :development do
   gem 'powder'
+  gem 'letter_opener'
 end
 
 group :production do
