@@ -30,6 +30,12 @@ ul {
     font-size: 11px;
     margin-right: 6px;
   }
+
+  &.disabled {
+    pointer-events: none;
+    background: none;
+    color: darken($light-silver, 25%);
+  }
 }
 
 .AssetList {
