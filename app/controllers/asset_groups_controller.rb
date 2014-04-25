@@ -1,6 +1,6 @@
 class AssetGroupsController < ApplicationController
   def download
-    @brand_guide = BrandGuide.find_by_subdomain!(request.subdomain)
+    @brand_guide = BrandGuide.friendly.find(request.subdomain)
     @asset_group = @brand_guide.asset_groups.find(params[:id])
 
     if params[:asset_ids].present?
