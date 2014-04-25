@@ -22,6 +22,8 @@ module BMS
 
     config.autoload_paths << "#{config.root}/app/validators"
 
+    config.action_mailer.default_url_options = { host: 'brandguide.io' }
+
     config.react.addons = true
   end
 end
