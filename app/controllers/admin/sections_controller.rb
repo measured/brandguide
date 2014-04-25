@@ -1,6 +1,6 @@
 class Admin::SectionsController < Admin::AdminController
-  before_action :find_brand_guide, only: [:new, :edit, :create, :update]
-  before_action :find_section, only: [:edit, :update]
+  before_action :find_brand_guide
+  before_action :find_section, only: [:edit, :update, :destroy]
 
   def new
     @section = Section.new
@@ -41,6 +41,12 @@ class Admin::SectionsController < Admin::AdminController
     else
       render :edit
     end
+  end
+
+  def destroy
+    @section.destroy
+
+    redirect_to edit_admin_brand_guide_path(@brand_guide)
   end
 
   private

@@ -2,4 +2,6 @@
 
 <%= render 'form' %>
 
+<%= link_to 'Delete Section', admin_brand_guide_section_path(@brand_guide, @section), method: :delete, data: { confirm: 'Are you sure?' } %>
+
 <%= link_to "Back to #{@brand_guide.title}", edit_admin_brand_guide_path(@brand_guide) %>
