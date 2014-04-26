@@ -1,0 +1,44 @@
+<div class="js__outside-drawer">
+  <section class="content">
+    <div class="banner">
+      <section class="grid-container">
+        <h2 class="banner__title__secondary"><%= @brand_guide.title %></h2>
+        <h1 class="banner__title__primary">Brand Guide</h1>
+      </section>
+    </div>
+
+    <section id="inner__nav" class="grid-container content__main">
+      <div class="sub-navigation">
+        <ul>
+          <% @brand_guide.pages.each do |page| %>
+            <li>
+              <%= link_to page.title, brand_guide_page_path(page) %>
+              <% if @page == page %>
+                <ul>
+                  <% page.children.each do |section| %>
+                    <li><%= link_to section.title, '#' %></li>
+                  <% end %>
+                </ul>
+              <% end %>
+            </li>
+          <% end %>
+        </ul>
+      </div>
+
+      <div class="column__content">
+        <% @page.children.each_with_index do |section| %>
+          <article id="section-<%= section.id %>" class="content__article js__article-item">
+            <h2 class="content__title"><%= section.title %></h2>
+            <%= raw section.content_html %>
+
+            <div class="floater">
+              <% section.asset_groups.each_with_index do |asset_group, index| %>
+                <%= render asset_group, index: index %>
+              <% end %>
+            </div>
+          </article>
+        <% end %>
+      </div>
+    </section>
+  </section>
+</div>
