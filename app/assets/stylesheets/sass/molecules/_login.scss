@@ -5,7 +5,11 @@
   flex-flow: row nowrap;
   align-content: center;
   justify-content: center;
-
+  align-items: center;
+  min-width: 100%;
+  min-height: 100%;
+  padding-top: 20px;
+  padding-bottom: 20px;
 }
 
 .login__contents {
