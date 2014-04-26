@@ -2,7 +2,6 @@
   <%= f.error_notification %>
 
   <%= f.input :title %>
-
   <%= f.input :content %>
 
   <%= f.input :files, label: 'Add Assets', as: :file, input_html: { multiple: true } %>
@@ -11,6 +10,7 @@
     <%= f.simple_fields_for :asset_groups do |ff| %>
       <% asset_group = ff.object %>
       <%= ff.input :title %>
+      <%= ff.input :type, collection: asset_group.class.type_options, include_blank: false %>
       <%= ff.input :_destroy, as: :boolean %>
       <%= image_tag asset_group.thumb('260x260#').url if asset_group.has_thumb? %>
         <ul>

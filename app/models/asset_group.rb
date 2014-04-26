@@ -9,8 +9,10 @@ class AssetGroup < ActiveRecord::Base
 
   after_initialize :default_attributes
 
-  def self.types
-    [FileAssetGroup]
+  def self.type_options
+    [
+      ['Files', FileAssetGroup]
+    ]
   end
 
   def has_thumb?
