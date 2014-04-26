@@ -1,7 +1,7 @@
 
 
 
-.guidegroup {
+.guides {
   text-align: center;
   padding-top: 30px; 
 
@@ -12,7 +12,7 @@
 
 // ----------------------------------------------------------
 
-.guidegroup__create-btn {
+.guides__create-btn {
   display: inline-block;
   padding: 5px 10px;
   background-color: #53E2C0;
@@ -26,7 +26,7 @@
 
 // ----------------------------------------------------------
 
-.guidegroup__list {
+.guides__list {
   display: flex;
   flex-flow: row wrap;
   justify-content: space-between; 
@@ -43,7 +43,7 @@
   }
 }
 
-.guidegroup__btn {
+.guides__btn {
   text-align: center;
   display: block;
   width: 100px;
@@ -58,7 +58,7 @@
   }
 }
 
-.guidegroup__img {
+.guides__img {
   display: block;
   width: 100px;
   height: 100px;
@@ -71,7 +71,7 @@
   }
 }
 
-.guidegroup__title {
+.guides__title {
   display: inline-block;
   padding-top: 5px;
 }

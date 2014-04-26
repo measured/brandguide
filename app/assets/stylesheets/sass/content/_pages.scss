@@ -1,0 +1,24 @@
+
+
+.pages {
+  text-align: center;
+  padding-top: 30px; 
+
+  @include breakpoint(portrait) {
+    padding-top: 60px;
+  }
+}
+
+// ----------------------------------------------------------
+
+.pages__create-btn {
+  display: inline-block;
+  padding: 5px 10px;
+  background-color: #53E2C0;
+  color: darken(#328974, 10%);
+  border-radius: 2px;
+
+  &:hover {
+    color: darken(#328974, 20%);
+  }
+}
