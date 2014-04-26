@@ -16,11 +16,20 @@
     <div class="alert"><%= alert %></div>
   </div>
 
-  <% if user_signed_in? %>
-    <div id="current_user">
-      Signed in as <%= current_user.email %>. <%= link_to 'Sign out', destroy_user_session_path, method: :delete %>
+  <div class="header">
+    
+    <!-- TODO: make the header text dynamic on different views 
+
+          - sometimes it'll need to be positioned left (breadcrumbs)
+          - some of these views might be front end layers tho?
+          - ...maybe the header should be a dynamic element inside yeild?
+    -->
+    <h2 class="header__text">brandguide.io</h2>
+    <div class="header__settings">
+      <%= render 'shared/user_settings' if user_signed_in? %>
     </div>
-  <% end %>
+
+  </div>
 
   <%= yield %>
 

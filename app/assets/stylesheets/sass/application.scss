@@ -26,7 +26,9 @@
 // Molecules should import here
 // --------------------------------------------
 
-@import "molecules/_flexform";
+@import "interface/_flexform";
+@import "interface/_header";
+@import "interface/_settings";
 
 // js mechanics
 @import "_global/_javascript";
