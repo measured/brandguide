@@ -16,6 +16,9 @@ BMS::Application.routes.draw do
 
   constraints subdomain: /^((?!www).).+$/ do
     resource :brand_guide, path: '/' do
+      post :authenticate, on: :member
+      get :logout, on: :member
+      
       resources :pages, only: [:show]
       
       resources :asset_bundles do

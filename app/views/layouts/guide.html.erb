@@ -20,26 +20,33 @@
         </section>
       </div>
 
-      <section id="inner__nav" class="grid-container content__main">
-        <div class="sub-navigation">
-          <ul>
-            <% @brand_guide.pages.each do |page| %>
-              <li>
-                <%= link_to page.title, brand_guide_page_path(page) %>
-                <ul>
-                  <% page.children.each do |section| %>
-                    <li><%= link_to section.title, brand_guide_page_path(page) %>
-                  <% end %>
-                </ul>
-              </li>
-            <% end %>
-          </ul>
-        </div>
+      <% if authenticated? %>
+        <section id="inner__nav" class="grid-container content__main">
+          <div class="sub-navigation">
+            <ul>
+              <% @brand_guide.pages.each do |page| %>
+                <li>
+                  <%= link_to page.title, brand_guide_page_path(page) %>
+                  <ul>
+                    <% page.children.each do |section| %>
+                      <li><%= link_to section.title, brand_guide_page_path(page) %>
+                    <% end %>
+                  </ul>
+                </li>
+              <% end %>
+            </ul>
+          </div>
 
-        <div class="column__content">
-          <%= yield %>
-        </div>
-      </section>
+          <div class="column__content">
+            <%= yield %>
+          </div>
+        </section>
+      <% else %>
+        <%= simple_form_for [:authenticate, @brand_guide], method: :post do |f| %>
+          <%= f.input :password %>
+          <%= f.submit 'Login' %>
+        <% end %>
+      <% end %>
     </section>
   </div>
 
