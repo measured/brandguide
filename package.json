@@ -1,0 +1,27 @@
+{
+  "name": "railzwatcher",
+  "description": "Simple watch task for rails projects",
+  "version": "0.0.0",
+  "homepage": "http://idealogue.io",
+  "author": {
+    "name": "Idealogue",
+    "url": "http://idealogue.io"
+  },
+  "contributors": [
+    {
+      "name": "David Hauser",
+      "url": "https://github.com/haustraliaer"
+    },
+    {
+      "name": "Ben Jennings",
+      "url": "https://github.com/jenbennings"
+    }
+  ],
+  "engines": {
+    "node": ">=0.8"
+  },
+  "dependencies": {
+    "grunt": "0.4.2",
+    "grunt-contrib-watch": "0.5.3"
+  }
+}

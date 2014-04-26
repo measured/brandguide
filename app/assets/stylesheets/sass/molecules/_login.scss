@@ -2,5 +2,13 @@
 
 .login {
   display: flex;
+  flex-flow: row nowrap;
   align-content: center;
+  justify-content: center;
+
+}
+
+.login__contents {
+  width: 80%;
+  max-width: 400px;
 }
