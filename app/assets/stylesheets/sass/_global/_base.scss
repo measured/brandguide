@@ -2,7 +2,7 @@
 
 
 // Base style globally applied to elements on this project
-// ------------------------------------------------------------------------------------ 
+// ------------------------------------------------------------------------------------
 
 
 
@@ -49,12 +49,12 @@ em,i,cite,q,address,dfn,var {
 abbr[title],dfn[title] {
   cursor:help;
   border-bottom-width: 1px;
-  border-bottom-style: dotted; 
+  border-bottom-style: dotted;
 }
 
 ins {
   border-bottom-width: 1px;
-  border-bottom-style: solid; 
+  border-bottom-style: solid;
 }
 
 a,u,ins {
@@ -75,13 +75,13 @@ del,s {
 
 html {
   width: 100%;
-  height: 100%; 
+  height: 100%;
 
   font-size: $base_font_size;
   line-height: $base_line_height;
 
-  font-family: $sans;
-  font-weight: $roman; 
+  font-family: $whitney;
+  font-weight: $light;
   font-style: normal;
 
   -webkit-text-size-adjust: 100%;
