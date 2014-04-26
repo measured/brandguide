@@ -1,10 +1,13 @@
 
 
 // generic scroll to anchor function
-function scroll_to(target) {    
+var scroll_to = function(e) {
+    
+  var target = $($(this).attr('href'));
   if (target.offset()) {
     __htmlbody.animate({scrollTop: target.offset().top + 'px'}, 600);
   }
+  e.preventDefault();
 }
 
 // custom fastclick function...

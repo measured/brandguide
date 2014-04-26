@@ -1,59 +1,32 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <title><%= @brand_guide.title %> Brand Guide</title>
+  <head>
+    <title><%= @brand_guide.title %> Brand Guide</title>
 
-  <%= stylesheet_link_tag :guide %>
-  <%= csrf_meta_tags %>
-</head>
-<body>
-  <div id="js__opacity-hack"></div>
-  <div id="js__media-check"></div>
-  <div id="outside_translate" class="grid-container"></div>
+    <%= stylesheet_link_tag :guide %>
+    <%= csrf_meta_tags %>
+  </head>
+  <body>
+    <div id="js__media-check"></div>
 
-  <div class="js__outside-drawer">
-    <section class="content">
-      <div class="banner">
-        <section class="grid-container">
-          <h2 class="banner__title__secondary"><%= link_to @brand_guide.title, brand_guide_path(subdomain: @brand_guide.slug) %></h2>
-          <h1 class="banner__title__primary"><%= link_to 'Brand Guide', brand_guide_path(subdomain: @brand_guide.slug) %></h1>
-        </section>
-      </div>
+    <h2>Brand Guide</h2>
+    <h2><%= link_to @brand_guide.title, brand_guide_path(subdomain: @brand_guide.slug) %></h2>
 
-      <% if authenticated? %>
-        <section id="inner__nav" class="grid-container content__main">
-          <div class="sub-navigation">
-            <ul>
-              <% @brand_guide.pages.each do |page| %>
-                <li>
-                  <%= link_to page.title, brand_guide_page_path(page) %>
-                  <ul>
-                    <% page.children.each do |section| %>
-                      <li><%= link_to section.title, brand_guide_page_path(page) %>
-                    <% end %>
-                  </ul>
-                </li>
-              <% end %>
-            </ul>
+    <% if authenticated? %>
 
-            <%= link_to 'Log out', logout_brand_guide_path %>
-          </div>
+      <%= yield %>
+    
+    <% else %>
 
-          <div class="column__content">
-            <%= yield %>
-          </div>
-        </section>
-      <% else %>
-        <%= simple_form_for [:authenticate, @brand_guide], method: :post do |f| %>
-          <%= f.input :password %>
-          <%= f.submit 'Login' %>
-        <% end %>
+      <%= simple_form_for [:authenticate, @brand_guide], method: :post do |f| %>
+        <%= f.input :password %>
+        <%= f.submit 'Login' %>
       <% end %>
-    </section>
-  </div>
 
-  <%= javascript_include_tag :guide %>
+    <% end %>
 
-  <%= render 'shared/livereload' if Rails.env.development? %>
-</body>
+    <%= javascript_include_tag :guide %>
+
+    <%= render 'shared/livereload' if Rails.env.development? %>
+  </body>
 </html>

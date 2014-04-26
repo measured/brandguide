@@ -1,3 +1,5 @@
+
+
 <% @brand_guide.pages.each_with_index do |page| %>
   <article id="page-<%= page.id %>" class="content__article js__article-item">
     <h2 class="content__title"><%= link_to page.title, brand_guide_page_path(page) %></h2>
