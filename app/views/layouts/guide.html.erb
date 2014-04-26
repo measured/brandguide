@@ -11,8 +11,36 @@
   <div id="js__media-check"></div>
   <div id="outside_translate" class="grid-container"></div>
 
-  <div id="yield">
-    <%= yield %>
+  <div class="js__outside-drawer">
+    <section class="content">
+      <div class="banner">
+        <section class="grid-container">
+          <h2 class="banner__title__secondary"><%= link_to @brand_guide.title, brand_guide_path(subdomain: @brand_guide.slug) %></h2>
+          <h1 class="banner__title__primary"><%= link_to 'Brand Guide', brand_guide_path(subdomain: @brand_guide.slug) %></h1>
+        </section>
+      </div>
+
+      <section id="inner__nav" class="grid-container content__main">
+        <div class="sub-navigation">
+          <ul>
+            <% @brand_guide.pages.each do |page| %>
+              <li>
+                <%= link_to page.title, brand_guide_page_path(page) %>
+                <ul>
+                  <% page.children.each do |section| %>
+                    <li><%= link_to section.title, brand_guide_page_path(page) %>
+                  <% end %>
+                </ul>
+              </li>
+            <% end %>
+          </ul>
+        </div>
+
+        <div class="column__content">
+          <%= yield %>
+        </div>
+      </section>
+    </section>
   </div>
 
   <%= javascript_include_tag :guide %>
