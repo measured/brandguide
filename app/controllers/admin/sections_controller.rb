@@ -1,9 +1,11 @@
 class Admin::SectionsController < Admin::AdminController
   before_action :find_brand_guide
+  before_action :find_page
   before_action :find_section, only: [:edit, :update, :destroy]
 
   def new
     @section = Section.new
+    @section.parent = @page
     @section.brand_guide = @brand_guide
   end
 
@@ -11,6 +13,7 @@ class Admin::SectionsController < Admin::AdminController
 
   def create
     @section = Section.new(section_params)
+    @section.parent = @page
     @section.brand_guide = @brand_guide
 
     upload_files
@@ -44,6 +47,10 @@ class Admin::SectionsController < Admin::AdminController
     @brand_guide = BrandGuide.friendly.find(params[:brand_guide_id])
   end
 
+  def find_page
+    @page = @brand_guide.pages.find(params[:page_id])
+  end
+
   def find_section
     @section = @brand_guide.sections.find(params[:id])
   end
@@ -66,6 +73,6 @@ class Admin::SectionsController < Admin::AdminController
   end
 
   def section_params
-    params.require(:section).permit(:title, :parent_id, :content, asset_groups_attributes: [:id, :title, :_destroy], files: [])
+    params.require(:section).permit(:title, :content, asset_groups_attributes: [:id, :title, :_destroy], files: [])
   end
 end

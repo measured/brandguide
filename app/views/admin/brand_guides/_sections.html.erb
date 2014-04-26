@@ -1,8 +1,8 @@
 <ul>
   <% sections.each do |section| %>
     <li>
-      <%= link_to section.title, [:edit, :admin, @brand_guide, section] %>
-      <%= render 'sections', sections: section.children %>
+      <%= link_to section.title, edit_admin_brand_guide_page_section_path(@brand_guide, page, section) %>
+      <%= render 'sections', page: page, sections: section.children %>
     </li>
   <% end %>
 </ul>

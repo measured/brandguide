@@ -7,7 +7,9 @@ BMS::Application.routes.draw do
 
       resources :brand_guides, path: '/' do
         post :sort 
-        resources :sections
+        resources :pages do
+          resources :sections
+        end
       end
     end
   end

@@ -1,9 +1,7 @@
-<%= simple_form_for [:admin, @brand_guide, @section], html: { multipart: true } do |f| %>
+<%= simple_form_for [:admin, @brand_guide, @page, @section], html: { multipart: true } do |f| %>
   <%= f.error_notification %>
 
   <%= f.input :title %>
-
-  <%= f.input :parent_id, collection: ancestry_collection(@section.brand_guide.sections), disabled: @section.id %>
 
   <%= f.input :content %>
 

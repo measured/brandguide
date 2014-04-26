@@ -7,9 +7,9 @@
 
   <code><%= link_to brand_guide_url(@brand_guide, subdomain: @brand_guide.slug), brand_guide_url(@brand_guide, subdomain: @brand_guide.slug) %></code>
 
-  <%= render 'sections', sections: @brand_guide.sections.roots %>
+  <%= render 'pages', pages: @brand_guide.pages %>
 
-  <%= link_to 'Add Section', new_admin_brand_guide_section_path(@brand_guide) %>
+  <%= link_to 'Add Page', new_admin_brand_guide_page_path(@brand_guide) %>
 
   <div class="buttons">
     <%= f.button :submit, 'Save Changes' %>

@@ -1,0 +1,9 @@
+<h1>New Page</h1>
+
+<%= render 'form' %>
+
+<%= link_to 'Delete Page', admin_brand_guide_page_path(@brand_guide, @page), method: :delete, data: { confirm: 'Are you sure?' } %>
+
+<%= link_to 'Add Section', new_admin_brand_guide_page_section_path(@brand_guide, @page) %>
+
+<%= link_to "Back to #{@brand_guide.title}", edit_admin_brand_guide_path(@brand_guide) %>
