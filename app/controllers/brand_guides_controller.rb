@@ -18,7 +18,11 @@ class BrandGuidesController < ApplicationController
   private
 
   def authenticated?
-    session[:password] == 'sekret'
+    if @brand_guide.password.present?
+      session[:password] == @brand_guide.password
+    else
+      true
+    end
   end
 
   helper_method :authenticated?
