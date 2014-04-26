@@ -4,6 +4,7 @@
   <%= f.error_notification %>
 
   <%= f.input :title %>
+  <%= f.input :password, as: :string %>
 
   <code><%= link_to brand_guide_url(@brand_guide, subdomain: @brand_guide.slug), brand_guide_url(@brand_guide, subdomain: @brand_guide.slug) %></code>
 

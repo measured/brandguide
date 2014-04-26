@@ -42,6 +42,6 @@ class Admin::BrandGuidesController < Admin::AdminController
   end
 
   def brand_guide_params
-    params.require(:brand_guide).permit(:title, sections_attributes: [:id, :title, :content, :_destroy])
+    params.require(:brand_guide).permit(:title, :password, sections_attributes: [:id, :title, :content, :_destroy])
   end
 end
