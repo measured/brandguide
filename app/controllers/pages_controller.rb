@@ -1,8 +1,6 @@
 class PagesController < BrandGuidesController
   before_action :find_page, only: [:show]
 
-  layout 'guide'
-
   def show; end
 
   private
