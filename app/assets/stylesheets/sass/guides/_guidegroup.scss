@@ -1,0 +1,79 @@
+
+
+
+.guidegroup {
+  text-align: center;
+  padding-top: 30px; 
+
+  @include breakpoint(portrait) {
+    padding-top: 60px;
+  }
+}
+
+// ----------------------------------------------------------
+
+.guidegroup__create-btn {
+  display: inline-block;
+  padding: 5px 10px;
+  background-color: #53E2C0;
+  color: darken(#328974, 10%);
+  border-radius: 2px;
+
+  &:hover {
+    color: darken(#328974, 20%);
+  }
+}
+
+// ----------------------------------------------------------
+
+.guidegroup__list {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-between; 
+
+  max-width: 250px;
+  margin: 0 auto;
+
+  padding-top: 40px;
+
+  @include breakpoint(portrait) {
+    justify-content: center;
+    max-width: 600px;
+    padding-top: 80px;
+  }
+}
+
+.guidegroup__btn {
+  text-align: center;
+  display: block;
+  width: 100px;
+  padding-bottom: 30px;
+  margin-left: 10px;
+  margin-right: 10px;
+
+  @include breakpoint(portrait) {
+    width: 150px;
+    margin-left: 20px;
+    margin-right: 20px;
+  }
+}
+
+.guidegroup__img {
+  display: block;
+  width: 100px;
+  height: 100px;
+  border-radius: 5px;
+  background-color: #b4b4b4;
+
+  @include breakpoint(portrait) {
+    width: 150px;
+    height: 150px;
+  }
+}
+
+.guidegroup__title {
+  display: inline-block;
+  padding-top: 5px;
+}
+
+

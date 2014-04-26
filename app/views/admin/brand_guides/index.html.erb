@@ -1,9 +1,20 @@
-<h1>Brand Guides</h1>
 
-<ul>
-  <% @brand_guides.each do |brand_guide| %>
-    <li><%= link_to brand_guide.title, edit_admin_brand_guide_path(brand_guide) %></li>
-  <% end %>
-</ul>
+<div class="guidegroup">
 
-<%= link_to 'Create Brand Guide', new_admin_brand_guide_path %>
+  <a class="guidegroup__create-btn" href='<%= new_admin_brand_guide_path %>'>Create Brand Guide</a>
+
+  <div class="guidegroup__list">
+
+    <% @brand_guides.each do |brand_guide| %>
+
+      <a class="guidegroup__btn" href='<%= edit_admin_brand_guide_path(brand_guide) %>'>
+        <!-- TODO: This should actually pull a hero image from each brandguide? -->
+        <span class="guidegroup__img"></span>
+        <span class="guidegroup__title"><%= brand_guide.title %></span>
+      </a>
+
+    <% end %>
+
+  </div>
+
+</div>
