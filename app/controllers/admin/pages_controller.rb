@@ -20,6 +20,14 @@ class Admin::PagesController < Admin::AdminController
     end
   end
 
+  def update
+    if @page.update(page_params)
+      redirect_to edit_admin_brand_guide_page_path(@brand_guide, @page)
+    else
+      render :edit
+    end
+  end
+
   def destroy
     @page.descendants.map(&:destroy)
     @page.destroy
@@ -34,7 +42,7 @@ class Admin::PagesController < Admin::AdminController
   end
 
   def find_page
-    @page = @brand_guide.pages.find(params[:id])
+    @page = @brand_guide.pages.friendly.find(params[:id])
   end
 
   def page_params

@@ -29,7 +29,7 @@ class Admin::SectionsController < Admin::AdminController
     upload_files
 
     if @section.update(section_params)
-      redirect_to edit_admin_brand_guide_section_path(@brand_guide, @section)
+      redirect_to edit_admin_brand_guide_page_section_path(@brand_guide, @page, @section)
     else
       render :edit
     end
@@ -48,7 +48,7 @@ class Admin::SectionsController < Admin::AdminController
   end
 
   def find_page
-    @page = @brand_guide.pages.find(params[:page_id])
+    @page = @brand_guide.pages.friendly.find(params[:page_id])
   end
 
   def find_section
