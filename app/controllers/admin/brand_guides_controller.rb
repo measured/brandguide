@@ -2,7 +2,7 @@ class Admin::BrandGuidesController < Admin::AdminController
   before_action :find_brand_guide, only: %w(edit update destroy sort)
 
   def index
-    @brand_guides = BrandGuide.all
+    @brand_guides = BrandGuide.all.order('created_at desc')
   end
 
   def new
