@@ -24,7 +24,7 @@ var AssetGroup = React.createClass({
       <div className="AssetGroupThumbnailContainer">
         <div className="AssetGroupThumbnail" style={thumbStyle} />
       </div>
-      <AssetList assets={this.props.assets} downloadUrl={this.props.download_url} buttons={this.state.buttons} />
+      <AssetList assets={this.props.assets} bundleUrl={this.props.bundle_url} buttons={this.state.buttons} />
     </figure>;
   }
 });

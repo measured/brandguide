@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+</head>
+<body>
+  <% if @message.present? %>
+    <h2>Message</h2>
+    <p><%= @message %></p>
+  <% end %>
+
+  <h2>Files</h2>
+  <ul>
+    <% @asset_bundle.assets.each do |asset| %>
+      <li><%= asset.file.name %> (<%= number_to_human_size(asset.file.size) %>)</li>
+    <% end %>
+  </ul>
+
+  <h2><%= link_to 'Download Assets', @download_url %></h2>
+</body>
+</html>

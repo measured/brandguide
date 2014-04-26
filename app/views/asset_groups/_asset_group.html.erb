@@ -8,6 +8,6 @@
       format: asset.file.format,
       selected: true
     } end,
-    download_url: download_asset_group_url(asset_group, subdomain: @brand_guide.slug)
+    bundle_url: brand_guide_asset_bundles_url(subdomain: @brand_guide)
   }, { prerender: true }
 %>

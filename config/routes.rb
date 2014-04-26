@@ -13,8 +13,12 @@ BMS::Application.routes.draw do
   end
 
   constraints subdomain: /^((?!www).).+$/ do
-    get '/', to: 'brand_guides#show', as: 'brand_guide'
-    get '/asset_groups/:id/download', to: 'asset_groups#download', as: 'download_asset_group'
+    resource :brand_guide, path: '/' do
+      resources :asset_bundles do
+        get :download, on: :member
+        get :email, on: :member
+      end
+    end
   end
 
   root 'application#index'

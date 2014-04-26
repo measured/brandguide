@@ -11,10 +11,26 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140424063530) do
+ActiveRecord::Schema.define(version: 20140426020637) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "asset_bundle_assets", force: true do |t|
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "asset_id"
+    t.integer  "asset_bundle_id"
+  end
+
+  create_table "asset_bundles", force: true do |t|
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "brand_guide_id", null: false
+    t.string   "access_key",     null: false
+  end
+
+  add_index "asset_bundles", ["access_key"], name: "index_asset_bundles_on_access_key", unique: true, using: :btree
 
   create_table "asset_groups", force: true do |t|
     t.datetime "created_at"
