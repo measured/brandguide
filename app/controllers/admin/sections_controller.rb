@@ -13,6 +13,8 @@ class Admin::SectionsController < Admin::AdminController
     @section = Section.new(section_params)
     @section.brand_guide = @brand_guide
 
+    upload_files
+
     if @section.save
       redirect_to edit_admin_brand_guide_path(@brand_guide)
     else
@@ -21,20 +23,7 @@ class Admin::SectionsController < Admin::AdminController
   end
 
   def update
-    if files = section_params[:files]
-      asset_group = AssetGroup.new
-
-      files.each do |file|
-        asset = Asset.new
-        asset.file = file
-
-        asset.save!
-
-        asset_group.assets << asset
-      end
-
-      @section.asset_groups << asset_group
-    end
+    upload_files
 
     if @section.update(section_params)
       redirect_to edit_admin_brand_guide_section_path(@brand_guide, @section)
@@ -57,6 +46,23 @@ class Admin::SectionsController < Admin::AdminController
 
   def find_section
     @section = @brand_guide.sections.find(params[:id])
+  end
+
+  def upload_files
+    if files = section_params[:files]
+      asset_group = AssetGroup.new
+
+      files.each do |file|
+        asset = Asset.new
+        asset.file = file
+
+        asset.save!
+
+        asset_group.assets << asset
+      end
+
+      @section.asset_groups << asset_group
+    end
   end
 
   def section_params
