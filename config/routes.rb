@@ -16,7 +16,10 @@ BMS::Application.routes.draw do
 
   constraints subdomain: /^((?!www).).+$/ do
     resource :brand_guide, path: '/' do
-      resources :sections, only: [:show]
+      resources :pages, only: [:show] do
+        resources :sections, only: [:show]
+      end
+      
       resources :asset_bundles do
         get :download, on: :member
         get :email, on: :member
