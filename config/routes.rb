@@ -15,6 +15,7 @@ BMS::Application.routes.draw do
   constraints subdomain: /^((?!www).).+$/ do
     get '/', to: 'brand_guides#show', as: 'brand_guide'
     get '/asset_groups/:id/download', to: 'asset_groups#download', as: 'download_asset_group'
+    get '/section/:id', to: 'section#show', as: 'brand_guide_section'
   end
 
   root 'application#index'

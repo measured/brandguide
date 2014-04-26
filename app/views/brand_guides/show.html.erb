@@ -10,7 +10,13 @@
     <section id="inner__nav" class="grid-container content__main">
       <div class="sub-navigation">
         <ul>
-          <% @brand_guide.sections.each do |section| %>
+          <% @brand_guide.sections.roots.each do |section| %>
+          
+            
+            <li>
+              <%= link_to section.title, brand_guide_section_path(section) %>
+            </li>
+
             <li>
               <a class="js__submenu-item" data-func="scroll_to" href="#section-<%= section.id %>"><%= section.title %></a>
             </li>
