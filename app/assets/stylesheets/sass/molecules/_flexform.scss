@@ -1,6 +1,6 @@
 
 
-.login {
+.flexform {
   display: flex;
   flex-flow: row nowrap;
   align-content: center;
@@ -9,10 +9,10 @@
   min-width: 100%;
   min-height: 100%;
   padding-top: 20px;
-  padding-bottom: 20px;
+  padding-bottom: 20px; 
 }
 
-.login__contents {
+.flexform__contents {
   width: 80%;
   max-width: 400px;
 }
