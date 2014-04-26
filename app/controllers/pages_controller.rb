@@ -1,4 +1,4 @@
-class PagesController < ApplicationController
+class PagesController < BrandGuidesController
   before_action :find_brand_guide
   before_action :find_page, only: [:show]
 
