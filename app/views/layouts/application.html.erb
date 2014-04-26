@@ -16,22 +16,6 @@
     <div class="alert"><%= alert %></div>
   </div>
 
-  <div class="header">
-    
-    <!-- TODO: make the header text dynamic on different views 
-
-          - sometimes it'll need to be positioned left (breadcrumbs)
-          - some of these views might be front end layers tho?
-          - ...maybe the header should be a dynamic element inside yeild?
-          - lol maybe I'll just overlay it with position: absolute;
-    -->
-    <h2 class="header__text"><a href="<%= root_path %>">brandguide.io</a></h2>
-    <div class="header__settings">
-      <%= render 'shared/user_settings' if user_signed_in? %>
-    </div>
-
-  </div>
-
   <%= yield %>
 
   <%= javascript_include_tag :application %>

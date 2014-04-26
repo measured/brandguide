@@ -1,7 +1,6 @@
 
 
 .pages {
-  text-align: center;
   padding-top: 30px; 
 
   @include breakpoint(portrait) {
@@ -10,6 +9,12 @@
 }
 
 // ----------------------------------------------------------
+
+.page__back-btn {
+  display: block;
+  margin-bottom: 50px;
+}
+
 
 .pages__create-btn {
   display: inline-block;
@@ -21,4 +26,11 @@
   &:hover {
     color: darken(#328974, 20%);
   }
+}
+
+
+// ----------------------------------------------------------
+
+.page__footer {
+  padding-top: 50px;
 }

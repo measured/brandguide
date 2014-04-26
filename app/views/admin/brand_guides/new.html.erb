@@ -1,9 +1,17 @@
-<h1>New Brand Guide</h1>
+<div class="flexform">
 
-<%= simple_form_for [:admin, @brand_guide] do |f| %>
-  <%= f.error_notification %>
+  <div class="flexform__contents">   
 
-  <%= f.input :title %>
+    <h1>New Brand Guide</h1>
 
-  <%= f.button :submit, 'Create Brand Guide' %>
-<% end %>
+    <%= simple_form_for [:admin, @brand_guide] do |f| %>
+      <%= f.error_notification %>
+
+      <%= f.input :title %>
+
+      <%= f.button :submit, 'Create Brand Guide' %>
+    <% end %>
+
+  </div>
+
+</div>

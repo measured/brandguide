@@ -1,0 +1,30 @@
+
+
+<% pages.each do |page| %>
+
+  <% page.children.each do |section| %>
+
+    <%= simple_form_for [:admin, @brand_guide, page, section], html: { multipart: true } do |f| %>
+      <%= f.error_notification %>
+      <%= f.input :title %>
+      <%= f.input :content %>
+      <%= f.input :files, label: 'Add Assets', as: :file, input_html: { multiple: true } %>
+      <div>
+        <%= f.simple_fields_for :asset_groups do |ff| %>
+          <% asset_group = ff.object %>
+          <%= ff.input :title %>
+          <%= ff.input :_destroy, as: :boolean %>
+          <%= image_tag asset_group.thumb('260x260#').url if asset_group.has_thumb? %>
+            <ul>
+              <% asset_group.assets.each do |asset| %>
+                <li><%= asset.file_name %></li>
+              <% end %>
+            </ul>
+        <% end %>
+      </div>
+      <%= f.button :submit %>
+    <% end %>
+
+  <% end %>
+  
+<% end %>

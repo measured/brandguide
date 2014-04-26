@@ -1,7 +1,20 @@
-<h1>Edit <%= @brand_guide.title %> / <%= @section.title %></h1>
+<div class="flexform">
 
-<%= render 'form' %>
+  <div class="flexform__contents">  
 
-<%= link_to 'Delete Section', admin_brand_guide_page_section_path(@brand_guide, @page, @section), method: :delete, data: { confirm: 'Are you sure?' } %>
+    <a class="page__back-btn" href="<%= edit_admin_brand_guide_path(@brand_guide)%>">← Back to <%= @brand_guide.title %></a>
 
-<%= link_to "Back to #{@brand_guide.title}", edit_admin_brand_guide_path(@brand_guide) %>
+    <h1>Edit <%= @brand_guide.title %> / <%= @section.title %></h1>
+
+    <%= render 'form' %>
+
+    <div class="page__footer">
+
+      <a class="guides__delete" href="<%=admin_brand_guide_page_section_path(@brand_guide, @page, @section)%>" data-method="delete" data-confirm='Are you sure you want to delete this section?'>Delete</a>
+
+    </div>
+
+
+  </div>
+
+</div>
