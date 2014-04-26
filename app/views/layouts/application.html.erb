@@ -3,7 +3,7 @@
 <head>
   <title>brandguide.io</title>
 
-  <%= render "devise/shared/head" %>
+  <%= render 'shared/head' %>
   <%= stylesheet_link_tag :application, media: :all %>
   <%= csrf_meta_tags %>
 </head>
@@ -26,11 +26,6 @@
 
   <%= javascript_include_tag :application %>
 
-  <% if Rails.env.development? %>
-    <script>
-      document.write('<script src="http://' + (location.host || 'localhost').split(':')[0] + ':35729/livereload.js?snipver=1"></' + 'script>')
-    </script>
-  <% end %>
-
+  <%= render 'shared/livereload' if Rails.env.development? %>
 </body>
 </html>
