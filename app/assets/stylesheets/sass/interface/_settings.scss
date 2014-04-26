@@ -2,7 +2,23 @@
 
 .settings__btn {
   display: inline-block;
-  padding: 4px 8px;
   border: 1px solid;
   border-radius: 3px;
+  position: relative;
+  overflow: hidden;
+
+  ._icon {
+    display: block;
+    position: absolute;
+    width: 34px;
+    height: 34px;
+    background-color: $light-silver;
+    background-size: 100%;
+    border-right: 1px solid;
+  }
+  ._text {
+    display: inline-block;
+    padding: 4px 8px;
+    margin-left: 34px;
+  }
 }
