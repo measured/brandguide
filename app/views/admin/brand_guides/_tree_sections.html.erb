@@ -2,7 +2,7 @@
   <% sections.each do |section| %>
     <li>
       <%= link_to section.title, edit_admin_brand_guide_page_section_path(@brand_guide, page, section) %>
-      <%= render 'sections', page: page, sections: section.children %>
     </li>
   <% end %>
+    <li><a class="pages__create-btn" href='<%= new_admin_brand_guide_page_section_path(@brand_guide, page) %>'>+ add section</a></li>
 </ul>

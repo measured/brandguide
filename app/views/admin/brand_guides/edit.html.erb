@@ -4,7 +4,7 @@
 <a href="<%= admin_root_path %>">← Back to Dashboard</a>
 
 <h1><%= @brand_guide.title %></h1>
-
+<!-- 
 <%= simple_form_for [:admin, @brand_guide] do |f| %>
   
   <%= f.error_notification %>
@@ -18,13 +18,13 @@
     <%= f.button :submit, 'Save Changes' %>
   </div>
 
-<% end %>
+<% end %> -->
 
 
 <div class="editor">
 
   <div class="editor__tree">
-    <%= render 'pages', pages: @brand_guide.pages %>
+    <%= render 'tree', pages: @brand_guide.pages %>
   </div>
 
   <div class="editor__content">

@@ -2,18 +2,30 @@
 
 <% pages.each do |page| %>
 
+  <h2 style="font-size: 30px; border-bottom: 1px solid; padding-top: 50px; margin-bottom: 10px;"><%= page.title %></h2>
+
   <% page.children.each do |section| %>
+
+    <h2 style="font-size: 20px; padding-top: 20px;"><%= section.title %></h2>
 
     <%= simple_form_for [:admin, @brand_guide, page, section], html: { multipart: true } do |f| %>
       <%= f.error_notification %>
-      <%= f.input :title %>
-      <%= f.input :content %>
-      <%= f.input :files, label: 'Add Assets', as: :file, input_html: { multiple: true } %>
+
+      <div style="visibility: hidden; height: 0;">
+        <%= f.input :title %>
+        <%= f.input :content %>
+      </div>
+     
+      <%= f.input :files, as: :file, input_html: { multiple: true } %>
       <div>
         <%= f.simple_fields_for :asset_groups do |ff| %>
           <% asset_group = ff.object %>
-          <%= ff.input :title %>
-          <%= ff.input :_destroy, as: :boolean %>
+
+          <div style="visibility: hidden; height: 0;">
+            <%= ff.input :title %>
+            <%= ff.input :_destroy, as: :boolean %>
+          </div>
+        
           <%= image_tag asset_group.thumb('260x260#').url if asset_group.has_thumb? %>
             <ul>
               <% asset_group.assets.each do |asset| %>
