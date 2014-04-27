@@ -3,15 +3,15 @@
 
   <div class="tree__list">
 
-    <ul>
+    <ul class="tree__pagelist">
       <% pages.each do |page| %>
-        <li>
+        <li class="tree__page">
           <%= link_to page.title, edit_admin_brand_guide_page_path(@brand_guide, page) %>
           <%= render 'tree_sections', page: page, sections: page.children %>
         </li>
       <% end %>
 
-      <li><a class="tree__btn" href='<%= new_admin_brand_guide_page_path(@brand_guide) %>'>+ add page</a></li>
+      <li class="tree__page"><a class="tree__btn" href='<%= new_admin_brand_guide_page_path(@brand_guide) %>'>+ add page</a></li>
     </ul>
 
   </div>

@@ -1,8 +1,8 @@
-<ul>
+<ul class="tree__sectionlist">
   <% sections.each do |section| %>
-    <li>
+    <li class="tree__section">
       <%= link_to section.title, edit_admin_brand_guide_page_section_path(@brand_guide, page, section) %>
     </li>
   <% end %>
-    <li><a class="pages__create-btn" href='<%= new_admin_brand_guide_page_section_path(@brand_guide, page) %>'>+ add section</a></li>
+    <li class="tree__section"><a class="tree__btn" href='<%= new_admin_brand_guide_page_section_path(@brand_guide, page) %>'>+ add section</a></li>
 </ul>
