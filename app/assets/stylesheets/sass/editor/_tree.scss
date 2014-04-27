@@ -11,7 +11,7 @@
 .tree__header {
   display: flex;
   justify-content: space-between;
-  padding: 10px 20px;
+  padding: 10px 25px;
   background-color: darken(#DD4538, 10%);
 
   ._icon {
@@ -27,8 +27,10 @@
   display: inline-block;
   padding: 2px 8px;
   padding-right: 12px;
+  padding-bottom: 4px;
   background-color: darken(#DD4538, 10%);
   border-radius: 20px;
+  font-size: 16px;
 
   &:hover {
     background-color: darken(#DD4538, 15%);
@@ -46,7 +48,7 @@
 
 
 .tree__list {
-  padding: 40px 20px;
+  padding: 40px 25px;
 }
 
 // -- top level ----------------------------------------
