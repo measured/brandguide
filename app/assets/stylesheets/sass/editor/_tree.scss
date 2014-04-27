@@ -4,7 +4,28 @@
 
 }
 
-// ------------------------------------------
+
+
+// -- interface ----------------------------------------
+
+.tree__header {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 20px;
+  background-color: darken(#DD4538, 8%);
+}
+
+.tree__btn {
+
+}
+
+
+
+.tree__list {
+  padding: 40px 20px;
+}
+
+// -- top level ----------------------------------------
 
 .tree__pages {
 
@@ -14,7 +35,7 @@
 
 }
 
-// ------------------------------------------
+// -- second level -------------------------------------
 
 .tree__sections {
 

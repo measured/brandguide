@@ -23,8 +23,9 @@
   <div class="editor__tree">
 
     <div class="tree__header">
-      <a href="<%= admin_root_path %>">← Back to Dashboard</a>
+      <a href="<%= admin_root_path %>">←</a>
       <h1><%= @brand_guide.title %></h1>
+      <a href="<%=admin_brand_guide_path(@brand_guide)%>" data-method="delete" data-confirm='Are you sure you want to delete this brandguide?'>Ð</a>
     </div>
     
     <%= render 'tree', pages: @brand_guide.pages %>
@@ -41,6 +42,6 @@
 <!-- 
 <div class="guides__footer">
 
-  <a class="guides__delete" href="<%=admin_brand_guide_path(@brand_guide)%>" data-method="delete" data-confirm='Are you sure you want to delete this brandguide?'>Delete</a>
+  <a class="guides__delete" 
 
 </div> -->

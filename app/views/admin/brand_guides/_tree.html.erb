@@ -1,8 +1,7 @@
 
-<div class="pages">
 
 
-  <div class="pages__list">
+  <div class="tree__list">
 
     <ul>
       <% pages.each do |page| %>
@@ -12,9 +11,7 @@
         </li>
       <% end %>
 
-      <li><a class="pages__create-btn" href='<%= new_admin_brand_guide_page_path(@brand_guide) %>'>+ add page</a></li>
+      <li><a class="tree__btn" href='<%= new_admin_brand_guide_page_path(@brand_guide) %>'>+ add page</a></li>
     </ul>
 
   </div>
-
-</div>

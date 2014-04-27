@@ -2,12 +2,14 @@
 
 .editor {
   display: flex;
+  min-height: 100%; 
 }
 
 .editor__tree {
   width: 40%;
+  max-width: 400px;
   margin-right: 10px;
-  font-size: 24px;
+  font-size: 18px;
   line-height: 1.7;
   
   color: white;
@@ -17,24 +19,6 @@
     color: white;
     &:hover {
       color: white;
-    }
-  }
-
-  ul {
-    margin-left: 20px;
-    li {
-      padding-bottom: 30px;
-    }
-    ul {
-      li {
-        padding-bottom: 0;
-      }
-      font-size: 18px;
-      .pages__create-btn {
-        font-size: 13px;
-        line-height: 1.2;
-        padding: 2px 4px;
-      }
     }
   }
 }
