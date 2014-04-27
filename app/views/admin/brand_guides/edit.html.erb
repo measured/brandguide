@@ -1,9 +1,6 @@
 
 
 
-<a href="<%= admin_root_path %>">← Back to Dashboard</a>
-
-<h1><%= @brand_guide.title %></h1>
 <!-- 
 <%= simple_form_for [:admin, @brand_guide] do |f| %>
   
@@ -24,7 +21,14 @@
 <div class="editor">
 
   <div class="editor__tree">
+
+    <div class="tree__header">
+      <a href="<%= admin_root_path %>">← Back to Dashboard</a>
+      <h1><%= @brand_guide.title %></h1>
+    </div>
+    
     <%= render 'tree', pages: @brand_guide.pages %>
+  
   </div>
 
   <div class="editor__content">
@@ -34,9 +38,9 @@
 </div>
 
 
-
+<!-- 
 <div class="guides__footer">
 
   <a class="guides__delete" href="<%=admin_brand_guide_path(@brand_guide)%>" data-method="delete" data-confirm='Are you sure you want to delete this brandguide?'>Delete</a>
 
-</div>
+</div> -->

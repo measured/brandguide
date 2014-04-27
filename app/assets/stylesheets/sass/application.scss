@@ -31,6 +31,10 @@
 @import "interface/_settings";
 @import "interface/_editor";
 
+@import "editor/_editor";
+@import "editor/_tree";
+@import "editor/_content";
+
 @import "content/_guides";
 @import "content/_pages";
 
