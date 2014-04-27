@@ -1,6 +1,6 @@
 <%=
   react_component 'AssetGroup', {
-    title: asset_group.title.present? ? asset_group.title : 'Asset Group',
+    title: asset_group.title.present? ? asset_group.title : asset_group.class.human_name,
     thumb: (asset_group.thumb('360x360').url if asset_group.has_thumb?),
     type: asset_group.type,
     assets: asset_group.assets.map do |asset| {

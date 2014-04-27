@@ -15,6 +15,12 @@ class AssetGroup < ActiveRecord::Base
     ]
   end
 
+  def self.human_name
+    type_option = self.type_options.select { |str, klass|  klass == self }
+
+    type_option.present? ? type_option.first.first : self.to_s.underscore.titleize
+  end
+
   def has_thumb?
     assets.images.present?
   end
