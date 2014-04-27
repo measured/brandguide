@@ -1,17 +1,21 @@
 
+<div class="tree__header">
+  <a class="ss-icon _icon" href="<%= admin_root_path %>">left</a>
+  <h1 class="_text"><%= @brand_guide.title %></h1>
+  <a class="ss-icon _icon" href="#">settings</a>
+</div>
 
+<div class="tree__list">
 
-  <div class="tree__list">
+  <ul class="tree__pagelist">
+    <% pages.each do |page| %>
+      <li class="tree__page">
+        <%= link_to page.title, edit_admin_brand_guide_page_path(@brand_guide, page) %>
+        <%= render 'tree_sections', page: page, sections: page.children.order('created_at ASC') %>
+      </li>
+    <% end %>
 
-    <ul class="tree__pagelist">
-      <% pages.each do |page| %>
-        <li class="tree__page">
-          <%= link_to page.title, edit_admin_brand_guide_page_path(@brand_guide, page) %>
-          <%= render 'tree_sections', page: page, sections: page.children.order('created_at ASC') %>
-        </li>
-      <% end %>
+    <li class="tree__page"><a class="tree__btn" href='<%= new_admin_brand_guide_page_path(@brand_guide) %>'>+ add page</a></li>
+  </ul>
 
-      <li class="tree__page"><a class="tree__btn" href='<%= new_admin_brand_guide_page_path(@brand_guide) %>'>+ add page</a></li>
-    </ul>
-
-  </div>
+</div>

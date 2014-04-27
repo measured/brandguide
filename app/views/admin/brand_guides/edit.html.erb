@@ -27,11 +27,11 @@
 
   <div class="editor__tree">
 
-    <div class="tree__header">
-      <a class="ss-icon _icon" href="<%= admin_root_path %>">left</a>
-      <h1 class="_text"><%= @brand_guide.title %></h1>
-      <a class="ss-icon _icon" href="#">settings</a>
-    </div>
+    <a href="#" class="editor__toggle">
+      <span class="_icon ss-icon">record</span>
+      <span class="_icon ss-icon">record</span>
+      <span class="_icon ss-icon">record</span>
+    </a>
     
     <%= render 'tree', pages: @brand_guide.pages.order('created_at ASC') %>
   
