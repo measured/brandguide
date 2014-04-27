@@ -7,7 +7,7 @@
       <% pages.each do |page| %>
         <li class="tree__page">
           <%= link_to page.title, edit_admin_brand_guide_page_path(@brand_guide, page) %>
-          <%= render 'tree_sections', page: page, sections: page.children %>
+          <%= render 'tree_sections', page: page, sections: page.children.order('created_at ASC') %>
         </li>
       <% end %>
 

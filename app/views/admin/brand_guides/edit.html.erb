@@ -28,7 +28,7 @@
       <a href="<%=admin_brand_guide_path(@brand_guide)%>" data-method="delete" data-confirm='Are you sure you want to delete this brandguide?'>Ð</a>
     </div>
     
-    <%= render 'tree', pages: @brand_guide.pages %>
+    <%= render 'tree', pages: @brand_guide.pages.order('created_at ASC') %>
   
   </div>
 
