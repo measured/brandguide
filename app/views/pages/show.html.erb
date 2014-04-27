@@ -16,7 +16,7 @@
 
     <div class="floater">
       <% section.asset_groups.each_with_index do |asset_group, index| %>
-        <%= render asset_group, index: index %>
+        <%= render 'asset_group', asset_group: asset_group, index: index %>
       <% end %>
     </div>
   </article>
