@@ -1,21 +1,26 @@
 
 
 
-<!-- 
-<%= simple_form_for [:admin, @brand_guide] do |f| %>
-  
-  <%= f.error_notification %>
-  
-  <%= f.input :title %>
-  <%= f.input :password, as: :string %>
+<!--  TODO: put this stuff in a dropdown...
 
-  <code><%= link_to brand_guide_url(@brand_guide, subdomain: @brand_guide.slug), brand_guide_url(@brand_guide, subdomain: @brand_guide.slug) %></code>
+  <%= simple_form_for [:admin, @brand_guide] do |f| %>
+    
+    <%= f.error_notification %>
+    
+    <%= f.input :title %>
+    <%= f.input :password, as: :string %>
 
-  <div class="buttons">
-    <%= f.button :submit, 'Save Changes' %>
-  </div>
+    <code><%= link_to brand_guide_url(@brand_guide, subdomain: @brand_guide.slug), brand_guide_url(@brand_guide, subdomain: @brand_guide.slug) %></code>
 
-<% end %> -->
+    <div class="buttons">
+      <%= f.button :submit, 'Save Changes' %>
+    </div>
+
+  <% end %> 
+
+  <a href="<%=admin_brand_guide_path(@brand_guide)%>" data-method="delete" data-confirm='Are you sure you want to delete this brandguide?'>delete</a>
+
+-->
 
 
 <div class="editor">
@@ -23,9 +28,9 @@
   <div class="editor__tree">
 
     <div class="tree__header">
-      <a href="<%= admin_root_path %>">←</a>
-      <h1><%= @brand_guide.title %></h1>
-      <a href="<%=admin_brand_guide_path(@brand_guide)%>" data-method="delete" data-confirm='Are you sure you want to delete this brandguide?'>Ð</a>
+      <a class="ss-icon _icon" href="<%= admin_root_path %>">left</a>
+      <h1 class="_text"><%= @brand_guide.title %></h1>
+      <a class="ss-icon _icon" href="#">settings</a>
     </div>
     
     <%= render 'tree', pages: @brand_guide.pages.order('created_at ASC') %>

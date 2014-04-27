@@ -13,6 +13,14 @@
   justify-content: space-between;
   padding: 10px 20px;
   background-color: darken(#DD4538, 10%);
+
+  ._icon {
+    margin-top: 4px;
+  }
+
+  ._text {
+    margin-top: 2px;
+  }
 }
 
 .tree__btn {
