@@ -1,7 +1,5 @@
 /** @jsx React.DOM */
 
-// I wanted to call this "<Button/>", but the name clashes with an existing HTML tag
-
 var Btn = React.createClass({
   getDefaultProps: function() {
     return {
@@ -21,7 +19,7 @@ var Btn = React.createClass({
 
     return this.transferPropsTo(
       <a className={btnClass} href="#" onClick={this.onClick}>
-        <i className="ss-icon">{this.props.icon}</i><span>{this.props.children}</span>
+        <i className="Btn__icon" className="ss-icon">{this.props.icon}</i><span className="Btn__text">{this.props.children}</span>
       </a>
     );
   }

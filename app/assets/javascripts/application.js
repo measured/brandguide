@@ -12,3 +12,5 @@
 //= require scripts/03-breakpoints
 
 //= require components
+
+window.csrfToken = $('meta[name=csrf-token]').prop('content');

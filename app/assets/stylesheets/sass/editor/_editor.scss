@@ -3,6 +3,7 @@
 .editor {
   display: flex;
   min-height: 100%; 
+  flex: 1;
 }
 
 .editor__tree {
@@ -32,7 +33,7 @@
   height: 80px;
   width: 25px;
   right: -25px;
-  top: 300px;
+  top: calc(50% - 40px);
 
   padding-top: 31px;
   padding-left: 8px;

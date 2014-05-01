@@ -1,37 +1,8 @@
-
-  <div class="header">
-    
-    <!-- TODO: make the header text dynamic on different views 
-
-          - sometimes it'll need to be positioned left (breadcrumbs)
-          - some of these views might be front end layers tho?
-          - ...maybe the header should be a dynamic element inside yeild?
-          - lol maybe I'll just overlay it with position: absolute;
-    -->
-    <h2 class="header__text"><a href="<%= root_path %>">brandguide.io</a></h2>
-    <div class="header__settings">
-      <%= render 'shared/user_settings' if user_signed_in? %>
-    </div>
-
-  </div>
-
-
-<div class="guides">
-
-  <a class="guides__create-btn" href='<%= new_admin_brand_guide_path %>'>New Brand Guide</a>
-
-  <div class="guides__list">
-
-    <% @brand_guides.each do |brand_guide| %>
-
-      <a class="guides__btn" href='<%= edit_admin_brand_guide_path(brand_guide) %>'>
-        <!-- TODO: This should actually pull a hero image from each brandguide? -->
-        <span class="guides__img"></span>
-        <span class="guides__title"><%= brand_guide.title %></span>
-      </a>
-
-    <% end %>
-
-  </div>
-
-</div>
+<%=
+  react_component 'BrandGuideIndex', {
+    currentUser: current_user.attributes,
+    guides: @brand_guides.map(&:attributes)
+  }, {
+    prerender: true
+  }
+%>

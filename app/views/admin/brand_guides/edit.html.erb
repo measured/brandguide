@@ -1,4 +1,23 @@
-
+<%=
+  react_component 'BrandGuideEditor', {
+    currentUser: current_user.attributes,
+    guide: {
+      id: @brand_guide.id,
+      slug: @brand_guide.slug,
+      title: @brand_guide.title,
+      pages: @brand_guide.pages.map do |page| {
+        id: page.id,
+        title: page.title,
+        slug: page.slug,
+        sections: page.children.map do |section| { 
+          id: section.id,
+          title: section.title,
+          slug: section.slug
+        } end
+      } end
+    }
+  }, { prerender: true }
+%>
 
 
 <!--  TODO: put this stuff in a dropdown...
@@ -23,7 +42,7 @@
 -->
 
 
-<div class="editor">
+<!-- <div class="editor">
 
   <div class="editor__tree">
 
@@ -41,7 +60,7 @@
     <%= render 'content', pages: @brand_guide.pages %>
   </div>
 
-</div>
+</div> -->
 
 
 <!-- 
