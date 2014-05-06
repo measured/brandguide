@@ -45,13 +45,17 @@ var EditorTree = React.createClass({
 
     var pages = this.props.guide.pages.map(function(page) {
       var sections = page.sections.map(function(section) {
+        var editSectionUrl = '/'+self.props.guide.slug+'/pages/'+page.slug+'/'+section.id+'/edit';
+
         return (<li className="tree__section">
-          <a href="#">{section.title}</a>
+          <a href={editSectionUrl}>{section.title}</a>
         </li>);
       });
 
+      var editPageUrl = '/'+self.props.guide.slug+'/pages/'+page.slug+'/edit';
+
       return (<li key={page.id} className="tree__page">
-        <a href="#">{page.title}</a>
+        <a href={editPageUrl}>{page.title}</a>
         <ul className="tree__sectionlist">
           {sections}
           <li className="tree__section">
@@ -92,7 +96,7 @@ var BrandGuideEditor = React.createClass({
     return (<div className="BrandGuideEditor editor">
       <EditorTree modal={this.modal} guide={this.props.guide} />
       <div className="editor__content">
-        {this.props.guide}
+        {this.props.guide.title}
       </div>
       <Modal onClose={this.modal.close} data={this.state.modal} />
     </div>);
