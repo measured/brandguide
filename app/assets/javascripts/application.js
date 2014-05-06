@@ -2,6 +2,8 @@
 //= require 02-jquery
 //= require 03-transit
 
+//= require underscore
+//= require backbone
 //= require react
 //= require react_ujs
 //= require jquery_ujs
