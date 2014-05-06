@@ -37,7 +37,11 @@ var EditorTree = React.createClass({
 
     var style = {};
 
-    style.marginLeft = this.state.open ? 0 : -400;
+    var classSet = React.addons.classSet({
+      EditorTree: true,
+      editor__tree: true,
+      open: this.state.open
+    });
 
     var pages = this.props.guide.pages.map(function(page) {
       var sections = page.sections.map(function(section) {
@@ -57,7 +61,7 @@ var EditorTree = React.createClass({
       </li>);
     });
 
-    return (<div className="EditorTree editor__tree" style={style}>
+    return (<div className={classSet}>
       <a onClick={this.toggleTree} href="#" className="editor__toggle">
         <span className="_icon ss-icon">record</span>
         <span className="_icon ss-icon">record</span>
@@ -87,7 +91,9 @@ var BrandGuideEditor = React.createClass({
   render: function() {
     return (<div className="BrandGuideEditor editor">
       <EditorTree modal={this.modal} guide={this.props.guide} />
-      <div className="editor__content">content</div>
+      <div className="editor__content">
+        {this.props.guide}
+      </div>
       <Modal onClose={this.modal.close} data={this.state.modal} />
     </div>);
   }
