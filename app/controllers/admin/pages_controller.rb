@@ -1,6 +1,6 @@
 class Admin::PagesController < Admin::AdminController
   before_action :find_brand_guide
-  before_action :find_page, only: [:edit, :update, :destroy]
+  before_action :find_page, only: %w(show edit update destroy)
 
   def new
     @page = Page.new
@@ -33,6 +33,10 @@ class Admin::PagesController < Admin::AdminController
     @page.destroy
 
     redirect_to edit_admin_brand_guide_path(@brand_guide)
+  end
+
+  def show
+    render json: @page.attributes_for_editor
   end
 
   private

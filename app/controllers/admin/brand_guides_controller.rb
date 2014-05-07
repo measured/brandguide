@@ -1,5 +1,9 @@
 class Admin::BrandGuidesController < Admin::AdminController
-  before_action :find_brand_guide, only: %w(edit update destroy sort)
+  before_action :find_brand_guide, only: %w(show edit update destroy sort)
+
+  def show
+    render json: @brand_guide.attributes_for_editor
+  end
 
   def index
     @brand_guides = BrandGuide.all.order('created_at desc')
@@ -22,11 +26,7 @@ class Admin::BrandGuidesController < Admin::AdminController
   def edit; end
 
   def update
-    if @brand_guide.update(brand_guide_params)
-      redirect_to [:edit, :admin, @brand_guide]
-    else
-      render :edit
-    end
+    render json: @brand_guide.update(brand_guide_params)
   end
 
   def destroy

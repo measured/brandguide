@@ -7,11 +7,14 @@
 
 // -- interface ----------------------------------------
 
+.tree__header,
+.tree__settings {
+  padding: 10px 25px;
+  background-color: darken(#DD4538, 10%);
+}
 .tree__header {
   display: flex;
   justify-content: space-between;
-  padding: 10px 25px;
-  background-color: darken(#DD4538, 10%);
 
   ._icon {
     margin-top: 4px;
@@ -19,6 +22,17 @@
 
   ._text {
     margin-top: 2px;
+  }
+}
+
+.tree__settings {
+  display: none;
+  padding-bottom: 25px;
+  form {
+    width: 100%;
+  }
+  &.open {
+    display: flex;
   }
 }
 
