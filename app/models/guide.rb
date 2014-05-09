@@ -1,4 +1,4 @@
-class BrandGuide < ActiveRecord::Base
+class Guide < ActiveRecord::Base
   extend FriendlyId
 
   validates :title, presence: true
@@ -15,13 +15,4 @@ class BrandGuide < ActiveRecord::Base
   has_many :asset_bundles
 
   friendly_id :title, use: :slugged
-
-  def attributes_for_editor
-    {
-      id: id,
-      slug: slug,
-      title: title,
-      pages: pages.map(&:attributes_for_editor)
-    }
-  end
 end

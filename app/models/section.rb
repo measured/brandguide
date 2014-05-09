@@ -1,5 +1,5 @@
 class Section < ActiveRecord::Base
-  belongs_to :brand_guide
+  belongs_to :guide
 
   validates_presence_of :title
 

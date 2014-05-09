@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>brandguide.io</title>
+
+  <%= render 'shared/head' %>
+  <%= stylesheet_link_tag :application %>
+  <%= csrf_meta_tags %>
+</head>
+<body>
+  <%= yield %>
+
+  <%= javascript_include_tag :application %>
+
+  <%= render 'shared/livereload' if Rails.env.development? %>
+</body>
+</html>

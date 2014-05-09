@@ -3,23 +3,20 @@
 <head>
   <title>brandguide.io</title>
 
-  <%= render 'shared/head' %>
+  <link rel="shortcut icon" href="<%= asset_path('favicon.ico') %>">
+  <link rel="apple-touch-icon" href="<%= asset_path('apple-touch-icon-precomposed.png') %>" sizes="152x152">
   <%= stylesheet_link_tag :application %>
   <%= csrf_meta_tags %>
 </head>
 <body>
-  <%# pipe breakpoints to javascript %>
-  <div id="js__media-check"></div>
-
-  <div id="flash">
-    <div class="notice"><%= notice %></div>
-    <div class="alert"><%= alert %></div>
-  </div>
-
   <%= yield %>
 
   <%= javascript_include_tag :application %>
 
-  <%= render 'shared/livereload' if Rails.env.development? %>
+  <% if Rails.env.development? %>
+    <script>
+      document.write('<script src="http://' + (location.host || 'localhost').split(':')[0] + ':35729/livereload.js?snipver=1"></' + 'script>')
+    </script>
+  <% end %>
 </body>
 </html>

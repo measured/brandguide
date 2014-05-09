@@ -4,22 +4,7 @@ class AssetGroup < ActiveRecord::Base
 
   accepts_nested_attributes_for :assets
 
-  delegate :brand_guide, to: :section, allow_nil: true
-  validates :type, presence: true
-
-  after_initialize :default_attributes
-
-  def self.type_options
-    [
-      ['Files', FileAssetGroup]
-    ]
-  end
-
-  def self.human_name
-    type_option = self.type_options.select { |str, klass|  klass == self }
-
-    type_option.present? ? type_option.first.first : self.to_s.underscore.titleize
-  end
+  delegate :guide, to: :section, allow_nil: true
 
   def has_thumb?
     assets.images.present?
@@ -29,11 +14,5 @@ class AssetGroup < ActiveRecord::Base
     if has_thumb?
       assets.images.first.file.thumb(geometry)
     end
-  end
-
-  private
-
-  def default_attributes
-    self.type = type.presence || 'FileAssetGroup'
   end
 end

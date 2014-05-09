@@ -4,4 +4,407 @@
 *= require_tree ./components
 */
 
-@import "sass/application";
+// @import "sass/application";
+
+@import "sass/_global/fonts";
+
+* {
+  font: inherit;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  color: inherit;
+}
+
+$easeOutExpo: cubic-bezier(0.190, 1.000, 0.220, 1.000);
+
+body {
+  font-family: "Whitney", sans-serif;
+  font-size: 16px;
+  line-height: 20px;
+}
+
+html, body {
+  height: 100%;
+}
+
+a {
+  text-decoration: none;
+}
+
+ul {
+  list-style: none;
+}
+
+strong {
+  font-weight: bold;
+}
+em {
+  font-style: italic;
+}
+
+.Application {
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+}
+
+.Header {
+  .content {
+    display: flex;
+  }
+  h1 {
+    flex: 1;
+    font-size: 24px;
+    margin: auto 0;
+  }
+  div.user {
+    &:not(:hover) {
+      .Button, .separator {
+        display: none;
+      }
+    }
+  }
+  div.user, a.profile {
+    display: flex;
+  }
+  a, span {
+    margin: auto;
+  }
+  a.profile {
+    i.avatar {
+      display: block;
+      width: 36px;
+      height: 36px;
+      border: 1px solid lighten(black, 85%);
+      background-color: white;
+      background-size: cover;
+      border-radius: 50%;
+    }
+  }
+  a.profile, i.avatar, span.separator {
+    margin-left: 8px;
+  }
+  span.separator {
+    color: lighten(black, 85%);
+  }
+  .Button {
+    color: lighten(black, 50%);
+    &:hover {
+      color: black;
+    }
+  }
+}
+
+.Drawer, .Editor, .Header {
+  .content {
+    padding: 24px;
+  }
+}
+
+.container {
+  flex: 1;
+  display: flex;
+}
+
+.Button {
+  .Icon {
+    font-size: 80%;
+  }
+  &.plain {
+    .Icon {
+      position: relative;
+      top: 1px;
+    }
+    .text {
+      margin-left: 4px;
+    }
+  }
+  &:not(.plain) {
+    border-radius: 3px;
+    background: transparentize(black, 0.85);
+    color: transparentize(black, 0.25);
+    display: inline-block;
+    padding: 0 2px;
+    margin-right: 8px;
+    overflow: hidden;
+
+    .Icon, .text {
+      display: block;
+      float: left;
+      padding: 6px 8px 6px;
+    }
+    .Icon {
+      position: relative;
+      padding-top: 8px;
+      padding-bottom: 4px;
+      border-right: 1px solid transparentize(black, 0.85);
+    }
+
+    &:hover {
+      color: white;
+      background: transparentize(black, 0.5);
+    }
+  }
+
+  &.green {
+    background: transparentize(seaGreen, 0.5);
+
+    &:hover {
+      background: transparentize(seaGreen, 0);
+    }
+  }
+}
+
+.Drawer {
+  $drawerBackgroundColor: #DD4538;
+  $drawerForegroundColor: white;
+  $drawerWidth: 360px;
+
+  display: flex;
+  
+  header {
+    position: relative;
+    background: darken($drawerBackgroundColor, 10%);
+    padding: 24px;
+    padding-bottom: 18px;
+
+    h2 {
+      font-size: 20px;
+      font-weight: bold;
+      text-align: center;
+    }
+    .Button {
+      font-size: 120%;
+      position: absolute;
+      top: 24px;
+      color: darken($drawerBackgroundColor, 20%);
+    }
+    .Button:hover {
+      color: darken($drawerBackgroundColor, 35%);
+    }
+    .back {
+      left: 24px;
+    }
+    .settings {
+      right: 24px;
+    }
+  }
+
+  h3 {
+    font-weight: bold;
+    margin-bottom: 12px;
+  }
+  
+  .contents {
+    width: $drawerWidth;
+    transition: margin-left 0.5s $easeOutExpo;
+    background: $drawerBackgroundColor;
+    color: $drawerForegroundColor;
+    border-radius: 0 4px 0 0;
+    overflow: hidden;
+  }
+  &[data-open="false"] .contents {
+    margin-left: -$drawerWidth+24px;
+  }
+  &[data-open="false"] .contents {
+    cursor: pointer;
+  }
+
+  .toggle {
+    flex: 1;
+    display: flex;
+    width: 0;
+    position: relative;
+    z-index: 0;
+    left: -12px;
+    a {
+      margin: auto;
+      background: $drawerBackgroundColor;
+      padding: 8px 0 8px 3px;
+      width: 24px;
+      border-radius: 0 4px 4px 0;
+      position: absolute;
+      top: 62px;
+
+      i {
+        display: block;
+        width: 8px; height: 8px;
+        margin: 4px;
+        background-color: darken($drawerBackgroundColor, 10%);
+        border-radius: 100%;
+      }
+      &:hover i {
+        background-color: darken($drawerBackgroundColor, 25%);
+      }
+    }
+  }
+
+  .DrawerSectionsList {
+    border-top: 1px solid darken($drawerBackgroundColor, 10%);
+    margin-bottom: 12px;
+    .DrawerSectionsListItem a {
+      display: block;
+      padding: 8px 0;
+      border-bottom: 1px solid darken($drawerBackgroundColor, 10%);
+    }
+  }
+}
+
+.Editor {
+  flex: 1;
+
+  .content {
+    padding-top: 0;
+  }
+
+  .input {
+    display: block;
+    width: 100%;
+    border: 1px solid lighten(black, 85%);
+    padding: 12px;
+    padding-bottom: 10px;
+    overflow: hidden;
+  }
+
+  .titleInput {
+    font-size: 24px;
+    border-radius: 3px 3px 0 0;
+    padding: 19px 12px 14px;
+    border-bottom: none;
+  }
+  .contentInput {
+    border-radius: 0;
+  }
+
+  .ButtonGroup {
+    margin-top: 24px;
+    text-align: right;
+    .Button {
+      margin-right: 0;
+    }
+  }
+}
+
+.MarkdownContentInput {
+  display: flex!important;
+  flex-direction: row;
+  padding: 0!important;
+  textarea {
+    padding: 12px;
+    width: 75%;
+    min-width: 25%;
+    max-width: 75%;
+    max-height: 320px;
+    min-height: 320px;
+    font-family: Monaco;
+    font-size: 80%;
+    border: none;
+  }
+  .preview {
+    flex: 1;
+    border-left: 1px solid lighten(black, 85%);
+    padding: 12px;
+    background: lighten(black, 98%);
+    height: 320px;
+    overflow-y: scroll;
+    label {
+      display: block;
+      color: lighten(black, 75%);
+      margin-bottom: 12px;
+    }
+  }
+  .previewHtml {
+    h1, h2, h3, h4, h5, p, img, li, ul {
+      margin-bottom: 12px;
+    }
+    :last-child {
+      margin-bottom: 0;
+    }
+    h1, h2, h3, h4, h5 {
+      font-weight: bold;
+    }
+    h1 {
+      font-size: 24px;
+    }
+    a {
+      color: blue;
+      text-decoration: underline;
+    }
+    img {
+      min-width: 100%;
+    }
+    li {
+      position: relative;
+      padding-left: 12px;
+    }
+    li:before {
+      position: absolute;
+      left: 0;
+      content: '•';
+    }
+  }
+}
+
+.AssetDropZone {
+  display: flex;
+  position: relative;
+  min-height: 320px;
+
+  &[data-has-assets="true"] {
+    .message {
+      opacity: 0;
+      z-index: 0;
+    }
+  }
+
+  .message {
+    display: flex;
+    position: absolute;
+    top: 1px; left: 1px; bottom: 1px; right: 1px;
+    border-radius: 3px;
+    pointer-events: none;
+    background: transparentize(floralWhite, 0.25);
+    transition: opacity 1s $easeOutExpo;
+    span {
+      margin: auto;
+      font-size: 36px;
+      color: lighten(black, 50%);
+      position: relative;
+      top: 6px;
+    }
+  }
+
+  &[data-drag-state="enter"],
+  &[data-drag-state="over"] {
+    .message {
+      opacity: 1!important;
+    }
+  }
+}
+
+.AssetGroupsList {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+  justify-content: center;
+  border: 1px solid lighten(black, 85%);
+  border-top: none;
+  padding: 12px;
+  border-radius: 0 0 3px 3px;
+  background: white;
+
+  .AssetGroup {
+    border-radius: 3px;
+    border: 1px solid lighten(black, 85%);
+    header, footer {
+      padding: 12px;
+    }
+    .stack {
+      width: 240px;
+      height: 240px;
+      background: lighten(black, 95%);
+    }
+    margin: 12px;
+  }
+}

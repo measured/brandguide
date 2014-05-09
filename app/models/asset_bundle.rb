@@ -1,10 +1,10 @@
 class AssetBundle < ActiveRecord::Base
   extend FriendlyId
 
-  belongs_to :brand_guide
+  belongs_to :guide
 
   validates :access_key, presence: true, uniqueness: true
-  validates :brand_guide_id, presence: true
+  validates :guide_id, presence: true
 
   has_many :asset_bundle_assets
   has_many :assets, through: :asset_bundle_assets

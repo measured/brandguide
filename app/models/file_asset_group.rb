@@ -1,2 +1,0 @@
-class FileAssetGroup < AssetGroup
-end
