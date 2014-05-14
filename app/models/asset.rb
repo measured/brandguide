@@ -9,4 +9,15 @@ class Asset < ActiveRecord::Base
   scope :images, -> { where(file_format: [:jpeg, :jpg, :gif, :png]) }
 
   attr_accessor :download
+
+  def api_attributes
+    {
+      id: id,
+      name: file.name,
+      type: file.mime_type,
+      size: file.size,
+      ctime: created_at.to_i,
+      mtime: updated_at.to_i
+    }
+  end
 end

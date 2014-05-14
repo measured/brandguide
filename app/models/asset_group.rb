@@ -6,6 +6,16 @@ class AssetGroup < ActiveRecord::Base
 
   delegate :guide, to: :section, allow_nil: true
 
+  def api_attributes
+    {
+      id: id,
+      title: title,
+      assets: assets.map(&:api_attributes),
+      ctime: created_at.to_i,
+      mtime: updated_at.to_i
+    }
+  end
+
   def has_thumb?
     assets.images.present?
   end

@@ -14,5 +14,18 @@ class Guide < ActiveRecord::Base
 
   has_many :asset_bundles
 
+  belongs_to :user
+
   friendly_id :title, use: :slugged
+
+  def api_attributes
+    {
+      id: id,
+      slug: slug,
+      title: title,
+      sections: sections.order('created_at asc').map(&:api_attributes),
+      ctime: created_at.to_i,
+      mtime: updated_at.to_i
+    }
+  end
 end
