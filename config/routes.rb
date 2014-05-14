@@ -1,27 +1,20 @@
 BMS::Application.routes.draw do
-  devise_for :users
-
-  constraints subdomain: /^admin$/ do
+constraints subdomain: /^admin$/ do
+    devise_for :users
+    
     namespace :admin, path: '/' do
-      get '/current_user.json', to: 'users#show'
-      get '/guides/:id.json', to: 'guides#show'
-      post '/guides/:id/add_section.json', to: 'guides#add_section'
-      post '/guides/:id/update_section.json', to: 'guides#update_section'
-      post '/guides/:id/upload.json', to: 'guides#upload'
+      post '/user.json', to: 'users#create'
+      post '/login.json', to: 'users#login'
+
+      get '/guides.json', to: 'guides#index'
+      get '/guides/:guide_id.json', to: 'guides#show'
+      post '/guides.json', to: 'guides#create'
+      post '/guides/:guide_id.json', to: 'guides#update'
 
       root to: 'admin#index'
-    end
-    
-    # namespace :admin, path: '/' do
-    #   root 'guides#index'
 
-    #   resources :guides, path: '/' do
-    #     post :sort 
-    #     resources :pages do
-    #       resources :sections
-    #     end
-    #   end
-    # end
+      get '/*path', to: 'admin#index'
+    end
   end
 
   constraints subdomain: /^((?!www).).+$/ do
