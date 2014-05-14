@@ -1,11 +1,17 @@
 class Admin::AdminController < ApplicationController
-  before_action :authenticate_user!
-
-  before_action :slowdown
+  def index; end
 
   private
 
-  def slowdown
-    sleep(rand(0..3)) if Rails.env.development? && request.method == 'POST'
+  def authenticate_from_token!
+    if header_token = request.headers['X-User-Token']
+      email, token = header_token.split(':')
+
+      user = User.find_by_email(email)
+
+      if user && Devise.secure_compare(user.authentication_token, token)
+        sign_in user, store: false
+      end
+    end
   end
 end
