@@ -549,7 +549,8 @@ var SectionEditor = React.createClass({
             
             <ButtonGroup>
               <Button onClick={this.addAssetGroup} text="Add Assets" icon="plus" />
-              <Button onClick={this.deleteSection} text="Delete" icon="trash" />
+              <span className="spacer" />
+              <Button onClick={this.deleteSection} text="Delete Page" icon="trash" />
               <Button onClick={this.saveChanges} className="green" text="Save Changes" icon="check" />
             </ButtonGroup>
           </form>

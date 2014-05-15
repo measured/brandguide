@@ -136,6 +136,7 @@ em {
 }
 
 .Button {
+  user-select: none;
   .Icon {
     font-size: 80%;
   }
@@ -344,7 +345,10 @@ em {
 
   .ButtonGroup {
     margin-top: 24px;
-    text-align: right;
+    display: flex;
+    .spacer {
+      flex: 1;
+    }
     .Button:last-child {
       margin-right: 0;
     }
