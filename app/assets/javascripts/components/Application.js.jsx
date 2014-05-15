@@ -1,11 +1,181 @@
 /** @jsx React.DOM */
 
+var LOCALSTORAGE_AUTH_KEY = 'brandguideAuth';
+
+var Location = ReactRouter.Location;
+var Locations = ReactRouter.Locations;
+
+var Dispatcher = _.clone(Backbone.Events);
+
+var GuideStore = _.extend(_.clone(Backbone.Events), {
+  collection: [],
+  selected: {},
+  parse: function(response) {
+    this.collection = _.map(response.data.guides, function(attributes) {
+      return new GuideModel(attributes);
+    });
+    this.trigger('change');
+  },
+  fetch: function() {
+    $.get('/guides.json', this.parse.bind(this))
+  },
+  toJSON: function() {
+    return this.collection.map(function(guide) {
+      return guide.attributes;
+    });
+  },
+  find: function(id) {
+    var selections = _.select(this.collection, function(guide) {
+      return guide.toJSON().slug === id;
+    });
+
+    return selections.length ? selections[0] : new GuideModel({});
+  }
+});
+
+var GuideModel = function(attributes) {
+  _.extend(this, Backbone.Events);
+
+  if(typeof attributes === 'number') this.attributes = { id: attributes }
+  if(typeof attributes === 'string') this.attributes = { slug: attributes }
+  if(typeof attributes === 'object') this.attributes = attributes;
+  
+  this.fetch = function() {
+    var slug = this.toJSON().slug;
+    $.get('/guides/'+slug+'.json').done(this.parse.bind(this));
+  }
+
+  this.parse = function(response) {
+    this.attributes = response.data.guide;
+    GuideStore.trigger('change');
+  }
+
+  this.sync = function(callback) {
+    var self = this;
+
+    var attributes = this.toJSON();
+
+    attributes.sections_attributes = _.clone(attributes.sections);
+    delete attributes.sections;
+
+    _.each(attributes.sections_attributes, function(section) {
+      section.asset_groups_attributes = _.clone(section.asset_groups);
+      delete section.asset_groups;
+    });
+
+    $.post('/guides/'+this.toJSON().slug+'.json', {
+      guide: attributes
+    }).done(function(response) {
+      self.parse(response);
+      if(typeof callback === 'function') callback();
+    });
+  }
+
+  this.findSection = function(id) {
+    var selections = _.select(this.toJSON().sections, function(section) {
+      return section.slug === id;
+    });
+
+    return selections.length ? selections[0] : {};
+  }
+
+  this.addSection = function(title, callback) {
+    this.attributes.sections.push({
+      title: title
+    });
+
+    this.sync(callback);
+  }
+
+  this.deleteSection = function(id, callback) {
+    var section = this.findSection(id);
+    section._destroy = true;
+
+    this.sync(callback);
+  }
+
+  this.updateSection = function(id, attributes) {
+    var section = this.findSection(id);
+
+    section = _.extend(section, attributes);
+
+    GuideStore.trigger('change');
+  }
+
+  this.addAssetGroupToSection = function(id) {
+    var section = this.findSection(id);
+    section.asset_groups.push({
+      title: null,
+      assets: []
+    });
+
+    GuideStore.trigger('change');
+  }
+
+  this.findAssetGroup = function(sectionId, assetGroupId) {
+    var section = this.findSection(sectionId);
+
+    var selected = _.select(section.asset_groups, function(assetGroup) {
+      return assetGroup.id === assetGroupId;
+    });
+
+    return selected.length ? selected[0] : {};
+  }
+
+  this.deleteAssetGroupFromSection = function(sectionId, assetGroupId) {
+    var assetGroup = this.findAssetGroup(sectionId, assetGroupId);
+    assetGroup._destroy = true;
+
+    this.sync();
+  }
+
+  this.uploadAssets = function(sectionId, assetGroupId, files) {
+    var formData = new FormData();
+
+    _.each(event.dataTransfer.files, function(file) {
+      formData.append('assets[][file]', file);
+    });
+
+    assetGroupId = assetGroupId ? assetGroupId : '';
+
+    $.ajax({
+      url: '/guides/'+this.toJSON().slug+'/upload.json?section_id='+sectionId+'&asset_group_id='+assetGroupId,
+      data: formData,
+      processData: false,
+      contentType: false,
+      type: 'post'
+    }).done(this.parse.bind(this));
+  }
+
+  this.updateSectionAssetGroup = function(sectionId, assetGroupId, attributes) {
+    var assetGroup = this.findAssetGroup(sectionId, assetGroupId);
+
+    assetGroup = _.extend(assetGroup, attributes);
+
+    GuideStore.trigger('change');
+  }
+
+  this.toJSON = function() {
+    return this.attributes;
+  }
+}
+
+var Spinner = React.createClass({
+  render: function() {
+    return (
+      <div className="Spinner" data-show={this.props.show}>
+        <div>
+          <div className="iconContainer"><Icon name="sync" /></div>
+        </div>
+      </div>
+    );
+  }
+});
+
 var ButtonGroup = React.createClass({
   render: function() {
     return (
-      <div className="ButtonGroup">
-        {this.props.children}
-      </div>
+      <div className="ButtonGroup">{this.props.children}</div>
     );
   }
 });
@@ -30,7 +200,9 @@ var Button = React.createClass({
       children.push(<Icon key="icon" name={this.props.icon} />);
     }
 
-    children.push(<span key="text" className="text">{this.props.text}</span>)
+    if(this.props.text) {
+      children.push(<span key="text" className="text">{this.props.text}</span>);
+    }
 
     return this.transferPropsTo(
       <a onClick={this.handleClick} className="Button" href="#">
@@ -43,10 +215,10 @@ var Button = React.createClass({
 var Header = React.createClass({
   render: function() {
     var avatarStyle = {
-      backgroundImage: 'url('+this.props.user.gravatarUrl+')'
+      backgroundImage: 'url('+this.props.user.gravatar+')'
     }
 
-    if(!this.props.user.gravatarUrl) avatarStyle = {}
+    if(!this.props.user.gravatar) avatarStyle = {}
 
     return (
       <div className="Header">
@@ -54,8 +226,10 @@ var Header = React.createClass({
           <h1><a href="/">brandguide.io</a></h1>
 
           <div className="user">
-            <Button icon="logout" className="plain" text="Sign out" />
+            <Button onClick={this.props.onLogout} icon="logout" className="plain" text="Sign out" />
+            
             <span className="separator">&bull;</span>
+            
             <a className="profile" href="#">
               <span>{this.props.user.email}</span>
               <i className="avatar" style={avatarStyle} />
@@ -70,12 +244,20 @@ var Header = React.createClass({
 var DrawerSectionsListItem = React.createClass({
   handleClick: function(event) {
     event.preventDefault();
-    this.props.onSelectSection();
+    Dispatcher.trigger('navigate', '/'+this.props.guide.slug+'/'+this.props.section.slug);
   },
   render: function() {
     return (
-      <li className="DrawerSectionsListItem">
-        <a onClick={this.handleClick} href="#">{this.props.section.title || 'Untitled'}</a>
+      <li className="DrawerSectionsListItem" data-selected={this.props.selected}>
+        <a onClick={this.handleClick} href={'/'+this.props.guide.slug+'/'+this.props.section.slug}>
+          <span>{this.props.section.title || 'Untitled'}</span><Icon className="plain" name="navigateright" />
+        </a>
+        <ul>
+          <li><a href="#">Section</a></li>
+          <li><a href="#">Section</a></li>
+          <li><a href="#">Section</a></li>
+          <li><a href="#">Section</a></li>
+        </ul>
       </li>
     );
   }
@@ -85,16 +267,15 @@ var DrawerSectionsList = React.createClass({
   render: function() {
     var self = this;
 
-    var drawerSectionsListItems = this.props.sections.map(function(section) {
-      var onSelectSection = function() {
-        self.props.onSelectSection(section.id);
-      }
+    var drawerSectionsListItems = (this.props.guide.sections || []).map(function(section) {
+      var selected = self.props.section ? (self.props.section.slug === section.slug) : false;
       
       return (
         <DrawerSectionsListItem
           key={section.id}
-          onSelectSection={onSelectSection}
-          section={section} />
+          section={section}
+          guide={self.props.guide}
+          selected={selected} />
       );
     });
 
@@ -107,28 +288,32 @@ var DrawerSectionsList = React.createClass({
 });
 
 var Drawer = React.createClass({
-  handleAddSection: function(event) {
-    var title = prompt('Enter title');
-    this.props.onAddSection(title);
-  },
   handleToggle: function(event) {
     event.preventDefault();
     this.props.onToggle();
+  },
+  handleBack: function() {
+    Dispatcher.trigger('navigate', '/');
+  },
+  addSection: function() {
+    if(title = prompt('Enter Title')) {
+      GuideStore.find(this.props.guide.slug).addSection(title);
+    }
   },
   render: function() {
     return (
       <div className="Drawer" data-open={this.props.open}>
         <div className="contents" onClick={this.props.onOpenDrawer}>
           <header>
-            <Button className="back plain" icon="back" />
-            <h2>{this.props.guide.title}</h2>
+            <Button onClick={this.handleBack} className="back plain" icon="back" />
+            <h2>{this.props.guide.title || 'Untitled'}</h2>
             <Button className="settings plain" icon="gear" />
           </header>
           <div className="content">
             <h3>Pages</h3>
 
-            <DrawerSectionsList onSelectSection={this.props.onSelectSection} sections={this.props.guide.sections} />
-            <Button onClick={this.handleAddSection} text="Add Page" icon="openbook" />
+            <DrawerSectionsList guide={this.props.guide} section={this.props.section} />
+            <Button onClick={this.addSection} text="Add Page" icon="openbook" />
           </div>
         </div>
         <div className="toggle">
@@ -158,73 +343,95 @@ var MarkdownContentInput = React.createClass({
   }
 });
 
-var AssetDropZone = React.createClass({
+var AssetGroup = React.createClass({
   getInitialState: function() {
     return {
-      dragState: null
+      drag: null,
+      displayMode: 'list'
     }
+  },
+  changeTitle: function(event) {
+    var guide = GuideStore.find(this.props.guide.slug);
+    guide.updateSectionAssetGroup(this.props.section.slug, this.props.assetGroup.id, { title: event.target.value });
+  },
+  handleDelete: function(event) {
+    var guide = GuideStore.find(this.props.guide.slug);
+    guide.deleteAssetGroupFromSection(this.props.section.slug, this.props.assetGroup.id);
   },
   handleDragEnter: function(event) {
     event.preventDefault();
-    this.setState({ dragState: 'enter' });
+    this.setState({ drag: 'enter' });
   },
   handleDragOver: function(event) {
     event.preventDefault();
-    this.setState({ dragState: 'over' });
+    this.setState({ drag: 'over' });
   },
   handleDragLeave: function(event) {
     event.preventDefault();
-    this.setState({ dragState: 'leave' });
+    this.setState({ drag: 'leave' });
   },
   handleDrop: function(event) {
-    event.preventDefault();
     event.stopPropagation();
+    event.preventDefault();
 
-    var self = this;
     this.setState({ dragState: 'drop' });
 
-    var formData = new FormData();
+    var guide = GuideStore.find(this.props.guide.slug);
 
-    formData.append('section[id]', this.props.sectionId);
+    guide.uploadAssets(this.props.section.slug, this.props.assetGroup.id, event.dataTransfer.files);
 
-    _.each(event.dataTransfer.files, function(file) {
-      formData.append('section[files][]', file);
-    });
-
-    var xhr = new XMLHttpRequest();
-
-    xhr.addEventListener('load', function(event) {
-      self.props.onUpload();
-    });
-
-    xhr.open('POST', '/guides/mt-gox/upload.json');
-    xhr.send(formData);
+    return false;
+  },
+  toggleDisplayMode: function() {
+    var displayMode = this.state.displayMode === 'list' ? 'grid' : 'list';
+    this.setState({ displayMode: displayMode });
   },
   render: function() {
-    var hasAssets = !!this.props.section.asset_groups;
+    var mtime = moment.unix(this.props.assetGroup.mtime).fromNow();
+
+    var assets = this.props.assetGroup.assets.map(function(asset) {
+      var style = {
+        backgroundImage: 'url('+asset.images.thumbnail+')'
+      }
+
+      return (
+        <li className="asset" key={asset.id}>
+          <div className="image" style={style}></div>
+          <div className="filename">
+            <span className="name">{asset.name}</span>
+            <span className="size">{asset.size}</span>
+          </div>
+        </li>
+      );
+    });
 
     return (
-      <div className="AssetDropZone" onDragEnter={this.handleDragEnter} onDragOver={this.handleDragOver} onDragLeave={this.handleDragLeave} onDrop={this.handleDrop} data-drag-state={this.state.dragState} data-has-assets={hasAssets}>
-        <div className="message"><span>Drop Files Here</span></div>
-        <AssetGroupsList assetGroups={this.props.section.asset_groups} />
-      </div>
-    );
-  }
-});
-
-var AssetGroup = React.createClass({
-  render: function() {
-    return (
-      <div className="AssetGroup">
+      <div
+        className="AssetGroup"
+        onDragEnter={this.handleDragEnter}
+        onDragOver={this.handleDragOver}
+        onDrop={this.handleDrop}
+        onDragLeave={this.handleDragLeave}
+        data-drag-state={this.state.drag}>
         <header>
-          {this.props.assetGroup.title || 'Untitled'}
+          <div className="symbol"></div>
+          <div className="title">
+            <input value={this.props.assetGroup.title || 'Untitled'} onChange={this.changeTitle} />
+          </div>
+          <div className="buttons">
+            <Button icon="delete" className="plain" onClick={this.handleDelete} />
+          </div>
         </header>
-        <div className="stack">
-          {this.props.assetGroup.assets.map(function(asset) {
-            return (<div>{asset}</div>)
-          })}
+        <div className="assetsListContainer">
+          <div className="meta">
+            <h2>{assets.length} Files</h2>
+            <Button className="displayMode plain" icon={this.state.displayMode || 'list'} onClick={this.toggleDisplayMode} />
+          </div>
+          <ul className="assetsList" data-display-mode={this.state.displayMode || 'list'}>{assets}</ul>
         </div>
-        <footer>footer</footer>
+        <footer>
+          <div className="text"><Icon name="clock" /> Updated {mtime}</div>
+        </footer>
       </div>
     );
   }
@@ -232,82 +439,332 @@ var AssetGroup = React.createClass({
 
 var AssetGroupsList = React.createClass({
   render: function() {
-    var assetGroups = this.props.assetGroups.map(function(assetGroup) {
+    var self = this;
+
+    var assetGroups = (this.props.section.asset_groups || []).map(function(group) {
       return (
-        <AssetGroup key={assetGroup.id} assetGroup={assetGroup} />
+        <AssetGroup
+          key={group.id}
+          assetGroup={group}
+          section={self.props.section}
+          guide={self.props.guide} />
       );
     });
 
+    var assetGroupsContainer;
+
+    if(assetGroups.length) {
+      assetGroupsContainer = (
+        <div className="container">
+          {assetGroups}
+        </div>
+      );
+    }
+
     return (
       <div className="AssetGroupsList">
-        {assetGroups}
+        {assetGroupsContainer}
       </div>
     );
   }
 });
 
-var Editor = React.createClass({
-  getInitialState: function() {
-    return {
-      section: {
-        asset_groups: []
-      }
-    }
-  },
-  handleSave: function(event) {
-    event.preventDefault();
-    this.props.onUpdateSection(this.state.section);
-  },
-  componentDidUpdate: function(prevProps, prevState) {
-    if((prevProps.sectionId !== this.props.sectionId) || (prevProps.guide !== this.props.guide)) {
-      this.selectSection(this.props.sectionId);
-    }
-  },
-  selectSection: function(sectionId) {
-    var sections = _.select(this.props.guide.sections, function(section) {
-      return section.id === sectionId;
-    });
+var SectionEditor = React.createClass({
+  componentDidMount: function() {
+    var self = this;
 
-    if(sections.length) {
-      this.setState({ section: sections[0] });
-    }
+    this.mtimeTicker = setInterval(function() {
+      self.forceUpdate();
+    }, 10000);
   },
-  handleTitleChange: function(event) {
-    var section = this.state.section;
-    section.title = event.target.value;
-    this.setState({ section: section });
+  componentWillUnmount: function() {
+    clearInterval(this.mtimeTicker);
   },
-  handleContentChange: function(event) {
-    var section = this.state.section;
-    section.content = event.target.value;
-    this.setState({ section: section });
+  deleteSection: function() {
+    var self = this;
+    var guide = GuideStore.find(this.props.guide.slug);
+
+    guide.deleteSection(this.props.section.slug, function() {
+      Dispatcher.trigger('navigate', '/'+self.props.guide.slug);
+    });
   },
-  handleUpload: function() {
-    this.props.onUpdateSection();
+  changeTitle: function(event) {
+    var guide = GuideStore.find(this.props.guide.slug);
+    guide.updateSection(this.props.section.slug, { title: event.target.value });
+  },
+  changeContent: function(event) {
+    var guide = GuideStore.find(this.props.guide.slug);
+    guide.updateSection(this.props.section.slug, { content: event.target.value });
+  },
+  saveChanges: function(event) {
+    event.preventDefault();
+    var guide = GuideStore.find(this.props.guide.slug);
+
+    guide.sync();
+  },
+  addAssetGroup: function() {
+    var guide = GuideStore.find(this.props.guide.slug);
+    guide.addAssetGroupToSection(this.props.section.slug);
   },
   render: function() {
     var self = this;
+    
+    if(this.props.section) {
+      var mtime = moment.unix(this.props.section.mtime).fromNow();
 
-    if(this.state.section) {
-      sectionEditor = (
+      var viewComponent = (
         <div>
-          <form onSubmit={this.handleSave}>
-            <input className="input titleInput" value={this.state.section.title} type="text" onChange={this.handleTitleChange} placeholder="Title" />
-            <MarkdownContentInput onChange={this.handleContentChange} value={this.state.section.content} placeholder="Content" />
-            <AssetDropZone section={this.state.section} sectionId={this.props.sectionId} onUpload={this.handleUpload} />
+          <form onSubmit={this.saveChanges}>
+            <span className="mtime"><Icon name="clock" /> Updated {mtime}</span>
+            <input className="input titleInput" value={this.props.section.title} type="text" onChange={this.changeTitle} placeholder="Title" />
+            
+            <MarkdownContentInput onChange={this.changeContent} value={this.props.section.content || ''} placeholder="Content" />
+            
+            <AssetGroupsList
+              onAssetGroupDeleted={this.props.onAssetGroupDeleted}
+              onAssetUploaded={this.props.onAssetUploaded}
+              section={this.props.section}
+              guide={this.props.guide} />
+            
             <ButtonGroup>
-              <Button onClick={this.handleSave} className="green" text="Save Changes" icon="check" />
+              <Button onClick={this.addAssetGroup} text="Add Assets" icon="plus" />
+              <Button onClick={this.deleteSection} text="Delete" icon="trash" />
+              <Button onClick={this.saveChanges} className="green" text="Save Changes" icon="check" />
             </ButtonGroup>
           </form>
         </div>
       );
+    } else {
+      var message = {}
+      
+      if(this.props.guide.sections && this.props.guide.sections.length) {
+        message.icon = 'list';
+        message.text = ['Select a page', <br />, 'to edit'];
+      } else {
+        message.icon = 'openbook';
+        message.text = ['Add a page', <br />, 'to get started'];
+      }
+
+      var viewComponent = (
+        <div className="noSectionsMessage">
+          <div>
+            <div className="book"><Icon name={message.icon} /></div>
+            <p>{message.text}</p>
+          </div>
+        </div>
+      )
     }
 
     return (
-      <div className="Editor">
+      <div className="SectionEditor">
         <div className="content">
-          {sectionEditor}
+          {viewComponent}
         </div>
+      </div>
+    );
+  }
+});
+
+var GuidesListItem = React.createClass({
+  handleClick: function() {
+    Dispatcher.trigger('navigate', '/'+this.props.guide.slug);
+  },
+  render: function() {
+    return (
+      <div onClick={this.handleClick} className="GuidesListItem">
+        <header>
+          <h2>{this.props.guide.title}</h2>
+        </header>
+        <div className="thumbnail" />
+      </div>
+    );
+  }
+});
+
+var GuidesList = React.createClass({
+  createGuide: function() {
+    var self = this;
+
+    if(title = prompt('Enter title')) {
+      var attributes = {
+        title: title
+      }
+
+      // console.log('GuidesList#createGuide');
+      // $.post('/guides.json', { guide: attributes }, function(response) {
+      //   self.props.onCreateGuide(response.guide);
+      // });
+    }
+  },
+  render: function() {
+    var self = this;
+
+    var guidesListItems = this.props.guides.map(function(guide) {
+      return (
+        <GuidesListItem key={guide.id} onClickGuide={self.props.onClickGuide} guide={guide} />
+      );
+    });
+
+    return (
+      <div className="GuidesList">
+        <div className="grid">
+          {guidesListItems}
+        </div>
+        <footer>
+          <Button onClick={this.createGuide} className="green" text="Create New Guide" icon="compose" />
+        </footer>
+      </div>
+    );
+  }
+});
+
+var GuidesListPage = React.createClass({
+  getInitialState: function() {
+    return {
+      guides: GuideStore.toJSON()
+    }
+  },
+  componentDidMount: function() {
+    GuideStore.on('change', this.guideStoreChanged);
+  },
+  componentWillUnmount: function() {
+    GuideStore.off('change', this.guideStoreChanged);
+  },
+  guideStoreChanged: function() {
+    this.setState({ guides: GuideStore.toJSON() });
+  },
+  render: function() {
+    return (
+      <div className="GuidesListPage">
+        <GuidesList onClickGuide={this.props.onClickGuide} onCreateGuide={this.props.onCreateGuide} guides={this.state.guides} />
+      </div>
+    );
+  }
+});
+
+var GuideEditPage = React.createClass({
+  getInitialState: function() {
+    return {
+      section: null,
+      drawerOpen: true,
+      guide: GuideStore.find(this.props.guideId).toJSON()
+    }
+  },
+  componentWillMount: function() {
+    GuideStore.on('change', this.guideStoreChanged);
+  },
+  componentWillUnmount: function() {
+    GuideStore.off('change', this.guideStoreChanged);
+  },
+  componentDidUpdate: function(prevProps, prevState) {
+    if(prevProps.sectionId !== this.props.sectionId) {
+      this.selectSection();
+    }
+  },
+  guideStoreChanged: function() {
+    console.log('guideStoreChanged');
+    this.setState({ guide: GuideStore.find(this.props.guideId).toJSON() });
+    this.selectSection();
+  },
+  selectSection: function() {
+    var guide = GuideStore.find(this.props.guideId);
+
+    var section = this.props.sectionId ? guide.findSection(this.props.sectionId) : null;
+    this.setState({ section: section });
+  },
+  toggleDrawer: function() {
+    this.setState({ drawerOpen: !this.state.drawerOpen });
+  },
+  render: function() {
+    var guide = this.state.guide || {};
+
+    // <Drawer
+    //   guide={guide}
+    //   onAddSection={this.addSection}
+    //   open={this.state.drawerOpen}
+    //   onToggle={this.toggleDrawer}
+    //   onSelectSection={this.selectSection} />
+    // <SectionEditor
+    //   guide={this.state.guide}
+    //   onTitleChange={this.changeSectionTitle}
+    //   onContentChange={this.changeSectionContent}
+    //   onSaveChanges={this.updateSection}
+    //   section={this.state.editorSection}
+    //   guideHasSections={guideHasSections}
+    //   onDelete={this.deleteSection}
+    //   onAddAssetGroup={this.addAssetGroup}
+    //   onAssetUploaded={this.assetUploaded}
+    //   onAssetGroupDeleted={this.assetGroupDeleted} />
+
+    return (
+      <div className="GuideEditPage">
+        <Drawer guide={guide} section={this.state.section} open={this.state.drawerOpen} onToggle={this.toggleDrawer} />
+        <SectionEditor guide={guide} section={this.state.section} />
+      </div>
+    );
+  }
+});
+
+var AdminPage = React.createClass({
+  componentDidMount: function() {
+    var self = this;
+
+    Dispatcher.on('navigate', function(path) {
+      self.refs.router.navigate(path);
+    });
+
+    GuideStore.fetch();
+  },
+  componentWillUnmount: function() {
+    Dispatcher.off('navigate');
+  },
+  render: function() {
+    return (
+      <div className="AdminPage">
+        <Header user={this.props.user} onLogout={this.props.onLogout} />
+        <Locations ref="router" className="Location">
+          <Location path="/" handler={GuidesListPage} />
+          <Location path="/:guideId" handler={GuideEditPage} />
+          <Location path="/:guideId/:sectionId" handler={GuideEditPage} />
+        </Locations>
+      </div>
+    );
+  }
+});
+
+var LoginPage = React.createClass({
+  submitLogin: function(event) {
+    if(event) event.preventDefault();
+
+    var attributes = {
+      email: this.refs.email.getDOMNode().value,
+      password: this.refs.password.getDOMNode().value
+    }
+
+    $.post('/login.json', { user: attributes })
+      .done(this.loginSucceeded);
+  },
+  loginSucceeded: function(response) {
+    if(response.status === 'success') {
+      var data = response.data;
+      localStorage.setItem(LOCALSTORAGE_AUTH_KEY, JSON.stringify(data));
+      this.props.onLogin();
+    } else {
+      alert(response.status + ': ' + response.message);
+    }
+  },
+  onKeyUp: function(event) {
+    if(event.keyCode === 13) this.submitLogin();
+  },
+  render: function() {
+    return (
+      <div className="LoginPage" onKeyUp={this.onKeyUp}>
+        <h1>Please sign in</h1>
+        <input className="input email" ref="email" required type="email" placeholder="Email" />
+        <input className="input password" ref="password" required type="password" placeholder="Password" />
+        <ButtonGroup>
+          <Button icon="user" text="Submit" onClick={this.submitLogin} />
+        </ButtonGroup>
       </div>
     );
   }
@@ -315,75 +772,63 @@ var Editor = React.createClass({
 
 var Application = React.createClass({
   getInitialState: function() {
-    return {
-      drawerOpen: true,
-      currentUser: {},
-      guide: {
-        title: 'Untitled',
-        sections: []
-      },
-      sectionId: 24
+    var state = {
+      user: {},
+      ajax: null
     }
+
+    if(savedState = localStorage.getItem(LOCALSTORAGE_AUTH_KEY)) {
+      state.user = JSON.parse(savedState).user;
+    }
+
+    return state;
+  },
+  setXhrHeaders: function() {
+    var xhrHeaders = {};
+
+    if(this.state.user.token && this.state.user.email) {
+      var userToken = [this.state.user.email, this.state.user.token].join(':');
+      xhrHeaders['X-User-Token'] = userToken;
+    }
+
+    $.ajaxSetup({
+      headers: xhrHeaders
+    });
+  },
+  logout: function() {
+    localStorage.removeItem(LOCALSTORAGE_AUTH_KEY);
+    this.setState(this.getInitialState());
+  },
+  login: function() {
+    this.setState(this.getInitialState());
+    this.setXhrHeaders();
   },
   componentWillMount: function() {
-    this.fetchUser();
-    this.fetchGuide();
+    this.setXhrHeaders();
   },
-  fetchGuide: function() {
+  componentDidMount: function() {
     var self = this;
-    $.get('/guides/mt-gox.json', function(response) {
-      self.setState({ guide: response.guide });
+  
+    $(document).ajaxStart(function() {
+      self.setState({ ajax: 'start' });
+    });
+
+    $(document).ajaxComplete(function() {
+      self.setState({ ajax: 'complete' });
     });
   },
-  fetchUser: function() {
-    var self = this;
-    $.get('/current_user.json', function(response) {
-      self.setState({ currentUser: response.user });
-    });
-  },
-  toggleDrawer: function() {
-    this.setState({ drawerOpen: !this.state.drawerOpen });
-  },
-  openDrawer: function() {
-    this.setState({ drawerOpen: true });
-  },
-  handleAddSection: function(title) {
-    var self = this;
-    $.post('/guides/mt-gox/add_section.json', { section: { title: title } }, function() {
-      self.fetchGuide();
-    });
-  },
-  handleSelectSection: function(sectionId) {
-    this.setState({ sectionId: sectionId });
-  },
-  handleUpdateSection: function(section) {
-    var self = this;
-    
-    if(section) {
-      $.post('/guides/mt-gox/update_section.json', { section: section }, function(response) {
-        self.fetchGuide();
-      });
-    } else {
-      self.fetchGuide();
-    }
+  componentDidUpdate: function() {
+    this.setXhrHeaders();
   },
   render: function() {
+    var viewComponent = this.state.user.token ?
+      (<AdminPage onLogout={this.logout} user={this.state.user} />) :
+      (<LoginPage onLogin={this.login} />);
+
     return (
-      <div className="Application">
-        <Header user={this.state.currentUser} />
-        <div className="container">
-          <Drawer
-            guide={this.state.guide}
-            onToggle={this.toggleDrawer}
-            onOpenDrawer={this.openDrawer}
-            open={this.state.drawerOpen}
-            onAddSection={this.handleAddSection}
-            onSelectSection={this.handleSelectSection} />
-          <Editor
-            guide={this.state.guide}
-            sectionId={this.state.sectionId}
-            onUpdateSection={this.handleUpdateSection} />
-        </div>
+      <div className="Application" data-ajax-state={this.state.ajax}>
+        <Spinner show={this.state.ajax === 'start'} />
+        {viewComponent}
       </div>
     );
   }

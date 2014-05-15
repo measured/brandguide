@@ -8,6 +8,15 @@
 
 @import "sass/_global/fonts";
 
+@-webkit-keyframes spinner {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
 * {
   font: inherit;
   margin: 0;
@@ -43,8 +52,18 @@ em {
   font-style: italic;
 }
 
-.Application {
+.input {
+  display: block;
+  width: 100%;
+  border: 1px solid lighten(black, 85%);
+  padding: 12px;
+  padding-bottom: 10px;
+  overflow: hidden;
+}
+
+.Application, .AdminPage, .Location {
   display: flex;
+  flex: 1;
   flex-direction: column;
   min-height: 100%;
 }
@@ -96,13 +115,22 @@ em {
   }
 }
 
-.Drawer, .Editor, .Header {
+.AdminPage {
+  &[data-nav-state="before"] {
+    background: blue;
+  }
+  &[data-nav-state="nav"] {
+    background: red;
+  }
+}
+
+.Drawer, .SectionEditor, .Header {
   .content {
     padding: 24px;
   }
 }
 
-.container {
+.Location {
   flex: 1;
   display: flex;
 }
@@ -149,7 +177,6 @@ em {
 
   &.green {
     background: transparentize(seaGreen, 0.5);
-
     &:hover {
       background: transparentize(seaGreen, 0);
     }
@@ -157,7 +184,7 @@ em {
 }
 
 .Drawer {
-  $drawerBackgroundColor: #DD4538;
+  $drawerBackgroundColor: #dd4538;
   $drawerForegroundColor: white;
   $drawerWidth: 360px;
 
@@ -243,28 +270,66 @@ em {
   .DrawerSectionsList {
     border-top: 1px solid darken($drawerBackgroundColor, 10%);
     margin-bottom: 12px;
-    .DrawerSectionsListItem a {
-      display: block;
-      padding: 8px 0;
-      border-bottom: 1px solid darken($drawerBackgroundColor, 10%);
+    .DrawerSectionsListItem {
+      a {
+        display: flex;
+        padding: 8px 12px;
+        padding-left: 0;
+        border-bottom: 1px solid darken($drawerBackgroundColor, 10%);
+        span {
+          flex: 1;
+        }
+        .Icon {
+          font-size: 65%;
+          line-height: 0;
+          margin: auto 0;
+          position: relative;
+          top: 1px;
+          color: darken($drawerBackgroundColor, 10%);
+        }
+      }
+      ul {
+        display: none;
+        margin-bottom: 12px;
+        a {
+          padding-left: 18px;
+          color: darken($drawerBackgroundColor, 25%);
+        }
+      }
+      
+      &[data-selected="true"] {
+        a {
+          .Icon {
+            color: white;
+          }
+        }
+      }
     }
   }
 }
 
-.Editor {
+.SectionEditor {
   flex: 1;
+  display: flex;
+  position: relative;
 
   .content {
     padding-top: 0;
+    flex: 1;
+    display: flex;
+    > div {
+      width: 100%;
+    }
   }
 
-  .input {
-    display: block;
-    width: 100%;
-    border: 1px solid lighten(black, 85%);
-    padding: 12px;
-    padding-bottom: 10px;
-    overflow: hidden;
+  .mtime {
+    position: absolute;
+    top: 6px; right: 36px;
+    color: lighten(black, 75%);
+    font-size: 75%;
+    .Icon {
+      font-size: 75%;
+    }
   }
 
   .titleInput {
@@ -274,14 +339,44 @@ em {
     border-bottom: none;
   }
   .contentInput {
-    border-radius: 0;
+    border-radius: 0 0 3px 3px;
   }
 
   .ButtonGroup {
     margin-top: 24px;
     text-align: right;
-    .Button {
+    .Button:last-child {
       margin-right: 0;
+    }
+  }
+
+  .noSectionsMessage {
+    display: flex;
+    flex: 1;
+    div {
+      margin: auto;
+      text-align: center;
+      .book {
+        display: flex;
+        width: 180px; height: 180px;
+        border: 8px dotted lighten(black, 90%);
+        border-radius: 100%;
+        margin-bottom: 24px;
+      }
+      .Icon {
+        display: block;
+        position: relative;
+        top: 14px;
+        font-size: 86px;
+        line-height: 86px;
+        color: lighten(black, 80%);
+        margin: auto;
+      }
+      p {
+        font-size: 24px;
+        line-height: 28px;
+        color: lighten(black, 65%);
+      }
     }
   }
 }
@@ -346,65 +441,252 @@ em {
   }
 }
 
-.AssetDropZone {
-  display: flex;
-  position: relative;
-  min-height: 320px;
-
-  &[data-has-assets="true"] {
-    .message {
-      opacity: 0;
-      z-index: 0;
-    }
-  }
-
-  .message {
+.AssetGroupsList {
+  .container {
     display: flex;
-    position: absolute;
-    top: 1px; left: 1px; bottom: 1px; right: 1px;
-    border-radius: 3px;
-    pointer-events: none;
-    background: transparentize(floralWhite, 0.25);
-    transition: opacity 1s $easeOutExpo;
-    span {
-      margin: auto;
-      font-size: 36px;
-      color: lighten(black, 50%);
-      position: relative;
-      top: 6px;
-    }
-  }
+    flex-wrap: wrap;
+    justify-content: center;
+    margin: -12px;
+    margin-top: 12px;
+    
+    .AssetGroup {
+      border: 1px solid lighten(black, 85%);
+      border-radius: 16px;
+      overflow: hidden;
+      margin: 12px;
+      .assetsListContainer {
+        width: 320px;
+        height: 320px;
+        display: flex;
+        flex-direction: column;
+        font-size: 85%;
 
-  &[data-drag-state="enter"],
-  &[data-drag-state="over"] {
-    .message {
-      opacity: 1!important;
+        .meta {
+          display: flex;
+          margin: 12px 8px 8px;
+
+          h2 {
+            flex: 1;
+          }
+        }
+      }
+      ul.assetsList {
+        flex: 1;
+        margin: 0 8px;
+        border-top: 1px solid lighten(black, 85%);
+        overflow-y: scroll;
+
+        li.asset .image {
+          background-position: center center;
+          background-size: contain;
+          background-repeat: no-repeat;
+        }
+        
+        &[data-display-mode="list"] {
+          li.asset {
+            padding: 8px 0;
+            border-bottom: 1px solid lighten(black, 85%);
+            display: flex;
+
+            .image {
+              width: 24px;
+              height: 24px;
+              margin-right: 8px;
+            }
+            .filename {
+              flex: 1;
+              display: flex;
+              margin: auto;
+              .name {
+                flex: 1;
+                overflow: hidden;
+                white-space: nowrap;
+                text-overflow: ellipsis;
+                margin-right: 12px;
+              }
+              .size {
+                color: lighten(black, 75%);
+              }
+            }
+            &:last-child {
+              margin-bottom: 8px;
+            }
+          }
+        }
+
+        &[data-display-mode="grid"] {
+          display: flex;
+          flex: 1;
+          flex-wrap: wrap;
+          justify-content: center;
+          padding: 16px 0;
+
+          li.asset {
+            padding: 12px;
+            margin: auto;
+            .image {
+              width: 120px;
+              height: 120px;
+              border-radius: 3px;
+              border: 1px solid lighten(black, 85%);
+              background-size: 75%;
+            }
+            .filename {
+              display: none;
+            }
+          }
+        }
+      }
+      header, footer {
+        height: 44px;
+        display: flex;
+        overflow: hidden;
+      }
+      footer {
+        border-top: 1px solid lighten(black, 85%);
+        div.text {
+          margin: auto;
+          color: lighten(black, 50%);
+          font-size: 85%;
+          .Icon {
+            font-size: 75%;
+          }
+        }
+      }
+      header {
+        border-bottom: 1px solid lighten(black, 85%);
+        div.title {
+          flex: 1;
+          padding: 13px 0 11px;
+          input {
+            border: none;
+            width: 100%;
+            outline: none;
+          }
+        }
+        div.symbol {
+          width: 44px;
+          margin-right: 8px;
+          background: lighten(black, 95%);
+        }
+        div.buttons {
+          display: flex;
+          .Button {
+            border-left: 1px solid lighten(black, 85%);
+            .Icon {
+              width: 42px;
+              padding: 14px 10px 10px 14px;
+              display: block;
+            }
+          }
+        }
+      }
     }
   }
 }
 
-.AssetGroupsList {
-  display: flex;
-  flex-wrap: wrap;
-  width: 100%;
-  justify-content: center;
-  border: 1px solid lighten(black, 85%);
-  border-top: none;
-  padding: 12px;
-  border-radius: 0 0 3px 3px;
-  background: white;
+.GuidesListPage {
+  margin: auto;
+  padding-bottom: 72px;
+  .GuidesList {
+    .grid {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      .GuidesListItem {
+        header {
+          margin-bottom: 12px;
+          display: flex;
 
-  .AssetGroup {
-    border-radius: 3px;
-    border: 1px solid lighten(black, 85%);
-    header, footer {
-      padding: 12px;
+          h2 {
+            flex: 1;
+            font-size: 20px;
+            font-weight: bold;
+          }
+        }
+        .thumbnail {
+          width: 320px;
+          height: 320px;
+          border-radius: 3px;
+          background: lighten(black, 85%);
+        }
+        margin: 12px;
+        cursor: pointer;
+      }
     }
-    .stack {
-      width: 240px;
-      height: 240px;
-      background: lighten(black, 95%);
+    .Button {
+      margin-right: 0;
     }
-    margin: 12px;
+  }
+  footer {
+    margin-top: 12px;
+    text-align: center;
+  }
+}
+
+.GuideEditPage {
+  flex: 1;
+  display: flex;
+}
+
+.LoginPage {
+  margin: auto;
+  padding: 24px;
+  h1 {
+    font-size: 24px;
+    line-height: 32px;
+    text-align: center;
+    margin-bottom: 12px;
+  }
+  .input {
+    width: 320px;
+    &.email {
+      border-radius: 3px 3px 0 0;
+    }
+    &.password {
+      border-top: none;
+      border-radius: 0 0 3px 3px;
+    }
+  }
+  .ButtonGroup {
+    margin-top: 12px;
+    text-align: center;
+    .Button {
+      margin-right: 0;
+    }
+  }
+}
+
+.Spinner {
+  display: none;
+  position: fixed;
+  top: 0; left: 0;
+  bottom: 0; right: 0;
+  background: transparentize(white, 0.25);
+  z-index: 100;
+  pointer-events: none;
+
+  &[data-show="true"] {
+    display: flex;  
+  }
+
+  > div {
+    margin: auto;
+    text-align: center;  
+  }
+  .iconContainer {
+    display: flex;
+    width: 100px;
+    height: 100px;
+    animation: spinner 1s infinite linear;
+    .Icon {
+      position: relative;
+      top: 4px;
+      margin: auto;
+      font-size: 200%;
+    }
+  }
+  span {
+    display: block;
   }
 }

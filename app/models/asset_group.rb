@@ -6,6 +6,8 @@ class AssetGroup < ActiveRecord::Base
 
   delegate :guide, to: :section, allow_nil: true
 
+  default_scope { order(created_at: :asc) }
+
   def api_attributes
     {
       id: id,

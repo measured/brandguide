@@ -14,6 +14,8 @@ class Section < ActiveRecord::Base
 
   friendly_id :title, use: :scoped, scope: :guide
 
+  default_scope { order(created_at: :asc) }
+
   def content_html
     Redcarpet::Markdown.new(Redcarpet::Render::HTML, autolink: true).render(content || '')
   end

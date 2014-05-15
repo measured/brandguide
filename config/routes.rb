@@ -10,6 +10,7 @@ constraints subdomain: /^admin$/ do
       get '/guides/:guide_id.json', to: 'guides#show'
       post '/guides.json', to: 'guides#create'
       post '/guides/:guide_id.json', to: 'guides#update'
+      post '/guides/:guide_id/upload.json', to: 'guides#upload'
 
       root to: 'admin#index'
 

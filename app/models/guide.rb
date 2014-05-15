@@ -18,6 +18,8 @@ class Guide < ActiveRecord::Base
 
   friendly_id :title, use: :slugged
 
+  default_scope { order(created_at: :asc) }
+
   def api_attributes
     {
       id: id,
