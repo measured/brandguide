@@ -347,7 +347,8 @@ var AssetGroup = React.createClass({
   getInitialState: function() {
     return {
       drag: null,
-      displayMode: 'list'
+      displayMode: 'list',
+      selectedAssets: []
     }
   },
   changeTitle: function(event) {
@@ -386,7 +387,20 @@ var AssetGroup = React.createClass({
     var displayMode = this.state.displayMode === 'list' ? 'grid' : 'list';
     this.setState({ displayMode: displayMode });
   },
+  toggleAssetSelection: function(id, event) {
+    var selectedAssets = this.state.selectedAssets;
+
+    if(selectedAssets.indexOf(id) === -1) {
+      selectedAssets.push(id);
+    } else {
+      selectedAssets.splice(selectedAssets.indexOf(id), 1);
+    }
+
+    this.setState({ selectedAssets: selectedAssets });
+  },
   render: function() {
+    var self = this;
+
     var mtime = moment.unix(this.props.assetGroup.mtime).fromNow();
 
     var displayModeIcon = this.state.displayMode === 'list' ? 'rows' : 'thumbnails';
@@ -396,9 +410,13 @@ var AssetGroup = React.createClass({
         backgroundImage: 'url('+asset.images.thumbnail+')'
       }
 
+      var selected = self.state.selectedAssets.indexOf(asset.id) !== -1;
+
       return (
-        <li className="asset" key={asset.id}>
-          <div className="image" style={style}></div>
+        <li className="asset" key={asset.id} data-selected={selected}>
+          <div className="image" style={style}>
+            <input type="checkbox" className="selectImage" checked={selected} onChange={self.toggleAssetSelection.bind(self, asset.id)} />
+          </div>
           <div className="filename">
             <span className="name">{asset.name}</span>
             <span className="size">{asset.size}</span>
