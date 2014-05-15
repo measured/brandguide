@@ -389,6 +389,8 @@ var AssetGroup = React.createClass({
   render: function() {
     var mtime = moment.unix(this.props.assetGroup.mtime).fromNow();
 
+    var displayModeIcon = this.state.displayMode === 'list' ? 'rows' : 'thumbnails';
+
     var assets = this.props.assetGroup.assets.map(function(asset) {
       var style = {
         backgroundImage: 'url('+asset.images.thumbnail+')'
@@ -425,9 +427,9 @@ var AssetGroup = React.createClass({
         <div className="assetsListContainer">
           <div className="meta">
             <h2>{assets.length} Files</h2>
-            <Button className="displayMode plain" icon={this.state.displayMode || 'list'} onClick={this.toggleDisplayMode} />
+            <Button className="displayMode plain" icon={displayModeIcon} onClick={this.toggleDisplayMode} />
           </div>
-          <ul className="assetsList" data-display-mode={this.state.displayMode || 'list'}>{assets}</ul>
+          <ul className="assetsList" data-display-mode={this.state.displayMode}>{assets}</ul>
         </div>
         <footer>
           <div className="text"><Icon name="clock" /> Updated {mtime}</div>
