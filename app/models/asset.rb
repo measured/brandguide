@@ -5,7 +5,6 @@ class Asset < ActiveRecord::Base
   has_many :asset_bundle_assets
   has_many :asset_bundles, through: :asset_bundle_assets
 
-  # scope :images, -> { where(file_image: true) }
   scope :images, -> { where(file_format: [:jpeg, :jpg, :gif, :png]) }
   default_scope { order(created_at: :asc) }
 
@@ -42,7 +41,7 @@ class Asset < ActiveRecord::Base
     end
 
     if file.mime_type.match /image/
-      file.thumb('120x120#').url
+      file.thumb('120x120^').url
     else
       "/assets/thumbnail_#{ext}.svg"
     end
