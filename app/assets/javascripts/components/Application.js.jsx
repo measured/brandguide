@@ -56,11 +56,11 @@ var GuideModel = function(attributes) {
     var attributes = this.toJSON();
 
     attributes.sections_attributes = _.clone(attributes.sections);
-    delete attributes.sections;
+    // delete attributes.sections;
 
     _.each(attributes.sections_attributes, function(section) {
       section.asset_groups_attributes = _.clone(section.asset_groups);
-      delete section.asset_groups;
+      // delete section.asset_groups;
     });
 
     $.post('/guides/'+this.toJSON().slug+'.json', {
@@ -445,6 +445,7 @@ var AssetGroup = React.createClass({
         <div className="assetsListContainer">
           <div className="meta">
             <h2>{assets.length} Files</h2>
+            <span className="size">{this.props.assetGroup.size}</span>
             <Button className="displayMode plain" icon={displayModeIcon} onClick={this.toggleDisplayMode} />
           </div>
           <ul className="assetsList" data-display-mode={this.state.displayMode}>{assets}</ul>

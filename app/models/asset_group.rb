@@ -8,11 +8,14 @@ class AssetGroup < ActiveRecord::Base
 
   default_scope { order(created_at: :asc) }
 
+  include ActionView::Helpers::NumberHelper
+
   def api_attributes
     {
       id: id,
       title: title,
       assets: assets.map(&:api_attributes),
+      size: number_to_human_size(assets.map(&:file).map(&:size).inject(:+)),
       ctime: created_at.to_i,
       mtime: updated_at.to_i
     }
