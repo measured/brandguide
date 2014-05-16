@@ -390,13 +390,11 @@ var AssetGroup = React.createClass({
     event.stopPropagation();
     event.preventDefault();
 
-    if(this.state.drag !== 'drop') this.setState({ dragState: 'drop' });
-
     var guide = GuideStore.find(this.props.guide.slug);
 
     guide.uploadAssets(this.props.section.slug, this.props.assetGroup.id, event.dataTransfer.files);
 
-    return false;
+    this.setState({ drag: 'drop' });
   },
   toggleDisplayMode: function() {
     var displayMode = this.state.displayMode === 'list' ? 'grid' : 'list';
@@ -828,6 +826,12 @@ var Application = React.createClass({
     this.setState(this.getInitialState());
     this.setXhrHeaders();
   },
+  handleDragOver: function(event) {
+    event.preventDefault();
+  },
+  handleDrop: function(event) {
+    event.preventDefault();
+  },
   componentWillMount: function() {
     this.setXhrHeaders();
   },
@@ -851,7 +855,7 @@ var Application = React.createClass({
       (<LoginPage onLogin={this.login} />);
 
     return (
-      <div className="Application" data-ajax-state={this.state.ajax}>
+      <div className="Application" data-ajax-state={this.state.ajax} onDragOver={this.handleDragOver} onDrop={this.handleDrop}>
         <Spinner show={this.state.ajax === 'start'} />
         {viewComponent}
       </div>
