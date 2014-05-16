@@ -368,17 +368,23 @@ var AssetGroup = React.createClass({
     var guide = GuideStore.find(this.props.guide.slug);
     guide.deleteAssetGroupFromSection(this.props.section.slug, this.props.assetGroup.id);
   },
+  handleDragStart: function(event) {
+    event.preventDefault();
+    event.dataTransfer.effectAllowed = 'copyMove';
+    this.setState({ drag: 'start' });
+  },
   handleDragEnter: function(event) {
     event.preventDefault();
-    if(this.state.drag !== 'enter') this.setState({ drag: 'enter' });
+    this.setState({ drag: 'enter' });
   },
   handleDragOver: function(event) {
     event.preventDefault();
-    // if(this.state.drag !== 'over') this.setState({ drag: 'over' });
+    event.dataTransfer.dropEffect = 'copy';
+    this.setState({ drag: 'over' });
   },
   handleDragLeave: function(event) {
     event.preventDefault();
-    // if(this.state.drag !== 'leave') this.setState({ drag: 'leave' });
+    this.setState({ drag: 'leave' });
   },
   handleDrop: function(event) {
     event.stopPropagation();
@@ -437,6 +443,7 @@ var AssetGroup = React.createClass({
     return (
       <div
         className="AssetGroup"
+        onDragStart={this.handleDragStart}
         onDragEnter={this.handleDragEnter}
         onDragOver={this.handleDragOver}
         onDrop={this.handleDrop}
