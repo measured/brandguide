@@ -277,17 +277,14 @@ var DrawerSectionsListItem = React.createClass({
     Dispatcher.trigger('navigate', '/'+this.props.guide.slug+'/'+this.props.section.slug);
   },
   render: function() {
+    var icon = this.props.selected ? 'navigateright' : 'navigateright';
+
     return (
       <li className="DrawerSectionsListItem" data-selected={this.props.selected}>
         <a onClick={this.handleClick} href={'/'+this.props.guide.slug+'/'+this.props.section.slug}>
-          <span>{this.props.section.title}</span><Icon className="plain" name="navigateright" />
+          <span>{this.props.section.title}</span><Icon className="plain" name={icon} />
         </a>
-        <ul>
-          <li><a href="#">Section</a></li>
-          <li><a href="#">Section</a></li>
-          <li><a href="#">Section</a></li>
-          <li><a href="#">Section</a></li>
-        </ul>
+        <ul></ul>
       </li>
     );
   }
