@@ -1,5 +1,5 @@
 class AssetGroup < ActiveRecord::Base
-  belongs_to :section
+  belongs_to :section, touch: true
   has_many :assets
 
   accepts_nested_attributes_for :assets

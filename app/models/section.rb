@@ -1,7 +1,7 @@
 class Section < ActiveRecord::Base
   extend FriendlyId
 
-  belongs_to :guide
+  belongs_to :guide, touch: true
 
   validates :title, presence: true
 
