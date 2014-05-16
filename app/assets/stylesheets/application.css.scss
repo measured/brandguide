@@ -458,6 +458,34 @@ em {
       border-radius: 16px;
       overflow: hidden;
       margin: 12px;
+      position: relative;
+
+      // &[data-drag-state="over"] .dropHint,
+      // &[data-drag-state="enter"] .dropHint {
+      //   display: flex;
+      // }
+      .dropHint {
+        display: none;
+        position: absolute;
+        top: -1px; left: -1px;
+        bottom: -1px; right: -1px;
+        border: 6px dotted lighten(black, 85%);
+        border-radius: 16px;
+        background: transparentize(white, 0.15);
+        z-index: 5;
+        > div {
+          margin: auto;
+          text-align: center;
+        }
+        span {
+          display: block;
+          margin-top: 8px;
+        }
+        .Icon {
+          font-size: 72px;
+        }
+      }
+
       .assetsListContainer {
         width: 320px;
         height: 320px;
@@ -469,9 +497,6 @@ em {
           display: flex;
           margin: 12px 8px 8px;
 
-          h2 {
-            // flex: 1;
-          }
           .size {
             flex: 1;
             margin-left: 8px;
@@ -479,6 +504,7 @@ em {
           }
         }
       }
+
       ul.assetsList {
         flex: 1;
         margin: 0 8px;

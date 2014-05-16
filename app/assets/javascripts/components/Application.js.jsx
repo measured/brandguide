@@ -361,21 +361,21 @@ var AssetGroup = React.createClass({
   },
   handleDragEnter: function(event) {
     event.preventDefault();
-    this.setState({ drag: 'enter' });
+    if(this.state.drag !== 'enter') this.setState({ drag: 'enter' });
   },
   handleDragOver: function(event) {
     event.preventDefault();
-    this.setState({ drag: 'over' });
+    if(this.state.drag !== 'over') this.setState({ drag: 'over' });
   },
   handleDragLeave: function(event) {
     event.preventDefault();
-    this.setState({ drag: 'leave' });
+    if(this.state.drag !== 'leave') this.setState({ drag: 'leave' });
   },
   handleDrop: function(event) {
     event.stopPropagation();
     event.preventDefault();
 
-    this.setState({ dragState: 'drop' });
+    if(this.state.drag !== 'drop') this.setState({ dragState: 'drop' });
 
     var guide = GuideStore.find(this.props.guide.slug);
 
@@ -400,6 +400,8 @@ var AssetGroup = React.createClass({
   },
   render: function() {
     var self = this;
+
+    console.log('called render');
 
     var mtime = moment.unix(this.props.assetGroup.mtime).fromNow();
 
@@ -433,6 +435,12 @@ var AssetGroup = React.createClass({
         onDrop={this.handleDrop}
         onDragLeave={this.handleDragLeave}
         data-drag-state={this.state.drag}>
+        <div className="dropHint">
+          <div>
+            <Icon name="upload" />
+            <span>Drop to upload files</span>
+          </div>
+        </div>
         <header>
           <div className="symbol"></div>
           <div className="title">
@@ -548,7 +556,8 @@ var SectionEditor = React.createClass({
               guide={this.props.guide} />
             
             <ButtonGroup>
-              <Button onClick={this.addAssetGroup} text="Add Assets" icon="plus" />
+              <Button onClick={this.addAssetGroup} text="Add Asset Group" icon="plus" />
+              <Button onClick={this.addAssetGroup} text="Add Colour" icon="eyedropper" />
               <span className="spacer" />
               <Button onClick={this.deleteSection} text="Delete Page" icon="trash" />
               <Button onClick={this.saveChanges} className="green" text="Save Changes" icon="check" />
