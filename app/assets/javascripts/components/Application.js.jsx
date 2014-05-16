@@ -59,19 +59,21 @@ var GuideModel = function(attributes) {
 
     var attributes = clone(this.toJSON());
 
-    attributes.sections_attributes = clone(attributes.sections);
-    delete attributes.sections;
+    if(attributes.sections) {
+      attributes.sections_attributes = clone(attributes.sections);
+      delete attributes.sections;
 
-    _.each(attributes.sections_attributes, function(section) {
-      section.asset_groups_attributes = clone(section.asset_groups);
-      delete attributes.asset_groups;
-      
-      _.each(section.asset_groups_attributes, function(asset_group) {
-        asset_group.assets_attributes = _.clone(asset_group.assets);
-        delete asset_group.assets;
-      });
-    });
-
+      _.each(attributes.sections_attributes, function(section) {
+        section.asset_groups_attributes = clone(section.asset_groups);
+        delete attributes.asset_groups;
+        
+        _.each(section.asset_groups_attributes, function(asset_group) {
+          asset_group.assets_attributes = _.clone(asset_group.assets);
+          delete asset_group.assets;
+        });
+      });  
+    }
+    
     var slug = this.toJSON().slug;
 
     var postUrl = slug ? '/guides/'+slug+'.json' : '/guides.json';
