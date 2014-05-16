@@ -24,7 +24,7 @@ class Section < ActiveRecord::Base
     {
       id: id,
       slug: slug,
-      title: title,
+      title: (title || 'Untitled'),
       content: content,
       asset_groups: asset_groups.map(&:api_attributes),
       ctime: created_at.to_i,

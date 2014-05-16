@@ -24,7 +24,7 @@ class Guide < ActiveRecord::Base
     {
       id: id,
       slug: slug,
-      title: title,
+      title: (title || 'Untitled'),
       sections: sections.order('created_at asc').map(&:api_attributes),
       ctime: created_at.to_i,
       mtime: updated_at.to_i

@@ -13,7 +13,7 @@ class AssetGroup < ActiveRecord::Base
   def api_attributes
     {
       id: id,
-      title: title,
+      title: (title || 'Untitled'),
       assets: assets.map(&:api_attributes),
       size: number_to_human_size(assets.map(&:file).map(&:size).inject(:+)),
       ctime: created_at.to_i,

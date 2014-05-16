@@ -114,7 +114,7 @@ var GuideModel = function(attributes) {
   this.addAssetGroupToSection = function(id) {
     var section = this.findSection(id);
     section.asset_groups.push({
-      title: null,
+      title: 'Untitled',
       assets: []
     });
 
@@ -259,7 +259,7 @@ var DrawerSectionsListItem = React.createClass({
     return (
       <li className="DrawerSectionsListItem" data-selected={this.props.selected}>
         <a onClick={this.handleClick} href={'/'+this.props.guide.slug+'/'+this.props.section.slug}>
-          <span>{this.props.section.title || 'Untitled'}</span><Icon className="plain" name="navigateright" />
+          <span>{this.props.section.title}</span><Icon className="plain" name="navigateright" />
         </a>
         <ul>
           <li><a href="#">Section</a></li>
@@ -315,7 +315,7 @@ var Drawer = React.createClass({
         <div className="contents" onClick={this.props.onOpenDrawer}>
           <header>
             <Button onClick={this.handleBack} className="back plain" icon="back" />
-            <h2>{this.props.guide.title || 'Untitled'}</h2>
+            <h2>{this.props.guide.title}</h2>
             <Button className="settings plain" icon="gear" />
           </header>
           <div className="content">
@@ -374,11 +374,11 @@ var AssetGroup = React.createClass({
   },
   handleDragOver: function(event) {
     event.preventDefault();
-    if(this.state.drag !== 'over') this.setState({ drag: 'over' });
+    // if(this.state.drag !== 'over') this.setState({ drag: 'over' });
   },
   handleDragLeave: function(event) {
     event.preventDefault();
-    if(this.state.drag !== 'leave') this.setState({ drag: 'leave' });
+    // if(this.state.drag !== 'leave') this.setState({ drag: 'leave' });
   },
   handleDrop: function(event) {
     event.stopPropagation();
@@ -451,7 +451,7 @@ var AssetGroup = React.createClass({
         <header>
           <div className="symbol"></div>
           <div className="title">
-            <input value={this.props.assetGroup.title || 'Untitled'} onChange={this.changeTitle} />
+            <input value={this.props.assetGroup.title} onChange={this.changeTitle} />
           </div>
           <div className="buttons">
             <Button icon="delete" className="plain" onClick={this.handleDelete} />
@@ -564,7 +564,7 @@ var SectionEditor = React.createClass({
             
             <ButtonGroup>
               <Button onClick={this.addAssetGroup} text="Add Asset Group" icon="plus" />
-              <Button onClick={this.addAssetGroup} text="Add Colour" icon="eyedropper" style={{display:'none'}} />
+              <Button onClick={this.addAssetGroup} text="Add Colour" icon="eyedropper" />
               <span className="spacer" />
               <Button onClick={this.deleteSection} text="Delete Page" icon="trash" />
               <Button onClick={this.saveChanges} className="green" text="Save Changes" icon="check" />
@@ -713,24 +713,6 @@ var GuideEditPage = React.createClass({
   },
   render: function() {
     var guide = this.state.guide || {};
-
-    // <Drawer
-    //   guide={guide}
-    //   onAddSection={this.addSection}
-    //   open={this.state.drawerOpen}
-    //   onToggle={this.toggleDrawer}
-    //   onSelectSection={this.selectSection} />
-    // <SectionEditor
-    //   guide={this.state.guide}
-    //   onTitleChange={this.changeSectionTitle}
-    //   onContentChange={this.changeSectionContent}
-    //   onSaveChanges={this.updateSection}
-    //   section={this.state.editorSection}
-    //   guideHasSections={guideHasSections}
-    //   onDelete={this.deleteSection}
-    //   onAddAssetGroup={this.addAssetGroup}
-    //   onAssetUploaded={this.assetUploaded}
-    //   onAssetGroupDeleted={this.assetGroupDeleted} />
 
     return (
       <div className="GuideEditPage">
