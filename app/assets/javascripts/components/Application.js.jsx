@@ -63,10 +63,19 @@ var GuideModel = function(attributes) {
       // delete section.asset_groups;
     });
 
-    $.post('/guides/'+this.toJSON().slug+'.json', {
+    var slug = this.toJSON().slug;
+
+    var postUrl = slug ? '/guides/'+slug+'.json' : '/guides.json';
+
+    $.post(postUrl, {
       guide: attributes
     }).done(function(response) {
-      self.parse(response);
+      if(slug) {
+        self.parse(response);  
+      } else {
+        GuideStore.parse(response);
+      }
+      
       if(typeof callback === 'function') callback();
     });
   }
@@ -401,8 +410,6 @@ var AssetGroup = React.createClass({
   render: function() {
     var self = this;
 
-    console.log('called render');
-
     var mtime = moment.unix(this.props.assetGroup.mtime).fromNow();
 
     var displayModeIcon = this.state.displayMode === 'list' ? 'rows' : 'thumbnails';
@@ -557,7 +564,7 @@ var SectionEditor = React.createClass({
             
             <ButtonGroup>
               <Button onClick={this.addAssetGroup} text="Add Asset Group" icon="plus" />
-              <Button onClick={this.addAssetGroup} text="Add Colour" icon="eyedropper" />
+              <Button onClick={this.addAssetGroup} text="Add Colour" icon="eyedropper" style={{display:'none'}} />
               <span className="spacer" />
               <Button onClick={this.deleteSection} text="Delete Page" icon="trash" />
               <Button onClick={this.saveChanges} className="green" text="Save Changes" icon="check" />
@@ -621,10 +628,8 @@ var GuidesList = React.createClass({
         title: title
       }
 
-      // console.log('GuidesList#createGuide');
-      // $.post('/guides.json', { guide: attributes }, function(response) {
-      //   self.props.onCreateGuide(response.guide);
-      // });
+      var guide = new GuideModel({ title: title });
+      guide.sync();
     }
   },
   render: function() {

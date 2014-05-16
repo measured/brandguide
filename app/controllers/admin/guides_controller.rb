@@ -16,7 +16,7 @@ class Admin::GuidesController < Admin::AdminController
       render json: {
         status: :success,
         data: {
-          guide: guide.api_attributes
+          guides: current_user.guides.map(&:api_attributes)
         }
       }
     else
