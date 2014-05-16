@@ -64,13 +64,17 @@ var GuideModel = function(attributes) {
       delete attributes.sections;
 
       _.each(attributes.sections_attributes, function(section) {
-        section.asset_groups_attributes = clone(section.asset_groups);
-        delete attributes.asset_groups;
-        
-        _.each(section.asset_groups_attributes, function(asset_group) {
-          asset_group.assets_attributes = _.clone(asset_group.assets);
-          delete asset_group.assets;
-        });
+        if(section.asset_groups) {
+          section.asset_groups_attributes = clone(section.asset_groups);
+          delete attributes.asset_groups;
+          
+          _.each(section.asset_groups_attributes, function(asset_group) {
+            if(asset_group.assets) {
+              asset_group.assets_attributes = _.clone(asset_group.assets);
+              delete asset_group.assets;
+            }
+          });
+        }
       });  
     }
     
