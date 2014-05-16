@@ -5,6 +5,10 @@ var LOCALSTORAGE_AUTH_KEY = 'brandguideAuth';
 var Location = ReactRouter.Location;
 var Locations = ReactRouter.Locations;
 
+var clone = function(object) {
+  return JSON.parse(JSON.stringify(object));
+}
+
 var Dispatcher = _.clone(Backbone.Events);
 
 var GuideStore = _.extend(_.clone(Backbone.Events), {
@@ -53,14 +57,19 @@ var GuideModel = function(attributes) {
   this.sync = function(callback) {
     var self = this;
 
-    var attributes = this.toJSON();
+    var attributes = clone(this.toJSON());
 
-    attributes.sections_attributes = _.clone(attributes.sections);
-    // delete attributes.sections;
+    attributes.sections_attributes = clone(attributes.sections);
+    delete attributes.sections;
 
     _.each(attributes.sections_attributes, function(section) {
-      section.asset_groups_attributes = _.clone(section.asset_groups);
-      // delete section.asset_groups;
+      section.asset_groups_attributes = clone(section.asset_groups);
+      delete attributes.asset_groups;
+      
+      _.each(section.asset_groups_attributes, function(asset_group) {
+        asset_group.assets_attributes = _.clone(asset_group.assets);
+        delete asset_group.assets;
+      });
     });
 
     var slug = this.toJSON().slug;
@@ -131,7 +140,7 @@ var GuideModel = function(attributes) {
     return selected.length ? selected[0] : {};
   }
 
-  this.deleteAssetGroupFromSection = function(sectionId, assetGroupId) {
+  this.deleteAssetGroup = function(sectionId, assetGroupId) {
     var assetGroup = this.findAssetGroup(sectionId, assetGroupId);
     assetGroup._destroy = true;
 
@@ -162,6 +171,18 @@ var GuideModel = function(attributes) {
     assetGroup = _.extend(assetGroup, attributes);
 
     GuideStore.trigger('change');
+  }
+
+  this.deleteAssets = function(sectionId, assetGroupId, assetIds) {
+    var assetGroup = this.findAssetGroup(sectionId, assetGroupId);
+
+    _.each(assetGroup.assets, function(asset) {
+      if(assetIds.indexOf(asset.id) !== -1) {
+        asset._destroy = true;
+      }
+    });
+
+    this.sync();
   }
 
   this.toJSON = function() {
@@ -366,7 +387,7 @@ var AssetGroup = React.createClass({
   },
   handleDelete: function(event) {
     var guide = GuideStore.find(this.props.guide.slug);
-    guide.deleteAssetGroupFromSection(this.props.section.slug, this.props.assetGroup.id);
+    guide.deleteAssetGroup(this.props.section.slug, this.props.assetGroup.id);
   },
   handleDragStart: function(event) {
     event.preventDefault();
@@ -411,6 +432,11 @@ var AssetGroup = React.createClass({
 
     this.setState({ selectedAssets: selectedAssets });
   },
+  deleteSelectedAssets: function() {
+    var guide = GuideStore.find(this.props.guide.slug);
+    guide.deleteAssets(this.props.section.slug, this.props.assetGroup.id, this.state.selectedAssets);
+    this.setState({ selectedAssets: [] });
+  },
   render: function() {
     var self = this;
 
@@ -438,6 +464,10 @@ var AssetGroup = React.createClass({
       );
     });
 
+    var deleteButtonStyle = {
+      display: this.state.selectedAssets.length ? 'inline-block' : 'none'
+    }
+
     return (
       <div
         className="AssetGroup"
@@ -447,12 +477,14 @@ var AssetGroup = React.createClass({
         onDrop={this.handleDrop}
         onDragLeave={this.handleDragLeave}
         data-drag-state={this.state.drag}>
+        
         <div className="dropHint">
           <div>
             <Icon name="upload" />
             <span>Drop to upload files</span>
           </div>
         </div>
+        
         <header>
           <div className="symbol"></div>
           <div className="title">
@@ -462,16 +494,23 @@ var AssetGroup = React.createClass({
             <Button icon="delete" className="plain" onClick={this.handleDelete} />
           </div>
         </header>
+        
         <div className="assetsListContainer">
           <div className="meta">
-            <h2>{assets.length} Files</h2>
-            <span className="size">{this.props.assetGroup.size}</span>
+            <div className="left">
+              <h2>{assets.length} Files</h2>
+              <span className="size">{this.props.assetGroup.size}</span>
+              <Button onClick={this.deleteSelectedAssets} style={deleteButtonStyle} className="plain delete" text={this.state.selectedAssets.length} icon="trash" />
+            </div>
             <Button className="displayMode plain" icon={displayModeIcon} onClick={this.toggleDisplayMode} />
           </div>
           <ul className="assetsList" data-display-mode={this.state.displayMode}>{assets}</ul>
         </div>
+        
         <footer>
-          <div className="text"><Icon name="clock" /> Updated {mtime}</div>
+          <div className="text">
+            <span className="mtime"><Icon name="clock" /> Updated {mtime}</span>
+          </div>
         </footer>
       </div>
     );
@@ -703,7 +742,6 @@ var GuideEditPage = React.createClass({
     }
   },
   guideStoreChanged: function() {
-    console.log('guideStoreChanged');
     this.setState({ guide: GuideStore.find(this.props.guideId).toJSON() });
     this.selectSection();
   },

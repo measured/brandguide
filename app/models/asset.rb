@@ -8,6 +8,8 @@ class Asset < ActiveRecord::Base
   scope :images, -> { where(file_format: [:jpeg, :jpg, :gif, :png]) }
   default_scope { order(created_at: :asc) }
 
+  validates :file, presence: true, on: :create
+
   attr_accessor :download
 
   include ActionView::Helpers::NumberHelper

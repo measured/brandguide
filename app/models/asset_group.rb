@@ -2,7 +2,7 @@ class AssetGroup < ActiveRecord::Base
   belongs_to :section, touch: true
   has_many :assets
 
-  accepts_nested_attributes_for :assets
+  accepts_nested_attributes_for :assets, allow_destroy: true
 
   delegate :guide, to: :section, allow_nil: true
 

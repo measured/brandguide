@@ -84,7 +84,9 @@ class Admin::GuidesController < Admin::AdminController
       :id, :slug, :title,
       sections_attributes: [
         :id, :slug, :title, :content, :_destroy,
-        asset_groups_attributes: [:id, :title, :_destroy]
+        asset_groups_attributes: [:id, :title, :_destroy,
+          assets_attributes: [:id, :_destroy]
+        ]
       ]
     )
   end

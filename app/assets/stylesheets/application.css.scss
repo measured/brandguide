@@ -321,15 +321,15 @@ em {
     > div {
       width: 100%;
     }
-  }
 
-  .mtime {
-    position: absolute;
-    top: 6px; right: 36px;
-    color: lighten(black, 75%);
-    font-size: 75%;
-    .Icon {
+    form > .mtime {
+      position: absolute;
+      top: 6px; right: 36px;
+      color: lighten(black, 75%);
       font-size: 75%;
+      .Icon {
+        font-size: 75%;
+      }
     }
   }
 
@@ -498,10 +498,16 @@ em {
           display: flex;
           margin: 12px 8px 8px;
 
-          .size {
+          .left {
+            display: flex;
             flex: 1;
-            margin-left: 8px;
-            color: lighten(black, 75%);
+            .size, .delete {
+              color: lighten(black, 75%);
+              margin-left: 8px;
+            }
+            .delete:hover {
+              color: black;
+            }
           }
         }
       }
