@@ -288,7 +288,7 @@ var DrawerSectionsListItem = React.createClass({
     return (
       <li className="DrawerSectionsListItem" data-selected={this.props.selected}>
         <a onClick={this.handleClick} href={'/'+this.props.guide.slug+'/'+this.props.section.slug}>
-          <span>{this.props.section.title}</span><Icon className="plain" name={icon} />
+          <span>{this.props.section.title || 'Untitled'}</span><Icon className="plain" name={icon} />
         </a>
         <ul></ul>
       </li>
@@ -297,6 +297,35 @@ var DrawerSectionsListItem = React.createClass({
 });
 
 var DrawerSectionsList = React.createClass({
+  getInitialState: function() {
+    return {
+      input: {
+        icon: 'plus',
+        placeholder: 'Add Page'
+      }
+    }
+  },
+  handleKeyUp: function() {
+    var input = this.refs.input.getDOMNode();
+
+    if(event.keyCode === 13) {
+      GuideStore.find(this.props.guide.slug).addSection(input.value);
+      input.value = null;
+      input.blur();
+    }
+  },
+  handleInputFocus: function() {
+    this.setState({
+      input: {
+        icon: 'openbook',
+        placeholder: 'Enter title'
+      }
+    });
+  },
+  handleInputBlur: function() {
+    this.setState({ input: this.getInitialState().input });
+    this.refs.input.getDOMNode().value = null;
+  },
   render: function() {
     var self = this;
 
@@ -315,6 +344,9 @@ var DrawerSectionsList = React.createClass({
     return (
       <ul className="DrawerSectionsList">
         {drawerSectionsListItems}
+        <li className="addPage">
+          <Icon name={this.state.input.icon} /><input onFocus={this.handleInputFocus} onBlur={this.handleInputBlur} type="text" ref="input" placeholder={this.state.input.placeholder} onKeyUp={this.handleKeyUp} />
+        </li>
       </ul>
     );
   }
@@ -327,11 +359,6 @@ var Drawer = React.createClass({
   },
   handleBack: function() {
     Dispatcher.trigger('navigate', '/');
-  },
-  addSection: function() {
-    if(title = prompt('Enter Title')) {
-      GuideStore.find(this.props.guide.slug).addSection(title);
-    }
   },
   render: function() {
     return (
@@ -346,7 +373,6 @@ var Drawer = React.createClass({
             <h3>Pages</h3>
 
             <DrawerSectionsList guide={this.props.guide} section={this.props.section} />
-            <Button onClick={this.addSection} text="Add Page" icon="openbook" />
           </div>
         </div>
         <div className="toggle">

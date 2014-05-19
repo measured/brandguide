@@ -271,6 +271,30 @@ em {
   .DrawerSectionsList {
     border-top: 1px solid darken($drawerBackgroundColor, 10%);
     margin-bottom: 12px;
+    li.addPage {
+      display: flex;
+      border-bottom: 1px solid darken($drawerBackgroundColor, 10%);
+      .Icon {
+        font-size: 75%;
+        line-height: 0;
+        margin: auto;
+        margin-right: 8px;
+        position: relative;
+        top: 2px;
+      }
+      input {
+        padding: 8px 12px;
+        padding-left: 0;
+        width: 100%;
+        outline: none;
+        border: none;
+        background: none;
+        cursor: pointer;
+        &::placeholder {
+          color: inherit;
+        }
+      }
+    }
     .DrawerSectionsListItem {
       a {
         display: flex;
