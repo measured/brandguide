@@ -862,10 +862,12 @@ var Application = React.createClass({
   logout: function() {
     localStorage.removeItem(LOCALSTORAGE_AUTH_KEY);
     this.setState(this.getInitialState());
+    window.location.href = '/';
   },
   login: function() {
     this.setState(this.getInitialState());
     this.setXhrHeaders();
+    window.location.href = '/';
   },
   handleDragOver: function(event) {
     event.preventDefault();
