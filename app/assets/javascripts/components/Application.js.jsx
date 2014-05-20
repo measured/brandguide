@@ -23,14 +23,14 @@ var GuideStore = _.extend(_.clone(Backbone.Events), {
   fetch: function() {
     $.get('/guides.json', this.parse.bind(this))
   },
-  toJSON: function() {
+  attributes: function() {
     return this.collection.map(function(guide) {
       return guide.attributes;
     });
   },
   find: function(id) {
     var selections = _.select(this.collection, function(guide) {
-      return guide.toJSON().slug === id;
+      return guide.attributes.slug === id;
     });
 
     return selections.length ? selections[0] : new GuideModel({});
@@ -45,7 +45,7 @@ var GuideModel = function(attributes) {
   if(typeof attributes === 'object') this.attributes = attributes;
   
   this.fetch = function() {
-    var slug = this.toJSON().slug;
+    var slug = this.attributes.slug;
     $.get('/guides/'+slug+'.json').done(this.parse.bind(this));
   }
 
@@ -57,7 +57,7 @@ var GuideModel = function(attributes) {
   this.sync = function(callback) {
     var self = this;
 
-    var attributes = clone(this.toJSON());
+    var attributes = clone(this.attributes);
 
     if(attributes.sections) {
       attributes.sections_attributes = clone(attributes.sections);
@@ -78,7 +78,7 @@ var GuideModel = function(attributes) {
       });  
     }
     
-    var slug = this.toJSON().slug;
+    var slug = this.attributes.slug;
 
     var postUrl = slug ? '/guides/'+slug+'.json' : '/guides.json';
 
@@ -96,7 +96,7 @@ var GuideModel = function(attributes) {
   }
 
   this.findSection = function(id) {
-    var selections = _.select(this.toJSON().sections, function(section) {
+    var selections = _.select(this.attributes.sections, function(section) {
       return section.slug === id;
     });
 
@@ -104,7 +104,7 @@ var GuideModel = function(attributes) {
   }
 
   this.childrenOfSection = function(id) {
-    return _.select(this.toJSON().sections, function(section) {
+    return _.select(this.attributes.sections, function(section) {
       return section.parent_id === id;
     });
   }
@@ -172,7 +172,7 @@ var GuideModel = function(attributes) {
     assetGroupId = assetGroupId ? assetGroupId : '';
 
     $.ajax({
-      url: '/guides/'+this.toJSON().slug+'/upload.json?section_id='+sectionId+'&asset_group_id='+assetGroupId,
+      url: '/guides/'+this.attributes.slug+'/upload.json?section_id='+sectionId+'&asset_group_id='+assetGroupId,
       data: formData,
       processData: false,
       contentType: false,
@@ -198,10 +198,6 @@ var GuideModel = function(attributes) {
     });
 
     this.sync();
-  }
-
-  this.toJSON = function() {
-    return this.attributes;
   }
 }
 
@@ -796,7 +792,7 @@ var GuidesList = React.createClass({
 var GuidesListPage = React.createClass({
   getInitialState: function() {
     return {
-      guides: GuideStore.toJSON()
+      guides: GuideStore.attributes()
     }
   },
   componentDidMount: function() {
@@ -806,7 +802,7 @@ var GuidesListPage = React.createClass({
     GuideStore.off('change', this.guideStoreChanged);
   },
   guideStoreChanged: function() {
-    this.setState({ guides: GuideStore.toJSON() });
+    this.setState({ guides: GuideStore.attributes() });
   },
   render: function() {
     return (
@@ -822,7 +818,7 @@ var GuideEditPage = React.createClass({
     return {
       section: null,
       drawerOpen: true,
-      guide: GuideStore.find(this.props.guideId).toJSON()
+      guide: GuideStore.find(this.props.guideId).attributes
     }
   },
   componentWillMount: function() {
@@ -837,7 +833,7 @@ var GuideEditPage = React.createClass({
     }
   },
   guideStoreChanged: function() {
-    this.setState({ guide: GuideStore.find(this.props.guideId).toJSON() });
+    this.setState({ guide: GuideStore.find(this.props.guideId).attributes });
     this.selectSection();
   },
   selectSection: function() {
