@@ -1,0 +1,25 @@
+var GuideStore = _.extend(_.clone(Backbone.Events), {
+  collection: [],
+  selected: {},
+  parse: function(response) {
+    this.collection = _.map(response.data.guides, function(attributes) {
+      return new GuideModel(attributes);
+    });
+    this.trigger('change');
+  },
+  fetch: function() {
+    $.get('/guides.json', this.parse.bind(this))
+  },
+  attributes: function() {
+    return this.collection.map(function(guide) {
+      return guide.attributes;
+    });
+  },
+  find: function(id) {
+    var selections = _.select(this.collection, function(guide) {
+      return guide.attributes.slug === id;
+    });
+
+    return selections.length ? selections[0] : new GuideModel({});
+  }
+});

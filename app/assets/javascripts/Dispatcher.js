@@ -1,0 +1,1 @@
+var Dispatcher = _.clone(Backbone.Events);

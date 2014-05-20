@@ -8,6 +8,9 @@
 //= require bower_components/react-async/react-async
 //= require bower_components/react-router-component/react-router-component
 
+//= require Dispatcher
+//= require GuideStore
+//= require GuideModel
 //= require_tree ./components
 
 React.renderComponent(Application(), document.body);
