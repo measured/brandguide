@@ -280,7 +280,7 @@ var Header = React.createClass({
 var DrawerSectionsListItem = React.createClass({
   handleClick: function(event) {
     event.preventDefault();
-    Dispatcher.trigger('navigate', '/'+this.props.guide.slug+'/'+this.props.section.slug);
+    Dispatcher.trigger('navigate', '/'+this.props.guide.slug+'/'+this.props.section.slug, { replace: true });
   },
   render: function() {
     var icon = this.props.selected ? 'navigateright' : 'navigateright';
@@ -799,8 +799,8 @@ var AdminPage = React.createClass({
   componentDidMount: function() {
     var self = this;
 
-    Dispatcher.on('navigate', function(path) {
-      self.refs.router.navigate(path);
+    Dispatcher.on('navigate', function(path, options) {
+      self.refs.router.navigate(path, options);
     });
 
     GuideStore.fetch();
