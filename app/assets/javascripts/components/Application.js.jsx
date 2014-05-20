@@ -330,7 +330,7 @@ var DrawerSectionsListItem = React.createClass({
 
     var children = guide.childrenOfSection(this.props.section.id).map(function(child) {
       return (
-        <li><a onClick={self.handleClick} href={'/'+self.props.guide.slug+'/'+child.slug}><span>{child.title}</span></a></li>
+        <li key={child.id}><a onClick={self.handleClick} href={'/'+self.props.guide.slug+'/'+child.slug}><span>{child.title}</span></a></li>
       );
     });
 
@@ -475,6 +475,11 @@ var AssetGroup = React.createClass({
     var guide = GuideStore.find(this.props.guide.slug);
     guide.updateSectionAssetGroup(this.props.section.slug, this.props.assetGroup.id, { title: event.target.value });
   },
+  handleInputKeyUp: function(event) {
+    if([27,13].indexOf(event.keyCode) !== -1) {
+      event.target.blur();
+    }
+  },
   handleDelete: function(event) {
     var guide = GuideStore.find(this.props.guide.slug);
     guide.deleteAssetGroup(this.props.section.slug, this.props.assetGroup.id);
@@ -578,7 +583,7 @@ var AssetGroup = React.createClass({
         <header>
           <div className="symbol"></div>
           <div className="title">
-            <input value={this.props.assetGroup.title} onChange={this.changeTitle} />
+            <input value={this.props.assetGroup.title} onKeyUp={this.handleInputKeyUp} onChange={this.changeTitle} />
           </div>
           <div className="buttons">
             <Button icon="delete" className="plain" onClick={this.handleDelete} />
@@ -697,7 +702,7 @@ var SectionEditor = React.createClass({
               guide={this.props.guide} />
             
             <ButtonGroup>
-              <Button onClick={this.addAssetGroup} text="Add Asset Group" icon="plus" />
+              <Button onClick={this.addAssetGroup} text="Add Asset Group" icon="attachment" />
               <Button onClick={this.addAssetGroup} text="Add Colour" icon="eyedropper" />
               <span className="spacer" />
               <Button onClick={this.deleteSection} text="Delete Page" icon="trash" />
@@ -711,20 +716,20 @@ var SectionEditor = React.createClass({
       
       if(this.props.guide.sections && this.props.guide.sections.length) {
         message.icon = 'list';
-        message.text = ['Select a page', <br />, 'to edit'];
+        message.text = (<p>Select a page<br />to edit</p>);
       } else {
         message.icon = 'openbook';
-        message.text = ['Add a page', <br />, 'to get started'];
+        message.text = (<p>Add a page<br />to get started</p>);
       }
 
       var viewComponent = (
         <div className="noSectionsMessage">
           <div>
             <div className="book"><Icon name={message.icon} /></div>
-            <p>{message.text}</p>
+            {message.text}
           </div>
         </div>
-      )
+      );
     }
 
     return (
