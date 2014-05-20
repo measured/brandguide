@@ -46,7 +46,7 @@ class Admin::GuidesController < Admin::AdminController
     render json: {
       status: :success,
       data: {
-        guide: guide.api_attributes
+        guides: current_user.guides.map(&:api_attributes)
       }
     }
   end
@@ -83,7 +83,7 @@ class Admin::GuidesController < Admin::AdminController
     params.require(:guide).permit(
       :id, :slug, :title,
       sections_attributes: [
-        :id, :slug, :title, :content, :_destroy,
+        :id, :slug, :title, :content, :_destroy, :parent_id,
         asset_groups_attributes: [:id, :title, :_destroy,
           assets_attributes: [:id, :_destroy]
         ]

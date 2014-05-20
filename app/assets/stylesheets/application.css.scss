@@ -270,64 +270,34 @@ em {
 
   .DrawerSectionsList {
     border-top: 1px solid darken($drawerBackgroundColor, 10%);
-    margin-bottom: 12px;
-    li.addPage {
-      display: flex;
+    li[data-selected="false"] ul {
+      display: none;
+    }
+    a, .addSection {
+      display: block;
+      padding: 8px 0;
       border-bottom: 1px solid darken($drawerBackgroundColor, 10%);
+    }
+    ul {
+      margin-left: 12px;
+    }
+    .addSection {
+      display: flex;
+      color: darken($drawerBackgroundColor, 25%);
       .Icon {
         font-size: 75%;
-        line-height: 0;
-        margin: auto;
-        margin-right: 8px;
+        margin-right: 6px;
         position: relative;
         top: 2px;
       }
       input {
-        padding: 8px 12px;
-        padding-left: 0;
-        width: 100%;
-        outline: none;
-        border: none;
         background: none;
+        border: none;
+        flex: 1;
+        outline: none;
         cursor: pointer;
         &::placeholder {
           color: inherit;
-        }
-      }
-    }
-    .DrawerSectionsListItem {
-      a {
-        display: flex;
-        padding: 8px 12px;
-        padding-left: 0;
-        border-bottom: 1px solid darken($drawerBackgroundColor, 10%);
-        span {
-          flex: 1;
-        }
-        .Icon {
-          font-size: 65%;
-          line-height: 0;
-          margin: auto 0;
-          position: relative;
-          top: 1px;
-          color: darken($drawerBackgroundColor, 10%);
-        }
-      }
-
-      ul {
-        display: none;
-        margin-bottom: 12px;
-        a {
-          padding-left: 18px;
-          color: darken($drawerBackgroundColor, 25%);
-        }
-      }
-      
-      &[data-selected="true"] {
-        a {
-          .Icon {
-            color: white;
-          }
         }
       }
     }

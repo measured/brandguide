@@ -28,7 +28,9 @@ class Section < ActiveRecord::Base
       content: content,
       asset_groups: asset_groups.map(&:api_attributes),
       ctime: created_at.to_i,
-      mtime: updated_at.to_i
+      mtime: updated_at.to_i,
+      parent_id: parent_id,
+      path: path.pluck('slug').join('/')
     }
   end
 end

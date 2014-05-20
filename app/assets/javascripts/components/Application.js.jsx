@@ -85,7 +85,7 @@ var GuideModel = function(attributes) {
     $.post(postUrl, {
       guide: attributes
     }).done(function(response) {
-      if(slug) {
+      if(response.guide) {
         self.parse(response);  
       } else {
         GuideStore.parse(response);
@@ -103,9 +103,18 @@ var GuideModel = function(attributes) {
     return selections.length ? selections[0] : {};
   }
 
-  this.addSection = function(title, callback) {
+  this.childrenOfSection = function(id) {
+    return _.select(this.toJSON().sections, function(section) {
+      return section.parent_id === id;
+    });
+  }
+
+  this.addSection = function(title, parent, callback) {
+    var parentId = parent ? this.findSection(parent).id : null;
+
     this.attributes.sections.push({
-      title: title
+      title: title,
+      parent_id: parentId
     });
 
     this.sync(callback);
@@ -278,19 +287,64 @@ var Header = React.createClass({
 });
 
 var DrawerSectionsListItem = React.createClass({
+  getInitialState: function() {
+    return {
+      input: {
+        icon: 'plus',
+        placeholder: 'Add Section'
+      }
+    }
+  },
+  handleKeyUp: function() {
+    var input = this.refs.input.getDOMNode();
+
+    if(event.keyCode === 13) {
+      GuideStore.find(this.props.guide.slug).addSection(input.value, this.props.section.slug);
+    }
+
+    if([13, 27].indexOf(event.keyCode) !== -1) {
+      input.value = null;
+      input.blur();
+    }
+  },
+  handleInputFocus: function() {
+    this.setState({
+      input: {
+        icon: 'openbook',
+        placeholder: 'Enter title'
+      }
+    });
+  },
+  handleInputBlur: function() {
+    this.setState({ input: this.getInitialState().input });
+    this.refs.input.getDOMNode().value = null;
+  },
   handleClick: function(event) {
     event.preventDefault();
-    Dispatcher.trigger('navigate', '/'+this.props.guide.slug+'/'+this.props.section.slug, { replace: true });
+    Dispatcher.trigger('navigate', event.target.pathname, { replace: true });
   },
   render: function() {
-    var icon = this.props.selected ? 'navigateright' : 'navigateright';
+    var self = this;
+    var guide = GuideStore.find(this.props.guide.slug);
+    var icon = this.props.selected ? 'navigatedown' : 'navigateright';
+
+    var children = guide.childrenOfSection(this.props.section.id).map(function(child) {
+      return (
+        <li><a onClick={self.handleClick} href={'/'+self.props.guide.slug+'/'+child.slug}><span>{child.title}</span></a></li>
+      );
+    });
 
     return (
       <li className="DrawerSectionsListItem" data-selected={this.props.selected}>
         <a onClick={this.handleClick} href={'/'+this.props.guide.slug+'/'+this.props.section.slug}>
-          <span>{this.props.section.title || 'Untitled'}</span><Icon className="plain" name={icon} />
+          <span>{this.props.section.title || 'Untitled'}</span>
         </a>
-        <ul></ul>
+        <ul>
+          {children}
+          <li className="addSection">
+            <Icon name={this.state.input.icon} /><input onFocus={this.handleInputFocus} onBlur={this.handleInputBlur} type="text" ref="input" placeholder={this.state.input.placeholder} onKeyUp={this.handleKeyUp} />
+          </li>
+        </ul>
       </li>
     );
   }
@@ -309,7 +363,10 @@ var DrawerSectionsList = React.createClass({
     var input = this.refs.input.getDOMNode();
 
     if(event.keyCode === 13) {
-      GuideStore.find(this.props.guide.slug).addSection(input.value);
+      GuideStore.find(this.props.guide.slug).addSection(input.value, null);
+    }
+
+    if([13, 27].indexOf(event.keyCode) !== -1) {
       input.value = null;
       input.blur();
     }
@@ -330,7 +387,11 @@ var DrawerSectionsList = React.createClass({
     var self = this;
 
     var drawerSectionsListItems = (this.props.guide.sections || []).map(function(section) {
-      var selected = self.props.section ? (self.props.section.slug === section.slug) : false;
+      if(section.parent_id) return;
+
+      var selected = self.props.section ?
+        (self.props.section.slug === section.slug) || (section.id === self.props.section.parent_id) :
+        false;
       
       return (
         <DrawerSectionsListItem
@@ -344,7 +405,7 @@ var DrawerSectionsList = React.createClass({
     return (
       <ul className="DrawerSectionsList">
         {drawerSectionsListItems}
-        <li className="addPage">
+        <li className="addSection">
           <Icon name={this.state.input.icon} /><input onFocus={this.handleInputFocus} onBlur={this.handleInputBlur} type="text" ref="input" placeholder={this.state.input.placeholder} onKeyUp={this.handleKeyUp} />
         </li>
       </ul>
