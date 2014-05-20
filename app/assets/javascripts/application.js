@@ -11,6 +11,7 @@
 //= require Dispatcher
 //= require GuideStore
 //= require GuideModel
+
 //= require_tree ./components
 
 React.renderComponent(Application(), document.body);
