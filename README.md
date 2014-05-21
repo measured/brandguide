@@ -49,6 +49,13 @@ How to set up your local development environment, after cloning the repository.
 
 If `pow` has been installed and linked (try `powder link`), the server will be running and accessible at `http://brandguide.dev/`.
 
+### Possible errors
+
+I had to install the pg gem manually with the following command, pretty sure it was a mavericks bug:
+
+`gem install pg -- --with-pg-config=/Applications/Postgres.app/Contents/Versions/9.3/bin/pg_config`
+
+
 ## Production
 
 First, add the Heroku remote repository
