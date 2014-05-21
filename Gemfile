@@ -29,6 +29,9 @@ gem 'puma'
 group :development do
   gem 'powder'
   gem 'letter_opener'
+  gem 'guard'
+  gem 'guard-livereload', require: false
+  gem 'rack-livereload'
 end
 
 group :production do
