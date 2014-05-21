@@ -84,30 +84,38 @@ var DrawerSectionsListItem = React.createClass({
     this.setState({ input: this.getInitialState().input });
     this.refs.input.getDOMNode().value = null;
   },
-  handleClick: function(event) {
-    event.preventDefault();
-    Dispatcher.emit('navigate', event.target.pathname, { replace: true });
+  handleClick: function(href, event) {
+    if(event) event.preventDefault();
+    Dispatcher.emit('navigate', href, { replace: true });
   },
   render: function() {
     var self = this;
     var guide = GuideStore.find(this.props.guide.slug);
-    var icon = this.props.selected ? 'navigatedown' : 'navigateright';
 
     var children = guide.childrenOfSection(this.props.section.id).map(function(child) {
+      var href = '/'+self.props.guide.slug+'/'+child.slug;
+
       return (
-        <li key={child.id}><a onClick={self.handleClick} href={'/'+self.props.guide.slug+'/'+child.slug}><span>{child.title}</span></a></li>
+        <li key={child.id}>
+          <a onClick={self.handleClick.bind(self, href)} href={href}>
+            <span>{child.title}</span>
+          </a>
+        </li>
       );
     });
 
+    var href = '/'+this.props.guide.slug+'/'+this.props.section.slug;
+
     return (
       <li className="DrawerSectionsListItem" data-selected={this.props.selected}>
-        <a onClick={this.handleClick} href={'/'+this.props.guide.slug+'/'+this.props.section.slug}>
+        <a onClick={this.handleClick.bind(this, href)} href={href}>
           <span>{this.props.section.title || 'Untitled'}</span>
         </a>
         <ul>
           {children}
           <li className="addSection">
-            <Icon name={this.state.input.icon} /><input onFocus={this.handleInputFocus} onBlur={this.handleInputBlur} type="text" ref="input" placeholder={this.state.input.placeholder} onKeyUp={this.handleKeyUp} />
+            <Icon name={this.state.input.icon} />
+            <input onFocus={this.handleInputFocus} onBlur={this.handleInputBlur} type="text" ref="input" placeholder={this.state.input.placeholder} onKeyUp={this.handleKeyUp} />
           </li>
         </ul>
       </li>
@@ -196,8 +204,6 @@ var Drawer = React.createClass({
             <Button className="settings plain" icon="gear" />
           </header>
           <div className="content">
-            <h3>Pages</h3>
-
             <DrawerSectionsList guide={this.props.guide} section={this.props.section} />
           </div>
         </div>

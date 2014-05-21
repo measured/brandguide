@@ -270,6 +270,11 @@ em {
 
   .DrawerSectionsList {
     border-top: 1px solid darken($drawerBackgroundColor, 10%);
+    .Icon {
+      font-size: 75%;
+      position: relative;
+      top: 2px;
+    }
     li[data-selected="false"] ul {
       display: none;
     }
@@ -281,14 +286,21 @@ em {
     ul {
       margin-left: 12px;
     }
+    a {
+      display: flex;
+      span {
+        flex: 1;
+      }
+      .Icon {
+        top: 3px;
+        color: darken($drawerBackgroundColor, 25%);
+      }
+    }
     .addSection {
       display: flex;
       color: darken($drawerBackgroundColor, 25%);
       .Icon {
-        font-size: 75%;
         margin-right: 6px;
-        position: relative;
-        top: 2px;
       }
       input {
         background: none;
