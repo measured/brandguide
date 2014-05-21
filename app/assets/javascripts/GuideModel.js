@@ -1,4 +1,12 @@
-var GuideModel = function(attributes) {
+var GuideModel = module.exports = function(attributes) {
+  var $ = require('jquery');
+  var _ = require('underscore');
+  var Backbone = require('backbone');
+
+  var clone = require('./clone');
+
+  var GuideStore = require('./GuideStore');
+
   _.extend(this, Backbone.Events);
 
   if(typeof attributes === 'number') this.attributes = { id: attributes }

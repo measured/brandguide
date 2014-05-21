@@ -24,6 +24,6 @@ module BMS
 
     config.action_mailer.default_url_options = { host: 'brandguide.io' }
 
-    config.react.addons = true
+    config.browserify_rails.commandline_options = ['-t reactify']
   end
 end

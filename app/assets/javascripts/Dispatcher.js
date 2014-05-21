@@ -1,1 +1,4 @@
-var Dispatcher = _.clone(Backbone.Events);
+var _ = require('underscore');
+var Backbone = require('backbone');
+
+var Dispatcher = module.exports = _.clone(Backbone.Events);

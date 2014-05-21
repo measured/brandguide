@@ -1,4 +1,10 @@
-var GuideStore = _.extend(_.clone(Backbone.Events), {
+var $ = require('jquery');
+var _ = require('underscore');
+var Backbone = require('backbone');
+
+var GuideModel = require('./GuideModel');
+
+var GuideStore = module.exports = _.extend(_.clone(Backbone.Events), {
   collection: [],
   selected: {},
   parse: function(response) {
