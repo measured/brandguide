@@ -314,16 +314,22 @@ em {
     flex: 1;
     display: flex;
     > div {
+      display: flex;
       flex: 1;
     }
 
-    form > .mtime {
-      position: absolute;
-      top: 6px; right: 36px;
-      color: lighten(black, 75%);
-      font-size: 75%;
-      .Icon {
+    form {
+      display: flex;
+      flex: 1;
+      flex-direction: column;
+      > .mtime {
+        position: absolute;
+        top: 6px; right: 36px;
+        color: lighten(black, 75%);
         font-size: 75%;
+        .Icon {
+          font-size: 75%;
+        }
       }
     }
   }
@@ -441,6 +447,7 @@ em {
 }
 
 .AssetGroupsList {
+  flex: 1;
   .container {
     display: flex;
     flex-wrap: wrap;

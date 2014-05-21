@@ -86,7 +86,6 @@ var DrawerSectionsListItem = React.createClass({
   },
   handleClick: function(event) {
     event.preventDefault();
-    console.log($(event.target).prop('href'));
     Dispatcher.trigger('navigate', event.target.pathname, { replace: true });
   },
   render: function() {
@@ -613,22 +612,29 @@ var GuideEditPage = React.createClass({
 
 var AdminPage = React.createClass({
   componentDidMount: function() {
-    var self = this;
-
-    Dispatcher.on('navigate', function(path, options) {
-      self.refs.router.navigate(path, options);
-    });
+    Dispatcher.on('navigate', this.refs.router.navigate);
 
     GuideStore.fetch();
   },
   componentWillUnmount: function() {
     Dispatcher.off('navigate');
   },
+  onBeforeNavigation: function() {
+    $(this.getDOMNode()).hide();
+  },
+  onNavigation: function() {
+    // This is a hideous hackfix for a troublesome layout bug
+    var self = this;
+    
+    setTimeout(function() {
+      $(self.getDOMNode()).show();
+    }, 1);
+  },
   render: function() {
     return (
       <div className="AdminPage">
         <Header user={this.props.user} onLogout={this.props.onLogout} />
-        <Locations ref="router" className="Location">
+        <Locations ref="router" className="Location" onBeforeNavigation={this.onBeforeNavigation} onNavigation={this.onNavigation}>
           <Location path="/" handler={GuidesListPage} />
           <Location path="/:guideId" handler={GuideEditPage} />
           <Location path="/:guideId/:sectionId" handler={GuideEditPage} />
