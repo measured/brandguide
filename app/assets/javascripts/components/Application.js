@@ -86,7 +86,7 @@ var DrawerSectionsListItem = React.createClass({
   },
   handleClick: function(event) {
     event.preventDefault();
-    Dispatcher.trigger('navigate', event.target.pathname, { replace: true });
+    Dispatcher.emit('navigate', event.target.pathname, { replace: true });
   },
   render: function() {
     var self = this;
@@ -184,7 +184,7 @@ var Drawer = React.createClass({
     this.props.onToggle();
   },
   handleBack: function() {
-    Dispatcher.trigger('navigate', '/');
+    Dispatcher.emit('navigate', '/');
   },
   render: function() {
     return (
@@ -406,7 +406,7 @@ var SectionEditor = React.createClass({
     var guide = GuideStore.find(this.props.guide.slug);
 
     guide.deleteSection(this.props.section.slug, function() {
-      Dispatcher.trigger('navigate', '/'+self.props.guide.slug);
+      Dispatcher.emit('navigate', '/'+self.props.guide.slug);
     });
   },
   changeTitle: function(event) {
@@ -492,7 +492,7 @@ var SectionEditor = React.createClass({
 
 var GuidesListItem = React.createClass({
   handleClick: function() {
-    Dispatcher.trigger('navigate', '/'+this.props.guide.slug);
+    Dispatcher.emit('navigate', '/'+this.props.guide.slug);
   },
   render: function() {
     return (
@@ -617,7 +617,7 @@ var AdminPage = React.createClass({
     GuideStore.fetch();
   },
   componentWillUnmount: function() {
-    Dispatcher.off('navigate');
+    Dispatcher.rmoveListener('navigate');
   },
   onBeforeNavigation: function() {
     $(this.getDOMNode()).hide();
