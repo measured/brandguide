@@ -418,9 +418,20 @@ var Colour = React.createClass({
 
     return (
       <div className="Colour">
-        <div className="circle" style={circleStyle}></div>
-        <input placeholder="Colour Name" value={this.props.colour.title} onChange={this.changeTitle} />
-        <input placeholder="Colour Value" value={this.props.colour.display} onChange={this.changeDisplay} />
+        <header>
+          <div className="symbol"></div>
+          <div className="title">
+            <input placeholder="Colour name" value={this.props.colour.title} onKeyUp={this.handleInputKeyUp} onChange={this.changeTitle} />
+          </div>
+          <div className="buttons">
+            <Button icon="delete" className="plain" onClick={this.handleDelete} />
+          </div>
+        </header>
+
+        <div className="main">
+          <div className="circle" style={circleStyle}></div>
+          <input placeholder="Colour Value" value={this.props.colour.display} onChange={this.changeDisplay} />
+        </div>
       </div>
     );
   }
@@ -432,7 +443,7 @@ var ColoursList = React.createClass({
 
     var colours = this.props.colours.map(function(colour) {
       return (
-        <Colour colour={colour} guide={self.props.guide} section={self.props.section} />
+        <Colour key={colour.id} colour={colour} guide={self.props.guide} section={self.props.section} />
       );
     });
 
@@ -450,7 +461,7 @@ var SectionEditor = React.createClass({
   componentDidMount: function() {
     var self = this;
 
-    this.mtimeTicker = setInterval(self.forceUpdate, 10000);
+    this.mtimeTicker = setInterval(function() { self.forceUpdate }, 10000);
   },
   componentWillUnmount: function() {
     clearInterval(this.mtimeTicker);

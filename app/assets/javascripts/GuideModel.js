@@ -126,7 +126,7 @@ var GuideModel = module.exports = function(attributes) {
       display: 'rgb(0,0,0)'
     });
 
-    GuideStore.trigger('change');
+    this.sync();
   }
 
   this.updateSectionColour = function(sectionId, colourId, attributes) {

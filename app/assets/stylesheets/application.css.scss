@@ -462,17 +462,6 @@ em {
   flex: 1;
 }
 
-.ColoursList {
-  .Colour {
-    border-radius: 16px;
-    .circle {
-      width: 100px;
-      height: 100px;
-      border-radius: 50%;
-    }
-  }
-}
-
 .AssetGroupsList, .ColoursList {
   .container {
     display: flex;
@@ -487,6 +476,77 @@ em {
     overflow: hidden;
     margin: 12px;
     position: relative;
+    width: 320px;
+
+    header, footer {
+      height: 44px;
+      display: flex;
+      overflow: hidden;
+    }
+    footer {
+      border-top: 1px solid lighten(black, 85%);
+      div.text {
+        margin: auto;
+        color: lighten(black, 50%);
+        font-size: 85%;
+        .Icon {
+          font-size: 75%;
+        }
+      }
+    }
+    header {
+      border-bottom: 1px solid lighten(black, 85%);
+      div.title {
+        flex: 1;
+        padding: 13px 0 11px;
+        input {
+          border: none;
+          width: 100%;
+          outline: none;
+        }
+      }
+      div.symbol {
+        width: 44px;
+        margin-right: 8px;
+        background: lighten(black, 95%);
+      }
+      div.buttons {
+        display: flex;
+        .Button {
+          border-left: 1px solid lighten(black, 85%);
+          .Icon {
+            width: 42px;
+            padding: 14px 10px 10px 14px;
+            display: block;
+          }
+        }
+      }
+    }
+  }
+}
+
+.ColoursList {
+  .Colour {
+    .circle {
+      margin: 0 auto 12px;
+      width: 180px;
+      height: 180px;
+      border-radius: 50%;
+      background-color: lighten(black, 90%);
+    }
+    input {
+      background: none;
+      border: none;
+      width: 100%;
+      text-align: center;
+      outline: none;
+    }
+    .main {
+      height: 297px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
   }
 }
 
@@ -623,50 +683,6 @@ em {
           }
           .filename {
             display: none;
-          }
-        }
-      }
-    }
-    header, footer {
-      height: 44px;
-      display: flex;
-      overflow: hidden;
-    }
-    footer {
-      border-top: 1px solid lighten(black, 85%);
-      div.text {
-        margin: auto;
-        color: lighten(black, 50%);
-        font-size: 85%;
-        .Icon {
-          font-size: 75%;
-        }
-      }
-    }
-    header {
-      border-bottom: 1px solid lighten(black, 85%);
-      div.title {
-        flex: 1;
-        padding: 13px 0 11px;
-        input {
-          border: none;
-          width: 100%;
-          outline: none;
-        }
-      }
-      div.symbol {
-        width: 44px;
-        margin-right: 8px;
-        background: lighten(black, 95%);
-      }
-      div.buttons {
-        display: flex;
-        .Button {
-          border-left: 1px solid lighten(black, 85%);
-          .Icon {
-            width: 42px;
-            padding: 14px 10px 10px 14px;
-            display: block;
           }
         }
       }

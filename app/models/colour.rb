@@ -1,6 +1,8 @@
 class Colour < ActiveRecord::Base
   belongs_to :section
 
+  default_scope { order(created_at: :asc) }
+
   def api_attributes
     {
       id: id,
