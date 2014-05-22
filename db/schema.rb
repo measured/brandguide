@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140509045041) do
+ActiveRecord::Schema.define(version: 20140521061213) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -50,6 +50,14 @@ ActiveRecord::Schema.define(version: 20140509045041) do
     t.integer  "file_width"
     t.integer  "file_height"
     t.string   "file_format"
+  end
+
+  create_table "colours", force: true do |t|
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "title"
+    t.string   "display"
+    t.integer  "section_id"
   end
 
   create_table "friendly_id_slugs", force: true do |t|

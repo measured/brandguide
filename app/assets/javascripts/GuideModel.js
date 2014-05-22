@@ -33,6 +33,11 @@ var GuideModel = module.exports = function(attributes) {
       delete attributes.sections;
 
       _.each(attributes.sections_attributes, function(section) {
+        if(section.colours) {
+          section.colours_attributes = clone(section.colours);
+          delete section.colours;
+        }
+
         if(section.asset_groups) {
           section.asset_groups_attributes = clone(section.asset_groups);
           delete attributes.asset_groups;
@@ -112,6 +117,31 @@ var GuideModel = module.exports = function(attributes) {
     });
 
     GuideStore.trigger('change');
+  }
+
+  this.addColourToSection = function(id) {
+    var section = this.findSection(id);
+    section.colours.push({
+      title: 'Untitled',
+      display: 'rgb(0,0,0)'
+    });
+
+    GuideStore.trigger('change');
+  }
+
+  this.updateSectionColour = function(sectionId, colourId, attributes) {
+    var section = this.findSection(sectionId);
+    var colours = _.select(section.colours, function(colour) {
+      return colour.id === colourId;
+    });
+
+    if(colours.length) {
+      var colour = colours[0];
+
+      colour = _.extend(colour, attributes);
+
+      GuideStore.trigger('change');
+    }
   }
 
   this.findAssetGroup = function(sectionId, assetGroupId) {

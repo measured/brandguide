@@ -10,6 +10,9 @@ class Section < ActiveRecord::Base
   has_many :asset_groups
   accepts_nested_attributes_for :asset_groups, allow_destroy: true
 
+  has_many :colours
+  accepts_nested_attributes_for :colours, allow_destroy: true
+
   attr_accessor :files
 
   friendly_id :title, use: :scoped, scope: :guide
@@ -27,6 +30,7 @@ class Section < ActiveRecord::Base
       title: (title || 'Untitled'),
       content: content,
       asset_groups: asset_groups.map(&:api_attributes),
+      colours: colours.map(&:api_attributes),
       ctime: created_at.to_i,
       mtime: updated_at.to_i,
       parent_id: parent_id,

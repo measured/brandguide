@@ -396,13 +396,61 @@ var AssetGroupsList = React.createClass({
   }
 });
 
+var Colour = React.createClass({
+  changeTitle: function(event) {
+    var guide = GuideStore.find(this.props.guide.slug);
+    var colour = this.props.colour;
+    colour.title = event.target.value;
+
+    guide.updateSectionColour(this.props.section.slug, this.props.colour.id, colour);
+  },
+  changeDisplay: function(event) {
+    var guide = GuideStore.find(this.props.guide.slug);
+    var colour = this.props.colour;
+    colour.display = event.target.value;
+
+    guide.updateSectionColour(this.props.section.slug, this.props.colour.id, colour);
+  },
+  render: function() {
+    var circleStyle = {
+      backgroundColor: this.props.colour.display
+    }
+
+    return (
+      <div className="Colour">
+        <div className="circle" style={circleStyle}></div>
+        <input placeholder="Colour Name" value={this.props.colour.title} onChange={this.changeTitle} />
+        <input placeholder="Colour Value" value={this.props.colour.display} onChange={this.changeDisplay} />
+      </div>
+    );
+  }
+});
+
+var ColoursList = React.createClass({
+  render: function() {
+    var self = this;
+
+    var colours = this.props.colours.map(function(colour) {
+      return (
+        <Colour colour={colour} guide={self.props.guide} section={self.props.section} />
+      );
+    });
+
+    return (
+      <div className="ColoursList">
+        <div className="container">
+          {colours}
+        </div>
+      </div>
+    );
+  }
+});
+
 var SectionEditor = React.createClass({
   componentDidMount: function() {
     var self = this;
 
-    this.mtimeTicker = setInterval(function() {
-      self.forceUpdate();
-    }, 10000);
+    this.mtimeTicker = setInterval(self.forceUpdate, 10000);
   },
   componentWillUnmount: function() {
     clearInterval(this.mtimeTicker);
@@ -433,6 +481,10 @@ var SectionEditor = React.createClass({
     var guide = GuideStore.find(this.props.guide.slug);
     guide.addAssetGroupToSection(this.props.section.slug);
   },
+  addColour: function() {
+    var guide = GuideStore.find(this.props.guide.slug);
+    guide.addColourToSection(this.props.section.slug);
+  },
   render: function() {
     var self = this;
     
@@ -449,15 +501,19 @@ var SectionEditor = React.createClass({
               <textarea onChange={this.changeContent} value={this.props.section.content || ''} placeholder="Content" />
             </div>
             
-            <AssetGroupsList
-              onAssetGroupDeleted={this.props.onAssetGroupDeleted}
-              onAssetUploaded={this.props.onAssetUploaded}
-              section={this.props.section}
-              guide={this.props.guide} />
+            <div className="assetsColours">
+              <AssetGroupsList
+                onAssetGroupDeleted={this.props.onAssetGroupDeleted}
+                onAssetUploaded={this.props.onAssetUploaded}
+                section={this.props.section}
+                guide={this.props.guide} />
+
+              <ColoursList colours={this.props.section.colours} guide={this.props.guide} section={this.props.section} />
+            </div>
             
             <ButtonGroup>
               <Button onClick={this.addAssetGroup} text="Add Asset Group" icon="attachment" />
-              <Button onClick={this.addAssetGroup} text="Add Colour" icon="eyedropper" />
+              <Button onClick={this.addColour} text="Add Colour" icon="eyedropper" />
               <span className="spacer" />
               <Button onClick={this.deleteSection} text="Delete Page" icon="trash" />
               <Button onClick={this.saveChanges} className="green" text="Save Changes" icon="check" />
