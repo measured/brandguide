@@ -446,7 +446,7 @@ var ColoursList = React.createClass({
   render: function() {
     var self = this;
 
-    var colours = this.props.colours.map(function(colour) {
+    var colours = (this.props.colours || []).map(function(colour) {
       return (
         <Colour key={colour.id} colour={colour} guide={self.props.guide} section={self.props.section} />
       );
