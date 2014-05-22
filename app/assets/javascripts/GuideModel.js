@@ -144,11 +144,28 @@ var GuideModel = module.exports = function(attributes) {
     }
   }
 
+  this.deleteSectionColour = function(sectionId, colourId) {
+    var colour = this.findColour(sectionId, colourId);
+    colour._destroy = true;
+
+    this.sync();
+  }
+
   this.findAssetGroup = function(sectionId, assetGroupId) {
     var section = this.findSection(sectionId);
 
     var selected = _.select(section.asset_groups, function(assetGroup) {
       return assetGroup.id === assetGroupId;
+    });
+
+    return selected.length ? selected[0] : {};
+  }
+
+  this.findColour = function(sectionId, colourId) {
+    var section = this.findSection(sectionId);
+    
+    var selected = _.select(section.colours, function(colour) {
+      return colour.id === colourId;
     });
 
     return selected.length ? selected[0] : {};

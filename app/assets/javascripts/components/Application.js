@@ -228,9 +228,7 @@ var AssetGroup = React.createClass({
     guide.updateSectionAssetGroup(this.props.section.slug, this.props.assetGroup.id, { title: event.target.value });
   },
   handleInputKeyUp: function(event) {
-    if([27,13].indexOf(event.keyCode) !== -1) {
-      event.target.blur();
-    }
+    if([27,13].indexOf(event.keyCode) !== -1) event.target.blur();
   },
   handleDelete: function(event) {
     var guide = GuideStore.find(this.props.guide.slug);
@@ -410,6 +408,13 @@ var Colour = React.createClass({
     colour.display = event.target.value;
 
     guide.updateSectionColour(this.props.section.slug, this.props.colour.id, colour);
+  },
+  handleDelete: function() {
+    var guide = GuideStore.find(this.props.guide.slug);
+    guide.deleteSectionColour(this.props.section.slug, this.props.colour.id);
+  },
+  handleInputKeyUp: function(event) {
+    if([27,13].indexOf(event.keyCode) !== -1) event.target.blur();
   },
   render: function() {
     var circleStyle = {
