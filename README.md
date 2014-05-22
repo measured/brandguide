@@ -28,15 +28,15 @@ Deployment:
 - deployed via git
 
 Access:
-- Brandguides on simple urls eg: `brandguide.io/brand`
+- Brandguides on simple urls eg: `brand.brandguide.io`
 - Login required to access each guide (password), OR…
 - Login to account, access to multiple guides
 
 Features:
 - Download files + bundled zips
 - Email a unique url to a file, or bundle of files
-- Update text content via admin panel?
-- Upload files via admin panel?
+- Update text content via admin panel
+- Upload files via admin panel
 
 
 ## Development
@@ -46,6 +46,7 @@ How to set up your local development environment, after cloning the repository.
 1. `bundle`
 2. `npm install`
 3. `rake db:reset`
+4. `bundle exec guard`
 
 If `pow` has been installed and linked (try `powder link`), the server will be running and accessible at `http://brandguide.dev/`.
 
