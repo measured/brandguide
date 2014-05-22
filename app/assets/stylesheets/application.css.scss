@@ -528,9 +528,9 @@ em {
 .ColoursList {
   .Colour {
     .circle {
-      margin: 0 auto 12px;
-      width: 180px;
-      height: 180px;
+      margin: auto;
+      width: 240px;
+      height: 240px;
       border-radius: 50%;
       background-color: lighten(black, 90%);
     }
@@ -542,7 +542,7 @@ em {
       outline: none;
     }
     .main {
-      height: 297px;
+      height: 320px;
       display: flex;
       flex-direction: column;
       justify-content: center;

@@ -435,8 +435,11 @@ var Colour = React.createClass({
 
         <div className="main">
           <div className="circle" style={circleStyle}></div>
-          <input placeholder="Colour Value" value={this.props.colour.display} onChange={this.changeDisplay} />
         </div>
+
+        <footer>
+          <input placeholder="Colour Value" value={this.props.colour.display} onChange={this.changeDisplay} />
+        </footer>
       </div>
     );
   }
