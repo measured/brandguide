@@ -643,7 +643,10 @@ var GuidesListPage = React.createClass({
   render: function() {
     return (
       <div className="GuidesListPage">
-        <GuidesList onClickGuide={this.props.onClickGuide} onCreateGuide={this.props.onCreateGuide} guides={this.state.guides} />
+        <GuidesList
+          onClickGuide={this.props.onClickGuide}
+          onCreateGuide={this.props.onCreateGuide}
+          guides={this.state.guides} />
       </div>
     );
   }
