@@ -16,6 +16,7 @@
     "moment": "^2.6.0",
     "jquery": "^2.1.1",
     "underscore": "^1.6.0",
-    "backbone": "^1.1.2"
+    "backbone": "^1.1.2",
+    "tinycolor2": "^0.10.0"
   }
 }

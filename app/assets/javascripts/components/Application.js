@@ -394,6 +394,8 @@ var AssetGroupsList = React.createClass({
   }
 });
 
+var tinycolor = require('tinycolor2');
+
 var Colour = React.createClass({
   changeTitle: function(event) {
     var guide = GuideStore.find(this.props.guide.slug);
@@ -418,7 +420,7 @@ var Colour = React.createClass({
   },
   render: function() {
     var circleStyle = {
-      backgroundColor: this.props.colour.display
+      backgroundColor: tinycolor(this.props.colour.display).toHexString()
     }
 
     return (
