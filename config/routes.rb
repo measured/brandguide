@@ -23,7 +23,7 @@ constraints subdomain: /^admin$/ do
       post :authenticate, on: :member
       get :logout, on: :member
       
-      resources :pages, only: [:show]
+      resources :pages
       
       resources :asset_bundles do
         get :download, on: :member

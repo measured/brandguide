@@ -1,0 +1,10 @@
+<nav class="sidebar">
+  <nav class="pages">
+    <% @guide.sections.roots.each do |page| %>
+      <a class="<%= 'active' if params[:id] === page.slug %>" href="<%= guide_page_path(page) %>"><%= page.title %></a>
+    <% end %>
+  </nav>
+</nav>
+
+<div class="content">
+</div>

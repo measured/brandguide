@@ -1,0 +1,31 @@
+<div class="sidebar">
+  <nav class="sections">
+    <% @page.children.each do |section| %>
+      <a href="#section-<%= section.slug %>"><%= section.title %></a>
+    <% end %>
+  </nav>
+</div>
+
+<div class="content">
+  <div class="page">
+    <h1><a href="<%= guide_page_path(@page) %>"><%= @page.title %></a></h1>
+
+    <div class="contentHtml"><%= raw @page.content_html %></div>
+
+    <%= @page.asset_groups %>
+    <%= @page.colours %>
+  </div>
+
+  <div class="sections">
+    <% @page.children.each do |section| %>
+      <div class="section" id="section-<%= section.slug %>">
+        <h1><a href="#section-<%= section.slug %>"><%= section.title %></a></h1>
+
+        <div class="contentHtml"><%= raw section.content_html %></div>
+          
+        <%= section.asset_groups %>
+        <%= section.colours %>
+      </div>
+    <% end %>
+  </div>
+</div>
