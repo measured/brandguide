@@ -12,9 +12,10 @@
   <header id="banner">
     <div class="inner">
       <h1><a href="<%= root_path(subdomain: @guide.slug) %>"><%= @guide.title %></a></h1>
-      <h2><a href="<%= root_path(subdomain: @guide.slug) %>">Styleguide</a></h2>
+      <h2><a href="<%= root_path(subdomain: @guide.slug) %>">Brand Guide</a></h2>
       <span class="mtime"><%= @guide.updated_at.to_date.to_formatted_s(:rfc822) %></span>
     </div>
+    <div class="gradient"></div>
   </header>
 
   <section id="main">
@@ -28,6 +29,12 @@
       <p>Copyright &copy; <%= Time.now.year %> <%= @guide.title %>. Built with <a href="http://brandguide.io">brandguide.io</a>.</p>
     </div>
   </footer>
+
+  <script>
+    window.guide = {
+      colour: '<%= @guide.primary_colour %>'
+    }
+  </script>
 
   <%= javascript_include_tag :guide %>
 </body>

@@ -704,24 +704,18 @@ em {
       flex-wrap: wrap;
       justify-content: center;
       .GuidesListItem {
-        header {
-          margin-bottom: 12px;
-          display: flex;
-
-          h2 {
-            flex: 1;
-            font-size: 20px;
-            font-weight: bold;
-          }
-        }
-        .thumbnail {
-          width: 320px;
-          height: 320px;
-          border-radius: 3px;
-          background: lighten(black, 85%);
-        }
+        display: flex;
+        width: 320px;
+        height: 320px;
+        border-radius: 3px;
+        background: lighten(black, 85%);
         margin: 12px;
         cursor: pointer;
+        h2 {
+          margin: auto;
+          font-size: 36px;
+          line-height: 42px;
+        }
       }
     }
     .Button {

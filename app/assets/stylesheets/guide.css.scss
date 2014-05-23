@@ -55,9 +55,16 @@ em {
 }
 
 header#banner {
-  background: lighten(black, 75%);
+  background: black;
   color: white;
   height: 480px;
+  position: relative;
+  overflow: hidden;
+
+  .inner {
+    position: relative;
+    z-index: 1;
+  }
 
   h1 {
     font-size: 24px;
@@ -68,6 +75,7 @@ header#banner {
   h2 {
     font-size: 72px;
     line-height: 72px;
+    margin-left: -5px;
   }
   .mtime {
     position: absolute;
@@ -85,7 +93,6 @@ section#main {
       width: 256px;
     }
     .sidebar {
-      
       margin-right: 48px;
     }
     nav.sections {
@@ -111,7 +118,7 @@ section#main {
       }
     }
   }
-  .page, .section {
+  .section {
     margin-bottom: 48px;
   }
 }

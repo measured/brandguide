@@ -9,7 +9,7 @@ class Colour < ActiveRecord::Base
       title: title,
       ctime: created_at.to_i,
       mtime: updated_at.to_i,
-      display: display
+      hex: hex
     }
   end
 end

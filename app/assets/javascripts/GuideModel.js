@@ -123,7 +123,7 @@ var GuideModel = module.exports = function(attributes) {
     var section = this.findSection(id);
     section.colours.push({
       title: 'Untitled',
-      display: 'rgb(0,0,0)'
+      hex: '#000000'
     });
 
     this.sync();

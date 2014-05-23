@@ -1,4 +1,4 @@
-<div class="section" id="section-<%= section.slug %>">
+<div class="section" id="section-<%= section.slug %>" data-root="<%= section.root? %>">
   <h1><a href="#section-<%= section.slug %>"><%= section.title %></a></h1>
 
   <div class="contentHtml"><%= raw section.content_html %></div>

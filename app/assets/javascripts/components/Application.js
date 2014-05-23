@@ -404,10 +404,10 @@ var Colour = React.createClass({
 
     guide.updateSectionColour(this.props.section.slug, this.props.colour.id, colour);
   },
-  changeDisplay: function(event) {
+  changeHex: function(event) {
     var guide = GuideStore.find(this.props.guide.slug);
     var colour = this.props.colour;
-    colour.display = event.target.value;
+    colour.hex = event.target.value;
 
     guide.updateSectionColour(this.props.section.slug, this.props.colour.id, colour);
   },
@@ -419,15 +419,17 @@ var Colour = React.createClass({
     if([27,13].indexOf(event.keyCode) !== -1) event.target.blur();
   },
   render: function() {
-    var displayColour = tinycolor(this.props.colour.display);
+    var hex = tinycolor(this.props.colour.hex);
 
     var swatchStyle = {
-      backgroundColor: displayColour.toHexString()
+      backgroundColor: hex.toHexString()
     }
 
     var valueStyle = {
-      color: tinycolor.mostReadable(displayColour, ['white', 'black'])
+      color: tinycolor.mostReadable(hex, ['white', 'black'])
     }
+
+    var mtime = moment.unix(this.props.colour.mtime).fromNow();
 
     return (
       <div className="Colour">
@@ -443,11 +445,15 @@ var Colour = React.createClass({
 
         <div className="main">
           <div className="swatch" style={swatchStyle}>
-            <input style={valueStyle} placeholder="Colour Value" value={this.props.colour.display} onChange={this.changeDisplay} />
+            <input style={valueStyle} placeholder="Colour Value" value={this.props.colour.hex} onChange={this.changeHex} />
           </div>
         </div>
 
-        <footer></footer>
+        <footer>
+          <div className="text">
+            <span className="mtime"><Icon name="clock" /> Updated {mtime}</span>
+          </div>
+        </footer>
       </div>
     );
   }
@@ -579,17 +585,26 @@ var SectionEditor = React.createClass({
   }
 });
 
+var tinycolor = require('tinycolor2');
+
 var GuidesListItem = React.createClass({
   handleClick: function() {
     Dispatcher.emit('navigate', '/'+this.props.guide.slug);
   },
   render: function() {
+    var primary = tinycolor(this.props.guide.primary);
+
+    var itemStyle = {
+      backgroundColor: primary.toHexString()
+    }
+
+    var h2Style = {
+      color: tinycolor.mostReadable(primary, ['black', 'white'])
+    }
+
     return (
-      <div onClick={this.handleClick} className="GuidesListItem">
-        <header>
-          <h2>{this.props.guide.title}</h2>
-        </header>
-        <div className="thumbnail" />
+      <div onClick={this.handleClick} className="GuidesListItem" style={itemStyle}>
+        <h2 style={h2Style}>{this.props.guide.title}</h2>
       </div>
     );
   }

@@ -10,6 +10,7 @@ class Guide < ActiveRecord::Base
   has_many :pages
 
   has_many :asset_groups, through: :sections
+  has_many :colours, through: :sections
   has_many :assets, through: :asset_groups
 
   has_many :asset_bundles
@@ -20,6 +21,14 @@ class Guide < ActiveRecord::Base
 
   default_scope { order(created_at: :asc) }
 
+  def primary_colour
+    colours.first.try(:hex) || '#000000'
+  end
+
+  def secondary_colour
+    colours.second.try(:hex)
+  end
+
   def api_attributes
     {
       id: id,
@@ -27,7 +36,9 @@ class Guide < ActiveRecord::Base
       title: (title || 'Untitled'),
       sections: sections.order('created_at asc').map(&:api_attributes),
       ctime: created_at.to_i,
-      mtime: updated_at.to_i
+      mtime: updated_at.to_i,
+      primary: primary_colour,
+      secondary: secondary_colour
     }
   end
 end
