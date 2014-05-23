@@ -419,8 +419,14 @@ var Colour = React.createClass({
     if([27,13].indexOf(event.keyCode) !== -1) event.target.blur();
   },
   render: function() {
-    var circleStyle = {
-      backgroundColor: tinycolor(this.props.colour.display).toHexString()
+    var displayColour = tinycolor(this.props.colour.display);
+
+    var swatchStyle = {
+      backgroundColor: displayColour.toHexString()
+    }
+
+    var valueStyle = {
+      color: tinycolor.mostReadable(displayColour, ['white', 'black'])
     }
 
     return (
@@ -436,12 +442,12 @@ var Colour = React.createClass({
         </header>
 
         <div className="main">
-          <div className="circle" style={circleStyle}></div>
+          <div className="swatch" style={swatchStyle}>
+            <input style={valueStyle} placeholder="Colour Value" value={this.props.colour.display} onChange={this.changeDisplay} />
+          </div>
         </div>
 
-        <footer>
-          <input placeholder="Colour Value" value={this.props.colour.display} onChange={this.changeDisplay} />
-        </footer>
+        <footer></footer>
       </div>
     );
   }

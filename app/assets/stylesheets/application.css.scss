@@ -505,8 +505,10 @@ em {
       }
       div.symbol {
         width: 44px;
-        margin-right: 8px;
-        background: lighten(black, 95%);
+        background-repeat: no-repeat;
+        background-size: 65%;
+        background-position: center center;
+        background-image: url(asset_path('thumbnail_default.svg'));
       }
       div.buttons {
         display: flex;
@@ -525,25 +527,30 @@ em {
 
 .ColoursList {
   .Colour {
-    .circle {
-      margin: auto;
-      width: 240px;
-      height: 240px;
-      border-radius: 50%;
-      background-color: lighten(black, 90%);
+    div.symbol {
+      background-image: url(asset_path('thumbnail_colour.svg'))!important;
     }
-    input {
-      background: none;
-      border: none;
-      width: 100%;
-      text-align: center;
-      outline: none;
-    }
-    .main {
-      height: 320px;
+    .swatch {
       display: flex;
       flex-direction: column;
-      justify-content: center;
+      position: absolute;
+      top: 0; left: 0;
+      bottom: 0; right: 0;
+      input {
+        width: 100%;
+        margin: auto;
+        background: none;
+        border: none;
+        text-align: center;
+        font-size: 36px;
+        line-height: 42px;
+        color: white;
+        outline: none;
+      }
+    }
+    .main {
+      position: relative;
+      height: 320px;
     }
   }
 }
