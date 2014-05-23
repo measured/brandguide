@@ -1,0 +1,11 @@
+<div class="section" id="section-<%= section.slug %>">
+  <h1><a href="#section-<%= section.slug %>"><%= section.title %></a></h1>
+
+  <div class="contentHtml"><%= raw section.content_html %></div>
+    
+  <%= section.asset_groups %>
+  
+  <div class="colours">
+    <%= render section.colours %>
+  </div>
+</div>
