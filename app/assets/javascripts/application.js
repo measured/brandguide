@@ -1,3 +1,4 @@
+//= require Sortable
 //= require_self
 
 var React = require('react');

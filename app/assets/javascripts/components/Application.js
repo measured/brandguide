@@ -88,6 +88,18 @@ var DrawerSectionsListItem = React.createClass({
     if(event) event.preventDefault();
     Dispatcher.emit('navigate', href, { replace: true });
   },
+  componentDidMount: function() {
+    var node = this.refs.children.getDOMNode();
+
+    this.sortable = new Sortable(node, {
+      onUpdate: function(event) {
+        console.log('update sort order');
+      }
+    });
+  },
+  componentWillUnmount: function() {
+    this.sortable.destroy();
+  },
   render: function() {
     var self = this;
     var guide = GuideStore.find(this.props.guide.slug);
@@ -111,7 +123,7 @@ var DrawerSectionsListItem = React.createClass({
         <a onClick={this.handleClick.bind(this, href)} href={href}>
           <span>{this.props.section.title || 'Untitled'}</span>
         </a>
-        <ul>
+        <ul ref="children">
           {children}
           <li className="addSection">
             <Icon name={this.state.input.icon} />
@@ -155,6 +167,18 @@ var DrawerSectionsList = React.createClass({
   handleInputBlur: function() {
     this.setState({ input: this.getInitialState().input });
     this.refs.input.getDOMNode().value = null;
+  },
+  componentDidMount: function() {
+    var node = this.getDOMNode();
+
+    this.sortable = new Sortable(node, {
+      onUpdate: function(event) {
+        console.log('update sort order');
+      }
+    });
+  },
+  componentWillUnmount: function() {
+    this.sortable.destroy();
   },
   render: function() {
     var self = this;
