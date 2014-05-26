@@ -1,5 +1,6 @@
 //= require jquery
 //= require fixedsticky
+//= require Sortable
 //= require_self
 
 $('nav.sections').fixedsticky();
