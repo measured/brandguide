@@ -1,0 +1,48 @@
+.Button {
+  user-select: none;
+  .Icon {
+    font-size: 80%;
+  }
+  &.plain {
+    .Icon {
+      position: relative;
+      top: 1px;
+    }
+    .text {
+      margin-left: 4px;
+    }
+  }
+  &:not(.plain) {
+    border-radius: 3px;
+    background: transparentize(black, 0.85);
+    color: transparentize(black, 0.25);
+    display: inline-block;
+    padding: 0 2px;
+    margin-right: 8px;
+    overflow: hidden;
+
+    .Icon, .text {
+      display: block;
+      float: left;
+      padding: 6px 8px 6px;
+    }
+    .Icon {
+      position: relative;
+      padding-top: 8px;
+      padding-bottom: 4px;
+      border-right: 1px solid transparentize(black, 0.85);
+    }
+
+    &:hover {
+      color: white;
+      background: transparentize(black, 0.5);
+    }
+  }
+
+  &.green {
+    background: transparentize(seaGreen, 0.5);
+    &:hover {
+      background: transparentize(seaGreen, 0);
+    }
+  }
+}
