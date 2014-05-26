@@ -6,9 +6,9 @@ $('nav.sections').fixedsticky();
 
 var tinycolor = require('tinycolor2');
 
-var guideColour = tinycolor(window.guide.colour);
+var primary = tinycolor(window.guide.primary);
 
 $('header#banner').css({
-  backgroundColor: '#'+guideColour.toHex(),
-  color: tinycolor.mostReadable(guideColour, ['white', 'black'])
+  backgroundColor: '#'+primary.toHex(),
+  color: tinycolor.mostReadable(primary, ['white', 'black'])
 });
