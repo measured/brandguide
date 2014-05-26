@@ -54,10 +54,6 @@ var AssetGroup = module.exports = React.createClass({
       );
     });
 
-    var deleteButtonStyle = {
-      display: this.state.selectedAssets.length ? 'inline-block' : 'none'
-    }
-
     return (
       <div className="AssetGroup">
         <header>
@@ -76,7 +72,6 @@ var AssetGroup = module.exports = React.createClass({
             <div className="left">
               <h2>{assets.length} Files</h2>
               <span className="size">{this.props.assetGroup.size}</span>
-              <Button onClick={this.deleteSelectedAssets} style={deleteButtonStyle} className="plain delete" text={this.state.selectedAssets.length} icon="trash" />
             </div>
             <Button className="displayMode plain" icon={displayModeIcon} onClick={this.toggleDisplayMode} />
           </div>
