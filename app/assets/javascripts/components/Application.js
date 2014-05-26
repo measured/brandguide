@@ -10,6 +10,7 @@ var Locations = ReactRouter.Locations;
 
 var moment = require('moment');
 var $ = require('jquery');
+var _ = require('underscore');
 
 var Spinner = require('./Spinner');
 var Icon = require('./Icon');
@@ -88,18 +89,6 @@ var DrawerSectionsListItem = React.createClass({
     if(event) event.preventDefault();
     Dispatcher.emit('navigate', href, { replace: true });
   },
-  componentDidMount: function() {
-    var node = this.refs.children.getDOMNode();
-
-    this.sortable = new Sortable(node, {
-      onUpdate: function(event) {
-        console.log('update sort order');
-      }
-    });
-  },
-  componentWillUnmount: function() {
-    this.sortable.destroy();
-  },
   render: function() {
     var self = this;
     var guide = GuideStore.find(this.props.guide.slug);
@@ -168,22 +157,12 @@ var DrawerSectionsList = React.createClass({
     this.setState({ input: this.getInitialState().input });
     this.refs.input.getDOMNode().value = null;
   },
-  componentDidMount: function() {
-    var node = this.getDOMNode();
-
-    this.sortable = new Sortable(node, {
-      onUpdate: function(event) {
-        console.log('update sort order');
-      }
-    });
-  },
-  componentWillUnmount: function() {
-    this.sortable.destroy();
-  },
   render: function() {
     var self = this;
 
-    var drawerSectionsListItems = (this.props.guide.sections || []).map(function(section) {
+    var sections = (this.props.guide.sections || []);
+
+    var drawerSectionsListItems = sections.map(function(section) {
       if(section.parent_id) return;
 
       var selected = self.props.section ?

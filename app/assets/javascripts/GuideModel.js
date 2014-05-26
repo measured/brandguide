@@ -20,7 +20,10 @@ var GuideModel = module.exports = function(attributes) {
 
   this.parse = function(response) {
     this.attributes = response.data.guide;
+
     GuideStore.trigger('change');
+
+    return this;
   }
 
   this.sync = function(callback) {

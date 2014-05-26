@@ -2,6 +2,8 @@
 //= require fixedsticky
 //= require_self
 
+var AssetGroupsList = require('./components/guide/AssetGroupsList');
+
 $('nav.sections').fixedsticky();
 
 var tinycolor = require('tinycolor2');
@@ -12,3 +14,8 @@ $('header#banner').css({
   backgroundColor: '#'+primary.toHex(),
   color: tinycolor.mostReadable(primary, ['white', 'black'])
 });
+
+// Make browserify and react-rails play nicely
+window.React = require('react');
+window.AssetGroupsList = AssetGroupsList;
+require('./react_ujs')();

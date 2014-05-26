@@ -1,0 +1,33 @@
+.Spinner {
+  display: none;
+  position: fixed;
+  top: 0; left: 0;
+  bottom: 0; right: 0;
+  background: transparentize(white, 0.25);
+  z-index: 100;
+  pointer-events: none;
+
+  &[data-show="true"] {
+    display: flex;  
+  }
+
+  > div {
+    margin: auto;
+    text-align: center;  
+  }
+  .iconContainer {
+    display: flex;
+    width: 100px;
+    height: 100px;
+    animation: spinner 0.5s infinite linear;
+    .Icon {
+      position: relative;
+      top: 4px;
+      margin: auto;
+      font-size: 200%;
+    }
+  }
+  span {
+    display: block;
+  }
+}

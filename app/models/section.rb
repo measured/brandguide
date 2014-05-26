@@ -17,7 +17,7 @@ class Section < ActiveRecord::Base
 
   friendly_id :title, use: :scoped, scope: :guide
 
-  default_scope { order(created_at: :asc) }
+  default_scope { order(sort_order: :asc, created_at: :asc) }
 
   def content_html
     Redcarpet::Markdown.new(Redcarpet::Render::HTML, autolink: true).render(content || '')
@@ -34,7 +34,8 @@ class Section < ActiveRecord::Base
       ctime: created_at.to_i,
       mtime: updated_at.to_i,
       parent_id: parent_id,
-      path: path.pluck('slug').join('/')
+      path: path.pluck('slug').join('/'),
+      order: sort_order
     }
   end
 end

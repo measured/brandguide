@@ -49,7 +49,7 @@ em {
 }
 
 .inner {
-  width: 960px;
+  width: 968px;
   margin: 0 auto;
   position: relative;
 }
@@ -142,10 +142,12 @@ section#main {
   }
 }
 
-footer {
+footer#footer {
   margin-bottom: 24px;
   color: lighten(black, 85%);
   p {
     margin: 0;
   }
 }
+
+@import "components/AssetGroupsList";

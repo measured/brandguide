@@ -9,7 +9,9 @@ var GuideStore = module.exports = _.extend(_.clone(Backbone.Events), {
   selected: {},
   parse: function(response) {
     this.collection = _.map(response.data.guides, function(attributes) {
-      return new GuideModel(attributes);
+      var guide = new GuideModel;
+      guide = guide.parse({ data: { guide: attributes }})
+      return guide;
     });
     this.trigger('change');
   },
