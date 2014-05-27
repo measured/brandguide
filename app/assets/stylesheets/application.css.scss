@@ -134,8 +134,8 @@ em {
 }
 
 .Drawer {
-  $drawerBackgroundColor: #dd4538;
-  $drawerForegroundColor: white;
+  $drawerBackgroundColor: lighten(black, 85%);
+  $drawerForegroundColor: black;
   $drawerWidth: 360px;
 
   display: flex;
