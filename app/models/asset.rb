@@ -21,6 +21,7 @@ class Asset < ActiveRecord::Base
       type: file.mime_type,
       format: file_format,
       size: number_to_human_size(file.size),
+      pick: is_image?,
       images: {
         thumbnail: thumbnail
       },
@@ -33,6 +34,10 @@ class Asset < ActiveRecord::Base
     file.name.split('.').pop
   end
 
+  def is_image?
+    !!file.mime_type.match(/image/)
+  end
+
   def thumbnail
     available_extensions = %w(ai indd)
 
@@ -42,8 +47,8 @@ class Asset < ActiveRecord::Base
       'default'
     end
 
-    if file.mime_type.match /image/
-      file.thumb('120x120^').url
+    if is_image?
+      file.thumb('240x240^').url
     else
       "/assets/thumbnail_#{ext}.svg"
     end

@@ -158,6 +158,28 @@
         background-size: contain;
         background-repeat: no-repeat;
       }
+
+      &[data-display-mode="thumb"] {
+        margin: 0;
+        position: relative;
+        li.asset {
+          position: absolute;
+          top: 0; left: 0;
+          bottom: 0; right: 0;
+          &[data-pick="false"], .filename {
+            display: none;
+          }
+          .image {
+            position: absolute;
+            top: 0; left: 0;
+            bottom: 0; right: 0;
+            background-color: white;
+            input {
+              display: none;
+            }
+          }
+        }
+      }
       
       &[data-display-mode="list"] {
         li.asset {

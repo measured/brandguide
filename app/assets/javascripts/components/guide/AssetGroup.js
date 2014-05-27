@@ -8,12 +8,17 @@ var Button = require('../Button');
 var AssetGroup = module.exports = React.createClass({
   getInitialState: function() {
     return {
-      displayMode: 'list',
+      displayMode: 'thumb',
       selectedAssets: []
     }
   },
   toggleDisplayMode: function() {
-    var displayMode = this.state.displayMode === 'list' ? 'grid' : 'list';
+    var displayMode;
+
+    if(this.state.displayMode === 'thumb') displayMode = 'list';
+    if(this.state.displayMode === 'list')  displayMode = 'grid';
+    if(this.state.displayMode === 'grid')  displayMode = 'thumb';
+
     this.setState({ displayMode: displayMode });
   },
   toggleAssetSelection: function(id, event) {
@@ -32,7 +37,10 @@ var AssetGroup = module.exports = React.createClass({
 
     var mtime = moment.unix(this.props.assetGroup.mtime).fromNow();
 
-    var displayModeIcon = this.state.displayMode === 'list' ? 'rows' : 'thumbnails';
+    var displayModeIcon;
+    if(this.state.displayMode === 'list') displayModeIcon = 'rows';
+    if(this.state.displayMode === 'grid') displayModeIcon = 'thumbnails';
+    if(this.state.displayMode === 'thumb') displayModeIcon = 'stop';
 
     var assets = this.props.assetGroup.assets.map(function(asset) {
       var style = {
@@ -42,7 +50,7 @@ var AssetGroup = module.exports = React.createClass({
       var selected = self.state.selectedAssets.indexOf(asset.id) !== -1;
 
       return (
-        <li className="asset" key={asset.id} data-selected={selected}>
+        <li className="asset" key={asset.id} data-selected={selected} data-pick={asset.pick}>
           <div className="image" style={style}>
             <input type="checkbox" className="selectImage" checked={selected} onChange={self.toggleAssetSelection.bind(self, asset.id)} />
           </div>
@@ -59,7 +67,7 @@ var AssetGroup = module.exports = React.createClass({
         <header>
           <div className="symbol"></div>
           <div className="title">
-            <input value={this.props.assetGroup.title} />
+            <input value={this.props.assetGroup.title} readOnly />
           </div>
           <div className="buttons">
             <Button icon="email" className="plain" />
