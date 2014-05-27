@@ -137,6 +137,8 @@ var AssetGroup = module.exports = React.createClass({
             <input value={this.props.assetGroup.title} onKeyUp={this.handleInputKeyUp} onChange={this.changeTitle} />
           </div>
           <div className="buttons">
+            <Button icon="email" className="plain" onClick={this.handleDownload} />
+            <Button icon="download" className="plain" onClick={this.handleDownload} />
             <Button icon="delete" className="plain" onClick={this.handleDelete} style={{ display: this.props.public ? 'none' : 'flex' }} />
           </div>
         </header>
