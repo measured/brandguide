@@ -43,7 +43,7 @@ em {
 }
 
 .content {
-  p, h1 {
+  p, h1, ul {
     margin-bottom: 24px;
   }
 }
@@ -57,7 +57,7 @@ em {
 header#banner {
   background: black;
   color: white;
-  height: 480px;
+  height: 360px;
   position: relative;
   overflow: hidden;
 
@@ -66,10 +66,12 @@ header#banner {
     z-index: 1;
   }
 
+  .titles {
+    padding-top: 216px;
+  }
   h1 {
     font-size: 24px;
     line-height: 24px;
-    padding-top: 196px;
     font-weight: bold;
   }
   h2 {
@@ -80,7 +82,7 @@ header#banner {
   .mtime {
     position: absolute;
     top: 0; right: 0;
-    margin: 24px;
+    margin-top: 24px;
   }
 }
 
@@ -110,16 +112,28 @@ section#main {
     }
     .content {
       flex: 1;
-      margin-top: 38px;
       h1 {
         font-size: 24px;
         line-height: 32px;
         font-weight: bold;
       }
     }
+    .contentHtml {
+      li {
+        position: relative;
+        padding-left: 24px;
+        &:before {
+          display: block;
+          position: absolute;
+          left: 0;
+          content: '—';
+          color: lighten(black, 75%);
+        }
+      }
+    }
   }
   .section {
-    margin-bottom: 48px;
+    padding-top: 40px;
   }
 }
 
@@ -143,7 +157,7 @@ section#main {
 }
 
 footer#footer {
-  margin-bottom: 24px;
+  margin: 48px 0 24px;
   color: lighten(black, 85%);
   p {
     margin: 0;

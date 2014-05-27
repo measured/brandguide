@@ -9,11 +9,13 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
-  <header id="banner">
+  <header id="banner" data-slim="<%= (@section.present? || @page.present?) ? true : false %>">
     <div class="inner">
-      <h1><a href="<%= root_path(subdomain: @guide.slug) %>"><%= @guide.title %></a></h1>
-      <h2><a href="<%= root_path(subdomain: @guide.slug) %>">Brand Guide</a></h2>
       <span class="mtime"><%= @guide.updated_at.to_date.to_formatted_s(:rfc822) %></span>
+      <div class="titles">
+        <h1><a href="<%= root_path(subdomain: @guide.slug) %>"><%= @guide.title %></a></h1>
+        <h2><a href="<%= root_path(subdomain: @guide.slug) %>">Brand Guide</a></h2>
+      </div>
     </div>
     <div class="gradient"></div>
   </header>
