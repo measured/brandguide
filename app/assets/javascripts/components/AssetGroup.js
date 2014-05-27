@@ -13,7 +13,7 @@ var AssetGroup = module.exports = React.createClass({
   getInitialState: function() {
     return {
       drag: null,
-      displayMode: 'list',
+      displayMode: (this.props.public ? 'thumb' : 'list'),
       displayModeStates: ['thumb', 'list', 'grid'],
       displayModeIcons: ['stop', 'rows', 'thumbnails'],
       selectedAssets: []
