@@ -13,6 +13,7 @@ var GuideStore = module.exports = _.extend(_.clone(Backbone.Events), {
       guide = guide.parse({ data: { guide: attributes }})
       return guide;
     });
+
     this.trigger('change');
   },
   fetch: function() {

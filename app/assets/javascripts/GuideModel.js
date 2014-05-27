@@ -18,6 +18,18 @@ var GuideModel = module.exports = function(attributes) {
     $.get('/guides/'+slug+'.json').done(this.parse.bind(this));
   }
 
+  this.destroy = function() {
+    var self = this;
+    var slug = this.attributes.slug;
+    
+    $.ajax({
+      url: '/guides/'+slug+'.json',
+      type: 'delete'
+    }).done(function(response) {
+      GuideStore.parse(response);
+    });
+  }
+
   this.parse = function(response) {
     this.attributes = response.data.guide;
 

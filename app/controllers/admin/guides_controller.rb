@@ -38,6 +38,19 @@ class Admin::GuidesController < Admin::AdminController
     }
   end
 
+  def destroy
+    guide = find_guide
+
+    guide.destroy
+
+    render json: {
+      status: :success,
+      data: {
+        guides: current_user.guides.map(&:api_attributes)
+      }
+    }
+  end
+
   def update
     guide = find_guide
 

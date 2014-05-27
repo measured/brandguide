@@ -421,9 +421,10 @@ em {
       justify-content: center;
       .GuidesListItem {
         display: flex;
+        position: relative;
         width: 320px;
         height: 320px;
-        border-radius: 3px;
+        border-radius: 16px;
         background: lighten(black, 85%);
         margin: 12px;
         cursor: pointer;
@@ -431,6 +432,25 @@ em {
           margin: auto;
           font-size: 36px;
           line-height: 42px;
+        }
+        .Button.delete {
+          font-size: 75%;
+          border: 2px solid transparent;
+          border-radius: 50%;
+          position: absolute;
+          top: 0; right: 0;
+          margin: 8px;
+          width: 24px;
+          height: 24px;
+          text-align: center;
+          opacity: 0;
+          &:hover {
+            border-color: currentColor;
+            opacity: 1!important;
+          }
+        }
+        &:hover .Button.delete {
+          opacity: 0.5;
         }
       }
     }
