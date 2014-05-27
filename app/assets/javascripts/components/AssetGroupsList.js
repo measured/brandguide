@@ -14,7 +14,8 @@ var AssetGroupsList = module.exports = React.createClass({
           key={group.id}
           assetGroup={group}
           section={self.props.section}
-          guide={self.props.guide} />
+          guide={self.props.guide}
+          public={self.props.public} />
       );
     });
 

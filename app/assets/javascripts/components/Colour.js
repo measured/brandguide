@@ -52,7 +52,7 @@ var Colour = module.exports = React.createClass({
           <div className="title">
             <input placeholder="Colour name" value={this.props.colour.title} onKeyUp={this.handleInputKeyUp} onChange={this.changeTitle} readOnly={this.props.public} />
           </div>
-          <div className="buttons" style={{ display: this.props.public ? 'none' : 'block' }}>
+          <div className="buttons" style={{ display: this.props.public ? 'none' : 'flex' }}>
             <Button icon="delete" className="plain" onClick={this.handleDelete} />
           </div>
         </header>
