@@ -9,7 +9,7 @@ var ColoursList = module.exports = React.createClass({
 
     var colours = (this.props.colours || []).map(function(colour) {
       return (
-        <Colour key={colour.id} colour={colour} guide={self.props.guide} section={self.props.section} />
+        <Colour public={self.props.public} key={colour.id} colour={colour} guide={self.props.guide} section={self.props.section} />
       );
     });
 

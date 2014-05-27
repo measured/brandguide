@@ -50,16 +50,16 @@ var Colour = module.exports = React.createClass({
         <header>
           <div className="symbol"></div>
           <div className="title">
-            <input placeholder="Colour name" value={this.props.colour.title} onKeyUp={this.handleInputKeyUp} onChange={this.changeTitle} />
+            <input placeholder="Colour name" value={this.props.colour.title} onKeyUp={this.handleInputKeyUp} onChange={this.changeTitle} readOnly={this.props.public} />
           </div>
-          <div className="buttons">
+          <div className="buttons" style={{ display: this.props.public ? 'none' : 'block' }}>
             <Button icon="delete" className="plain" onClick={this.handleDelete} />
           </div>
         </header>
 
         <div className="main">
           <div className="swatch" style={swatchStyle}>
-            <input style={valueStyle} placeholder="Colour Value" value={this.props.colour.hex} onChange={this.changeHex} />
+            <input style={valueStyle} placeholder="Colour Value" value={this.props.colour.hex} onChange={this.changeHex} readOnly={this.props.public} />
           </div>
         </div>
 

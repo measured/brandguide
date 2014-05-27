@@ -3,9 +3,7 @@
 
   <div class="contentHtml"><%= raw section.content_html %></div>
     
-  <%= react_component 'AssetGroupsList', { asset_groups: section.asset_groups.map(&:api_attributes) } %>
+  <%= react_component 'AssetGroupsList', { asset_groups: section.asset_groups.map(&:api_attributes), public: true } %>
   
-  <div class="colours">
-    <%= render section.colours %>
-  </div>
+  <%= react_component 'ColoursList', { colours: section.colours.map(&:api_attributes), public: true } %>
 </div>

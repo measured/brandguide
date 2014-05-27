@@ -2,6 +2,9 @@
 //= require fixedsticky
 //= require_self
 
+var React = require('react');
+
+var ColoursList = require('./components/ColoursList');
 var AssetGroupsList = require('./components/AssetGroupsList');
 
 $('nav.sections').fixedsticky();
@@ -16,6 +19,8 @@ $('header#banner').css({
 });
 
 // Make browserify and react-rails play nicely
-window.React = require('react');
+window.React = React;
 window.AssetGroupsList = AssetGroupsList;
+window.ColoursList = ColoursList;
+
 require('./react_ujs')();
