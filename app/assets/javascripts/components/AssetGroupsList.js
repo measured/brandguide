@@ -8,7 +8,7 @@ var AssetGroupsList = module.exports = React.createClass({
   render: function() {
     var self = this;
 
-    var assetGroups = (this.props.section.asset_groups || []).map(function(group) {
+    var assetGroups = (this.props.asset_groups || this.props.section.asset_groups || []).map(function(group) {
       return (
         <AssetGroup
           key={group.id}

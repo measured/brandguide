@@ -46,7 +46,6 @@ var GuidesListItem = module.exports = React.createClass({
           <h2>{this.props.guide.title}</h2>
           <span className="url"><a onClick={this.handleUrlClick} href={'http://'+guideUrl}>{guideUrl}</a></span>
         </div>
-        <span style={textStyle} className="mtime"><Icon name="clock" />Updated {mtime}</span>
       </div>
     );
   }

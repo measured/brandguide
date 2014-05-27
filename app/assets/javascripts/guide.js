@@ -2,7 +2,7 @@
 //= require fixedsticky
 //= require_self
 
-var AssetGroupsList = require('./components/guide/AssetGroupsList');
+var AssetGroupsList = require('./components/AssetGroupsList');
 
 $('nav.sections').fixedsticky();
 

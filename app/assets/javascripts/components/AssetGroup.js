@@ -14,6 +14,8 @@ var AssetGroup = module.exports = React.createClass({
     return {
       drag: null,
       displayMode: 'list',
+      displayModeStates: ['thumb', 'list', 'grid'],
+      displayModeIcons: ['stop', 'rows', 'thumbnails'],
       selectedAssets: []
     }
   },
@@ -57,7 +59,11 @@ var AssetGroup = module.exports = React.createClass({
     this.setState({ drag: 'drop' });
   },
   toggleDisplayMode: function() {
-    var displayMode = this.state.displayMode === 'list' ? 'grid' : 'list';
+    var current = this.state.displayMode;
+    var list = this.state.displayModeStates;
+    
+    var displayMode = (list[list.indexOf(current)+1] || list[0]);
+
     this.setState({ displayMode: displayMode });
   },
   toggleAssetSelection: function(id, event) {
@@ -81,7 +87,8 @@ var AssetGroup = module.exports = React.createClass({
 
     var mtime = moment.unix(this.props.assetGroup.mtime).fromNow();
 
-    var displayModeIcon = this.state.displayMode === 'list' ? 'rows' : 'thumbnails';
+    var modeIndex = this.state.displayModeStates.indexOf(this.state.displayMode);
+    var displayModeIcon = this.state.displayModeIcons[modeIndex];
 
     var assets = this.props.assetGroup.assets.map(function(asset) {
       var style = {
