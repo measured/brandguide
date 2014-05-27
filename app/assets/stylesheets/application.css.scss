@@ -428,10 +428,35 @@ em {
         background: lighten(black, 85%);
         margin: 12px;
         cursor: pointer;
-        h2 {
+        .content {
+          text-align: center;
           margin: auto;
-          font-size: 36px;
-          line-height: 42px;
+          h2 {
+            margin: 6px 24px 0;
+            font-size: 36px;
+            line-height: 42px;
+          }
+        }
+        .mtime, .url {
+          font-size: 85%;
+        }
+        .url {
+          display: block;
+          margin: 4px 32px 0;
+          overflow: hidden;
+          white-space: nowrap;
+          text-overflow: ellipsis;
+        }
+        .mtime {
+          position: absolute;
+          bottom: 0; left: 0; right: 0;
+          text-align: center;
+          padding: 12px;
+          opacity: 0.5;
+          .Icon {
+            font-size: 75%;
+            margin-right: 4px;
+          }
         }
         .Button.delete {
           font-size: 75%;
