@@ -26,12 +26,7 @@ constraints subdomain: /^admin$/ do
 
       get '/bundles/:key.json', to: 'asset_bundles#show'
       get '/bundles/:key/download.zip', to: 'asset_bundles#download'
-      post '/bundles.json', to: 'asset_bundles#create';
-      
-      # resources :asset_bundles do
-      #   get :download, on: :member
-      #   get :email, on: :member
-      # end
+      post '/bundles.json', to: 'asset_bundles#create'
     end
   end
 

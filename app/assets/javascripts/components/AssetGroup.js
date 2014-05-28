@@ -98,12 +98,26 @@ var AssetGroup = module.exports = React.createClass({
       return asset.id;
     });
 
-    console.log(assetIds);
-
     $.post('/bundles.json', { asset_ids: assetIds }).done(function(response) {
       var key = response.data.bundle.access_key;
       window.location.href = 'bundles/'+key+'/download.zip';
     });
+  },
+  handleEmail: function() {
+    var recipients;
+
+    if(recipients = prompt('Enter email recipient')) {
+      var assetIds = this.state.selectedAssets;
+    
+      if(!assetIds.length) assetIds = this.props.assetGroup.assets.map(function(asset) {
+        return asset.id;
+      });
+      
+      $.post('/bundles.json', { asset_ids: assetIds, recipients: recipients }).done(function(response) {
+        var key = response.data.bundle.access_key;
+        console.log(response);
+      });
+    }
   },
   render: function() {
     var self = this;
