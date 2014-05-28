@@ -100,7 +100,7 @@ class Admin::GuidesController < Admin::AdminController
         asset_groups_attributes: [:id, :title, :_destroy,
           assets_attributes: [:id, :_destroy]
         ],
-        colours_attributes: [:id, :title, :hex, :_destroy]
+        colours_attributes: [:id, :title, :rgb, :cmyk, :pantone, :_destroy]
       ]
     )
   end

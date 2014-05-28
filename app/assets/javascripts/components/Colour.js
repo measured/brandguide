@@ -11,6 +11,12 @@ var tinycolor = require('tinycolor2');
 var GuideStore = require('../GuideStore');
 
 var Colour = module.exports = React.createClass({
+  getInitialState: function() {
+    return {
+      currentColourInput: 'RGB',
+      colourInputs: ['RGB', 'CMYK', 'Pantone']
+    }
+  },
   changeTitle: function(event) {
     var guide = GuideStore.find(this.props.guide.slug);
     var colour = this.props.colour;
@@ -18,10 +24,24 @@ var Colour = module.exports = React.createClass({
 
     guide.updateSectionColour(this.props.section.slug, this.props.colour.id, colour);
   },
-  changeHex: function(event) {
+  changeRgb: function(event) {
     var guide = GuideStore.find(this.props.guide.slug);
     var colour = this.props.colour;
-    colour.hex = event.target.value;
+    colour.rgb = event.target.value;
+
+    guide.updateSectionColour(this.props.section.slug, this.props.colour.id, colour);
+  },
+  changeCmyk: function(event) {
+    var guide = GuideStore.find(this.props.guide.slug);
+    var colour = this.props.colour;
+    colour.cmyk = event.target.value;
+
+    guide.updateSectionColour(this.props.section.slug, this.props.colour.id, colour);
+  },
+  changePantone: function(event) {
+    var guide = GuideStore.find(this.props.guide.slug);
+    var colour = this.props.colour;
+    colour.pantone = event.target.value;
 
     guide.updateSectionColour(this.props.section.slug, this.props.colour.id, colour);
   },
@@ -32,21 +52,46 @@ var Colour = module.exports = React.createClass({
   handleInputKeyUp: function(event) {
     if([27,13].indexOf(event.keyCode) !== -1) event.target.blur();
   },
+  toggleColourInput: function() {
+    var colourInput = (this.state.colourInputs[this.state.colourInputs.indexOf(this.state.currentColourInput)+1] || this.state.colourInputs[0]);
+
+    this.setState({ currentColourInput: colourInput });
+  },
   render: function() {
-    var hex = tinycolor(this.props.colour.hex);
+    var rgb = tinycolor(this.props.colour.rgb);
 
     var swatchStyle = {
-      backgroundColor: hex.toHexString()
+      backgroundColor: rgb.toHexString()
     }
 
     var valueStyle = {
-      color: tinycolor.mostReadable(hex, ['white', 'black'])
+      color: tinycolor.mostReadable(rgb, ['white', 'black'])
     }
 
     var mtime = moment.unix(this.props.colour.mtime).fromNow();
 
+    var colourInput;
+
+    if(this.state.currentColourInput === 'RGB') {
+      colourInput = (
+        <input style={valueStyle} placeholder="#000000" value={this.props.colour.rgb} onChange={this.changeRgb} readOnly={this.props.public} />
+      );
+    }
+
+    if(this.state.currentColourInput === 'CMYK') {
+      colourInput = (
+        <input style={valueStyle} placeholder="C,M,Y,K" value={this.props.colour.cmyk} onChange={this.changeCmyk} readOnly={this.props.public} />
+      );
+    }
+
+    if(this.state.currentColourInput === 'Pantone') {
+      colourInput = (
+        <input style={valueStyle} placeholder="Colour Name" value={this.props.colour.pantone} onChange={this.changePantone} readOnly={this.props.public} />
+      );
+    }
+
     return (
-      <div className="Colour">
+      <div className="Colour" data-public={!!this.props.public}>
         <header>
           <div className="symbol"></div>
           <div className="title">
@@ -59,7 +104,8 @@ var Colour = module.exports = React.createClass({
 
         <div className="main">
           <div className="swatch" style={swatchStyle}>
-            <input style={valueStyle} placeholder="Colour Value" value={this.props.colour.hex} onChange={this.changeHex} readOnly={this.props.public} />
+            <Button onClick={this.toggleColourInput} className="toggleColourInput" style={valueStyle} text={this.state.currentColourInput} />
+            {colourInput}
           </div>
         </div>
 

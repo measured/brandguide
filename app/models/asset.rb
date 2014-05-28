@@ -35,7 +35,7 @@ class Asset < ActiveRecord::Base
   end
 
   def is_image?
-    !!file.mime_type.match(/image/)
+    !!file.mime_type.match(/image/) && !file.mime_type.match(/svg/)
   end
 
   def thumbnail

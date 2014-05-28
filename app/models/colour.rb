@@ -9,7 +9,9 @@ class Colour < ActiveRecord::Base
       title: title,
       ctime: created_at.to_i,
       mtime: updated_at.to_i,
-      hex: hex
+      rgb: rgb,
+      cmyk: cmyk,
+      pantone: pantone
     }
   end
 end

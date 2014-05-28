@@ -16,7 +16,8 @@ var AssetGroup = module.exports = React.createClass({
       displayMode: (this.props.public ? 'thumb' : 'list'),
       displayModeStates: ['thumb', 'list', 'grid'],
       displayModeIcons: ['stop', 'rows', 'thumbnails'],
-      selectedAssets: []
+      selectedAssets: [],
+      buttonState: null
     }
   },
   changeTitle: function(event) {
@@ -82,6 +83,9 @@ var AssetGroup = module.exports = React.createClass({
     guide.deleteAssets(this.props.section.slug, this.props.assetGroup.id, this.state.selectedAssets);
     this.setState({ selectedAssets: [] });
   },
+  handleDownload: function() {
+    alert('download...');
+  },
   render: function() {
     var self = this;
 
@@ -114,6 +118,8 @@ var AssetGroup = module.exports = React.createClass({
       display: this.state.selectedAssets.length ? 'inline-block' : 'none'
     }
 
+    if(this.props.public) deleteButtonStyle.display = 'none';
+
     return (
       <div
         className="AssetGroup"
@@ -122,7 +128,8 @@ var AssetGroup = module.exports = React.createClass({
         onDragOver={this.handleDragOver}
         onDrop={this.handleDrop}
         onDragLeave={this.handleDragLeave}
-        data-drag-state={this.state.drag}>
+        data-drag-state={this.state.drag}
+        data-public={!!this.props.public}>
         
         <div className="dropHint">
           <div>
@@ -137,9 +144,9 @@ var AssetGroup = module.exports = React.createClass({
             <input value={this.props.assetGroup.title} onKeyUp={this.handleInputKeyUp} onChange={this.changeTitle} />
           </div>
           <div className="buttons">
-            <Button icon="email" className="plain" onClick={this.handleDownload} />
-            <Button icon="download" className="plain" onClick={this.handleDownload} />
-            <Button icon="delete" className="plain" onClick={this.handleDelete} style={{ display: this.props.public ? 'none' : 'flex' }} />
+            <Button icon="email" className="email plain" onClick={this.handleEmail} />
+            <Button icon="download" className="download plain" onClick={this.handleDownload} />
+            <Button icon="delete" className="delete plain" onClick={this.handleDelete} />
           </div>
         </header>
         

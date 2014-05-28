@@ -22,11 +22,11 @@ class Guide < ActiveRecord::Base
   default_scope { order(created_at: :asc) }
 
   def primary_colour
-    colours.first.try(:hex) || '#000000'
+    colours.first.try(:rgb) || '#000000'
   end
 
   def secondary_colour
-    colours.second.try(:hex)
+    colours.second.try(:rgb)
   end
 
   def api_attributes

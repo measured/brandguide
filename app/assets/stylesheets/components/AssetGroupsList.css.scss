@@ -19,6 +19,7 @@
       display: flex;
       overflow: hidden;
     }
+    
     footer {
       border-top: 1px solid lighten(black, 85%);
       div.text {
@@ -30,9 +31,25 @@
         }
       }
     }
+
+    &[data-public="true"] {
+      header .Button.delete {
+        display: none;
+      }
+      footer {
+        display: none;
+      }
+    }
+
+    &[data-public="false"] {
+      header .Button.download, header .Button.email {
+        display: none;
+      }
+    }
+
     header {
       border-bottom: 1px solid lighten(black, 85%);
-      div.title {
+      .title {
         flex: 1;
         padding: 13px 0 11px;
         input {
@@ -41,21 +58,26 @@
           outline: none;
         }
       }
-      div.symbol {
+      .symbol {
         width: 44px;
         background-repeat: no-repeat;
         background-size: 65%;
         background-position: center center;
         background-image: url(asset_path('thumbnail_default.svg'));
       }
-      div.buttons {
+      .buttons {
         display: flex;
         .Button {
           border-left: 1px solid lighten(black, 85%);
           .Icon {
             width: 42px;
-            padding: 14px 10px 10px 14px;
+            padding: 14px;
             display: block;
+            text-align: center;
+            color: lighten(black, 85%);
+          }
+          &:hover .Icon {
+            color: lighten(black, 65%);
           }
         }
       }
@@ -71,9 +93,17 @@
     .swatch {
       display: flex;
       flex-direction: column;
+      flex-wrap: wrap;
+      justify-content: space-around;
       position: absolute;
       top: 0; left: 0;
       bottom: 0; right: 0;
+      .Button.toggleColourInput {
+        position: absolute;
+        top: 8px; right: 0;
+        background: none;
+        border: 1px solid currentColor;
+      }
       input {
         width: 100%;
         margin: auto;
@@ -84,6 +114,13 @@
         line-height: 42px;
         color: white;
         outline: none;
+        &::placeholder {
+          color: inherit!important;
+          opacity: 0.25;
+        }
+      }
+      span {
+        margin: auto;
       }
     }
     .main {
@@ -99,6 +136,7 @@
     &[data-drag-state="enter"] .dropHint {
       display: flex;
     }
+
     .dropHint {
       display: none;
       position: absolute;
