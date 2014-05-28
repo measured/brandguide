@@ -21,8 +21,8 @@ constraints subdomain: /^admin$/ do
 
   constraints subdomain: /^((?!www).).+$/ do
     resource :guide, path: '/' do
-      post :authenticate, on: :member
-      get :logout, on: :member
+      post '/authenticate', to: 'guides#authenticate'
+      get '/logout', to: 'guides#logout'
 
       get '/bundles/:key.json', to: 'asset_bundles#show'
       get '/bundles/:key/download.zip', to: 'asset_bundles#download'

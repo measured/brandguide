@@ -20,17 +20,25 @@
     <div class="gradient"></div>
   </header>
 
-  <section id="main">
-    <div class="inner">
-      <%= yield %>
-    </div>
-  </section>
+  <% if authenticated? %>
+    <section id="main">
+      <div class="inner">
+        <%= yield %>
+      </div>
+    </section>
 
-  <footer id="footer">
-    <div class="inner">
-      <p>Copyright &copy; <%= Time.now.year %> <%= @guide.title %>. Built with <a href="http://brandguide.io">brandguide.io</a>.</p>
-    </div>
-  </footer>
+    <footer id="footer">
+      <div class="inner">
+        <p>Copyright &copy; <%= Time.now.year %> <%= @guide.title %>. Built with <a href="http://brandguide.io">brandguide.io</a>.</p>
+      </div>
+    </footer>
+  <% else %>
+    <form id="authenticate" action="/authenticate" method="post">
+      <input name="password" type="password" placeholder="Enter Password" />
+      <input type="hidden" name="guide" value="<%= @guide.slug %>" />
+      <input type="submit" />
+    </form>
+  <% end %>
 
   <script>
     window.guide = {
