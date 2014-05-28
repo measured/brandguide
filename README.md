@@ -63,6 +63,8 @@ First, add the Heroku remote repository
 
 `git remote add heroku git@heroku.com:idealogue-bms.git`
 
-When ready to push changes to the production site, just `git push heroku master`
+Assets must be precompiled for Heroku depolyment. Run `bundle exec rake assets:build` and then `git commit` the resulting files before pushing to Heroku.
+
+When ready to push changes to the production site, just `git push heroku master`.
 
 Don't pull from the heroku remote. Pull any code changes made by other collaborators from the github (`origin`) remote.
