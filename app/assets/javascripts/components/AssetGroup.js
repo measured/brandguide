@@ -193,7 +193,7 @@ var AssetGroup = module.exports = React.createClass({
         <div className="assetsListContainer">
           <div className="meta">
             <div className="left">
-              <h2>{assets.length} Files</h2>
+              <h2>{assets.length} {assets.length === 1 ? 'File' : 'Files'}</h2>
               <span className="size">{this.props.assetGroup.size}</span>
               <Button onClick={this.deleteSelectedAssets} style={deleteButtonStyle} className="plain delete" text={this.state.selectedAssets.length} icon="trash" />
             </div>
