@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>brandguide.io</title>
+  <title><%= @guide.title %> Brand Guide</title>
 
   <link rel="shortcut icon" href="<%= asset_path('favicon.ico') %>">
   <link rel="apple-touch-icon" href="<%= asset_path('apple-touch-icon-precomposed.png') %>" sizes="152x152">
@@ -9,7 +9,7 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
-  <header id="banner" data-slim="<%= (@section.present? || @page.present?) ? true : false %>">
+  <header id="banner">
     <div class="inner">
       <span class="mtime">Last updated <%= time_ago_in_words(@guide.updated_at) %> ago</span>
       <div class="titles">
