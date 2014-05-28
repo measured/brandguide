@@ -11,7 +11,7 @@
 <body>
   <header id="banner" data-slim="<%= (@section.present? || @page.present?) ? true : false %>">
     <div class="inner">
-      <span class="mtime"><%= @guide.updated_at.to_date.to_formatted_s(:rfc822) %></span>
+      <span class="mtime">Last updated <%= time_ago_in_words(@guide.updated_at) %> ago</span>
       <div class="titles">
         <h1><a href="<%= root_path(subdomain: @guide.slug) %>"><%= @guide.title %></a></h1>
         <h2><a href="<%= root_path(subdomain: @guide.slug) %>">Brand Guide</a></h2>
