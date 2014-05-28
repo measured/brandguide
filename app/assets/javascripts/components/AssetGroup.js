@@ -142,7 +142,7 @@ var AssetGroup = module.exports = React.createClass({
       var selected = self.state.selectedAssets.indexOf(asset.id) !== -1;
 
       return (
-        <li className="asset" key={asset.id} data-selected={selected}>
+        <li className="asset" key={asset.id} data-selected={selected} data-pick={asset.pick}>
           <div className="image" style={style}>
             <input type="checkbox" className="selectImage" checked={selected} onChange={self.toggleAssetSelection.bind(self, asset.id)} />
           </div>
