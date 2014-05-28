@@ -46,7 +46,8 @@ How to set up your local development environment, after cloning the repository.
 1. `bundle`
 2. `npm install`
 3. `rake db:reset`
-4. `bundle exec guard`
+4. `rake assets:clobber`
+5. `bundle exec guard`
 
 If `pow` has been installed and linked (try `powder link`), the server will be running and accessible at `http://brandguide.dev/`.
 
@@ -63,7 +64,7 @@ First, add the Heroku remote repository
 
 `git remote add heroku git@heroku.com:idealogue-bms.git`
 
-Assets must be precompiled for Heroku depolyment. Run `bundle exec rake assets:bundle` and then `git commit` the resulting files before pushing to Heroku.
+Assets must be precompiled for Heroku depolyment. Run `rake assets:bundle` and then `git commit` the resulting files before pushing to Heroku.
 
 When ready to push changes to the production site, just `git push heroku master`.
 
