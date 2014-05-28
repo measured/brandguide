@@ -2,6 +2,7 @@
 
 var React = require('react');
 
+var $ = require('jquery');
 var moment = require('moment');
 
 var Icon = require('./Icon');
@@ -83,8 +84,26 @@ var AssetGroup = module.exports = React.createClass({
     guide.deleteAssets(this.props.section.slug, this.props.assetGroup.id, this.state.selectedAssets);
     this.setState({ selectedAssets: [] });
   },
+  selectAllAssets: function() {
+    var assetIds = this.props.assetGroup.assets.map(function(asset) {
+      return asset.id;
+    });
+
+    this.setState({ selectedAssets: assetIds })
+  },
   handleDownload: function() {
-    alert('download...');
+    var assetIds = this.state.selectedAssets;
+    
+    if(!assetIds.length) assetIds = this.props.assetGroup.assets.map(function(asset) {
+      return asset.id;
+    });
+
+    console.log(assetIds);
+
+    $.post('/bundles.json', { asset_ids: assetIds }).done(function(response) {
+      var key = response.data.bundle.access_key;
+      window.location.href = 'bundles/'+key+'/download';
+    });
   },
   render: function() {
     var self = this;

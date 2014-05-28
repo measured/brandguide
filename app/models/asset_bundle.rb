@@ -16,4 +16,11 @@ class AssetBundle < ActiveRecord::Base
   def generate_access_key
     SecureRandom.hex(32)
   end
+
+  def api_attributes
+    {
+      access_key: access_key,
+      assets: assets.map(&:api_attributes)
+    }
+  end
 end

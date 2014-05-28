@@ -23,13 +23,15 @@ constraints subdomain: /^admin$/ do
     resource :guide, path: '/' do
       post :authenticate, on: :member
       get :logout, on: :member
+
+      get '/bundles/:key.json', to: 'asset_bundles#show'
+      get '/bundles/:key/download', to: 'asset_bundles#download'
+      post '/bundles.json', to: 'asset_bundles#create';
       
-      resources :pages
-      
-      resources :asset_bundles do
-        get :download, on: :member
-        get :email, on: :member
-      end
+      # resources :asset_bundles do
+      #   get :download, on: :member
+      #   get :email, on: :member
+      # end
     end
   end
 
