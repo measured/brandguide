@@ -102,7 +102,7 @@ var AssetGroup = module.exports = React.createClass({
 
     $.post('/bundles.json', { asset_ids: assetIds }).done(function(response) {
       var key = response.data.bundle.access_key;
-      window.location.href = 'bundles/'+key+'/download';
+      window.location.href = 'bundles/'+key+'/download.zip';
     });
   },
   render: function() {

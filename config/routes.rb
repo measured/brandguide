@@ -25,7 +25,7 @@ constraints subdomain: /^admin$/ do
       get :logout, on: :member
 
       get '/bundles/:key.json', to: 'asset_bundles#show'
-      get '/bundles/:key/download', to: 'asset_bundles#download'
+      get '/bundles/:key/download.zip', to: 'asset_bundles#download'
       post '/bundles.json', to: 'asset_bundles#create';
       
       # resources :asset_bundles do
