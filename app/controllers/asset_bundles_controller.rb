@@ -32,24 +32,39 @@ class AssetBundlesController < ApplicationController
     guide = find_guide
 
     assets = guide.assets.find(params[:asset_ids])
-    bundle = guide.asset_bundles.create(assets: assets)
-
-    if params[:recipients]
-      email_params = {
-        download_url: "http://#{request.host}/bundles/#{bundle.access_key}/download.zip",
-        recipients: params[:recipients],
-        message: params[:message]
+    
+    if assets.present? && bundle = guide.asset_bundles.create(assets: assets)
+      success_response = {
+        status: :success,
+        data: {
+          bundle: bundle.api_attributes
+        }
       }
 
-      BundleMailer.email(bundle, email_params).deliver
+      if params[:recipients]
+        email_params = {
+          download_url: "http://#{request.host}/bundles/#{bundle.access_key}/download.zip",
+          recipients: params[:recipients],
+          message: params[:message]
+        }
+
+        if BundleMailer.email(bundle, email_params).deliver
+          render json: success_response
+        else
+          render json: {
+            status: :fail,
+            message: 'Mail could not be delivered'
+          }
+        end
+      else
+        render json: success_response
+      end
+    else
+      render json: {
+        status: :fail,
+        message: 'Asset bundle failed'
+      }
     end
-
-    render json: {
-      status: :success,
-      data: {
-        bundle: bundle.api_attributes
-      }
-    }
   end
 
   private

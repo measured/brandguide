@@ -99,8 +99,12 @@ var AssetGroup = module.exports = React.createClass({
     });
 
     $.post('/bundles.json', { asset_ids: assetIds }).done(function(response) {
-      var key = response.data.bundle.access_key;
-      window.location.href = 'bundles/'+key+'/download.zip';
+      if(response.status === 'success') {
+        var key = response.data.bundle.access_key;
+        window.location.href = 'bundles/'+key+'/download.zip';
+      } else {
+        alert(response.message);
+      }
     });
   },
   handleEmail: function() {
@@ -114,8 +118,11 @@ var AssetGroup = module.exports = React.createClass({
       });
       
       $.post('/bundles.json', { asset_ids: assetIds, recipients: recipients }).done(function(response) {
-        var key = response.data.bundle.access_key;
-        console.log(response);
+        if(response.status === 'success') {
+          alert('Asset bundle delivered.');
+        } else {
+          alert(response.message);
+        }
       });
     }
   },
