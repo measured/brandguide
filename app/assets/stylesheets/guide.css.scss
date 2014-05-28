@@ -166,3 +166,9 @@ footer#footer {
 
 @import "components/Button";
 @import "components/AssetGroupsList";
+
+.AssetGroupsList, .ColoursList {
+  .container {
+    justify-content: flex-start!important;
+  }
+}
