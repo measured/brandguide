@@ -1,8 +1,6 @@
 <div class="section" id="section-<%= section.slug %>" data-root="<%= section.root? %>">
   <h1><a href="#section-<%= section.slug %>"><%= section.title %></a></h1>
 
-  <div class="contentHtml"><%= raw section.content_html %></div>
-    
   <%= react_component 'AssetGroupsList', { asset_groups: section.asset_groups.map(&:api_attributes), public: true } %>
   
   <%= react_component 'ColoursList', { colours: section.colours.map(&:api_attributes), public: true } %>
