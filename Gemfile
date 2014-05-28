@@ -23,6 +23,7 @@ gem 'dragonfly'
 gem 'dragonfly-s3_data_store'
 gem 'rubyzip', require: 'zip'
 gem 'friendly_id', '~> 5.0.0'
+gem 'non-stupid-digest-assets'
 
 gem 'foreman'
 gem 'puma'
