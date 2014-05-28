@@ -30,7 +30,7 @@ var AssetGroupsList = module.exports = React.createClass({
     }
 
     return (
-      <div className="AssetGroupsList">
+      <div className="AssetGroupsList" data-show={this.props.show}>
         {assetGroupsContainer}
       </div>
     );

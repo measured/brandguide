@@ -14,7 +14,7 @@ var ColoursList = module.exports = React.createClass({
     });
 
     return (
-      <div className="ColoursList">
+      <div className="ColoursList" data-show={this.props.show}>
         <div className="container">
           {colours}
         </div>

@@ -126,6 +126,7 @@ var GuideModel = module.exports = function(attributes) {
 
   this.addAssetGroupToSection = function(id) {
     var section = this.findSection(id);
+
     section.asset_groups.push({
       title: 'Untitled',
       assets: []

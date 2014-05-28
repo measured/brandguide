@@ -35,10 +35,6 @@ var SectionEditor = module.exports = React.createClass({
     var guide = GuideStore.find(this.props.guide.slug);
     guide.updateSection(this.props.section.slug, { title: event.target.value });
   },
-  changeContent: function(event) {
-    var guide = GuideStore.find(this.props.guide.slug);
-    guide.updateSection(this.props.section.slug, { content: event.target.value });
-  },
   saveChanges: function(event) {
     event.preventDefault();
     var guide = GuideStore.find(this.props.guide.slug);
@@ -55,28 +51,35 @@ var SectionEditor = module.exports = React.createClass({
   },
   render: function() {
     var self = this;
+
+    var showAssetGroupsList = showColoursList = false;
     
     if(this.props.section) {
       var mtime = moment.unix(this.props.section.mtime).fromNow();
+
+      if(this.props.section.asset_groups && this.props.section.asset_groups.length) showAssetGroupsList = true;
+      if(this.props.section.colours && this.props.section.colours.length) showColoursList = true;
 
       var viewComponent = (
         <div>
           <form onSubmit={this.saveChanges}>
             <span className="mtime"><Icon name="clock" /> Updated {mtime}</span>
             <input className="input titleInput" value={this.props.section.title} type="text" onChange={this.changeTitle} placeholder="Title" />
-
-            <div className="input contentInput MarkdownContentInput">
-              <textarea onChange={this.changeContent} value={this.props.section.content || ''} placeholder="Content" />
-            </div>
             
             <div className="assetsColours">
               <AssetGroupsList
                 onAssetGroupDeleted={this.props.onAssetGroupDeleted}
                 onAssetUploaded={this.props.onAssetUploaded}
+                guide={this.props.guide}
                 section={this.props.section}
-                guide={this.props.guide} />
+                show={showAssetGroupsList} />
 
-              <ColoursList colours={this.props.section.colours} guide={this.props.guide} section={this.props.section} />
+              <ColoursList
+                colours={this.props.section.colours}
+                guide={this.props.guide}
+                section={this.props.section}
+                show={showColoursList} />
+
             </div>
             
             <ButtonGroup>
