@@ -15,12 +15,17 @@ class AssetBundlesController < ApplicationController
     guide = find_guide
     bundle = guide.asset_bundles.friendly.find(params[:key])
 
-    render json: {
-      status: :success,
-      data: {
-        bundle: bundle.api_attributes
-      }
-    }
+    zip_name = "#{guide.title.parameterize}-assets"
+    tempfile = Tempfile.new("#{zip_name}--#{Time.now.to_i}")
+
+    Zip::OutputStream.open(tempfile.path) do |zipfile|
+      bundle.assets.each do |asset|
+        zipfile.put_next_entry asset.file.name
+        zipfile.print IO.read(asset.file.path)
+      end
+    end
+
+    send_file tempfile.path, type: 'application/zip', disposition: :attachment
   end
 
   def create
