@@ -25,7 +25,7 @@ class AssetBundlesController < ApplicationController
       end
     end
 
-    send_file tempfile.path, type: 'application/zip', disposition: :attachment
+    send_file tempfile.path, filename: zip_name, type: 'application/zip', disposition: :attachment
   end
 
   def create
