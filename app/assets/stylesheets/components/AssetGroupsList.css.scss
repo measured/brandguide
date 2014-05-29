@@ -12,7 +12,6 @@
     overflow: hidden;
     margin: 12px;
     position: relative;
-    width: 320px;
 
     header, footer {
       height: 44px;
@@ -22,6 +21,7 @@
     
     footer {
       border-top: 1px solid lighten(black, 85%);
+      display: none;
       div.text {
         margin: auto;
         color: lighten(black, 50%);
@@ -34,9 +34,6 @@
 
     &[data-public="true"] {
       header .Button.delete {
-        display: none;
-      }
-      footer {
         display: none;
       }
     }
@@ -125,6 +122,7 @@
     }
     .main {
       position: relative;
+      width: 320px;
       height: 320px;
     }
   }
@@ -162,7 +160,6 @@
 
     .assetsListContainer {
       width: 320px;
-      height: 320px;
       display: flex;
       flex-direction: column;
       font-size: 85%;
@@ -190,6 +187,7 @@
       margin: 0 8px;
       border-top: 1px solid lighten(black, 85%);
       overflow-y: scroll;
+      height: 320px;
 
       li.asset .image {
         background-position: center center;
