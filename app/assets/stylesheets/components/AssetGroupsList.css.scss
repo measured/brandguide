@@ -18,7 +18,7 @@
       display: flex;
       overflow: hidden;
     }
-    
+
     footer {
       border-top: 1px solid lighten(black, 85%);
       display: none;
@@ -186,7 +186,7 @@
       flex: 1;
       margin: 0 8px;
       border-top: 1px solid lighten(black, 85%);
-      overflow-y: scroll;
+      overflow-y: auto;
       height: 320px;
 
       li.asset .image {
@@ -222,7 +222,7 @@
           }
         }
       }
-      
+
       &[data-display-mode="list"] {
         li.asset {
           padding: 8px 0;
