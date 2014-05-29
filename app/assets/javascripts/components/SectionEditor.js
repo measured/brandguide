@@ -8,6 +8,7 @@ var Button = require('./Button');
 var ButtonGroup = require('./ButtonGroup');
 var Icon = require('./Icon');
 
+var GuideEditor = require('./GuideEditor');
 var AssetGroupsList = require('./AssetGroupsList');
 var ColoursList = require('./ColoursList');
 
@@ -18,7 +19,9 @@ var SectionEditor = module.exports = React.createClass({
   componentDidMount: function() {
     var self = this;
 
-    this.mtimeTicker = setInterval(function() { self.forceUpdate }, 10000);
+    this.mtimeTicker = setInterval(function() {
+      self.forceUpdate();
+    }, 10000);
   },
   componentWillUnmount: function() {
     clearInterval(this.mtimeTicker);
@@ -93,24 +96,7 @@ var SectionEditor = module.exports = React.createClass({
         </div>
       );
     } else {
-      var message = {}
-      
-      if(this.props.guide.sections && this.props.guide.sections.length) {
-        message.icon = 'list';
-        message.text = (<p>Select a page<br />to edit</p>);
-      } else {
-        message.icon = 'openbook';
-        message.text = (<p>Add a page<br />to get started</p>);
-      }
-
-      var viewComponent = (
-        <div className="noSectionsMessage">
-          <div>
-            <div className="book"><Icon name={message.icon} /></div>
-            {message.text}
-          </div>
-        </div>
-      );
+      viewComponent = (<GuideEditor guide={this.props.guide} />);
     }
 
     return (

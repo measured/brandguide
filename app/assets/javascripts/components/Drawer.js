@@ -16,14 +16,17 @@ var Drawer = module.exports = React.createClass({
   handleBack: function() {
     Dispatcher.emit('navigate', '/');
   },
+  handleSettings: function() {
+    Dispatcher.emit('navigate', '/'+this.props.guide.slug);
+  },
   render: function() {
     return (
       <div className="Drawer" data-open={this.props.open}>
         <div className="contents" onClick={this.props.onOpenDrawer}>
           <header>
             <Button onClick={this.handleBack} className="back plain" icon="back" />
-            <h2>{this.props.guide.title}</h2>
-            <Button className="settings plain" icon="gear" />
+            <h2>{this.props.guide.title || 'Untitled'}</h2>
+            <Button className="settings plain" icon="gear" onClick={this.handleSettings} active={!this.props.section} />
           </header>
           <div className="content">
             <DrawerSectionsList guide={this.props.guide} section={this.props.section} />

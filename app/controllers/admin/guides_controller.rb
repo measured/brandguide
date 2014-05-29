@@ -94,7 +94,7 @@ class Admin::GuidesController < Admin::AdminController
 
   def guide_params
     params.require(:guide).permit(
-      :id, :slug, :title,
+      :id, :slug, :title, :content, :password,
       sections_attributes: [
         :id, :slug, :title, :content, :_destroy, :parent_id, :sort_order,
         asset_groups_attributes: [:id, :title, :_destroy,

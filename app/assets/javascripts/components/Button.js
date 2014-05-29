@@ -21,7 +21,7 @@ var Button = module.exports = React.createClass({
     }
 
     return this.transferPropsTo(
-      <a onClick={this.handleClick} className="Button" href="#">
+      <a onClick={this.handleClick} className="Button" href="#" data-active={this.props.active}>
         {children}
       </a>
     );

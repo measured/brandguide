@@ -55,6 +55,7 @@ em {
   padding: 12px;
   padding-bottom: 10px;
   overflow: hidden;
+  outline: none;
 }
 
 .Application, .AdminPage, .Location {
@@ -165,10 +166,6 @@ em {
     font-size: 24px;
     border-radius: 3px;
     padding: 19px 12px 14px;
-    outline: none;
-  }
-  .contentInput {
-    border-radius: 0 0 3px 3px;
   }
 
   .ButtonGroup {
@@ -182,7 +179,46 @@ em {
     }
   }
 
+  .GuideEditor {
+    .titleInput {
+      border-bottom: none;
+      border-radius: 3px 3px 0 0;
+    }
+   .contentInput {
+      border-radius: 3px;
+      margin-top: 24px;
+      height: 320px;
+    }
+
+    .inputWithLabel {
+      position: relative;
+      label {
+        position: absolute;
+        padding: 12px;
+        padding-bottom: 10px;
+      }
+      .input {
+        padding-left: 180px;
+      }
+    }
+
+    .metaInputs {
+      .inputWithLabel:not(:last-child) {
+        .input {
+          border-bottom: none;
+        }
+      }
+      .inputWithLabel:last-child {
+        .input {
+          border-radius: 0 0 3px 3px;
+        }
+      }
+    }
+  }
+
   .noSectionsMessage {
+    user-select: none;
+    pointer-events: none;
     display: flex;
     flex: 1;
     div {

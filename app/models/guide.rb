@@ -21,6 +21,10 @@ class Guide < ActiveRecord::Base
 
   default_scope { order(created_at: :asc) }
 
+  def content_html
+    Redcarpet::Markdown.new(Redcarpet::Render::HTML, autolink: true).render(content) if content.present?
+  end
+
   def primary_colour
     colours.first.try(:rgb) || '#000000'
   end
@@ -35,6 +39,8 @@ class Guide < ActiveRecord::Base
       slug: slug,
       title: (title || 'Untitled'),
       sections: sections.order('created_at asc').map(&:api_attributes),
+      password: password,
+      content: content,
       ctime: created_at.to_i,
       mtime: updated_at.to_i,
       primary: primary_colour,
