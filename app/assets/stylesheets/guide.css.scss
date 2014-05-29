@@ -54,7 +54,10 @@ em {
 }
 
 header#banner {
-  background: black;
+  background-color: black;
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
   color: white;
   height: 360px;
   position: relative;
