@@ -18,7 +18,7 @@ var GuideModel = module.exports = function(attributes) {
     $.get('/guides/'+slug+'.json').done(this.parse.bind(this));
   }
 
-  this.destroy = function() {
+  this.destroy = function(callback) {
     var self = this;
     var slug = this.attributes.slug;
     
@@ -27,6 +27,7 @@ var GuideModel = module.exports = function(attributes) {
       type: 'delete'
     }).done(function(response) {
       GuideStore.parse(response);
+      if(typeof callback === 'function') callback();
     });
   }
 

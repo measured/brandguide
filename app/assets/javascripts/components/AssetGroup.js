@@ -29,8 +29,10 @@ var AssetGroup = module.exports = React.createClass({
     if([27,13].indexOf(event.keyCode) !== -1) event.target.blur();
   },
   handleDelete: function(event) {
-    var guide = GuideStore.find(this.props.guide.slug);
-    guide.deleteAssetGroup(this.props.section.slug, this.props.assetGroup.id);
+    if(confirm('Are you sure?')) {
+      var guide = GuideStore.find(this.props.guide.slug);
+      guide.deleteAssetGroup(this.props.section.slug, this.props.assetGroup.id);
+    }
   },
   handleDragStart: function(event) {
     event.preventDefault();

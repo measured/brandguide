@@ -46,8 +46,10 @@ var Colour = module.exports = React.createClass({
     guide.updateSectionColour(this.props.section.slug, this.props.colour.id, colour);
   },
   handleDelete: function() {
-    var guide = GuideStore.find(this.props.guide.slug);
-    guide.deleteSectionColour(this.props.section.slug, this.props.colour.id);
+    if(confirm('Are you sure?')) {
+      var guide = GuideStore.find(this.props.guide.slug);
+      guide.deleteSectionColour(this.props.section.slug, this.props.colour.id);
+    }
   },
   handleInputKeyUp: function(event) {
     if([27,13].indexOf(event.keyCode) !== -1) event.target.blur();

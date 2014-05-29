@@ -4,6 +4,7 @@ var React = require('react');
 var moment = require('moment');
 
 var GuideStore = require('../GuideStore');
+var Dispatcher = require('../Dispatcher');
 
 var ButtonGroup = require('./ButtonGroup');
 var Button = require('./Button');
@@ -43,6 +44,14 @@ var GuideEditor = module.exports = React.createClass({
     var guide = GuideStore.find(this.props.guide.slug);
 
     guide.sync();
+  },
+  deleteGuide: function() {
+    if(confirm('Are you sure?')) {
+      var guide = GuideStore.find(this.props.guide.slug);
+      guide.destroy(function() {
+        Dispatcher.emit('navigate', '/');
+      });
+    }
   },
   render: function() {
     var mtime = moment.unix(this.props.guide.mtime).fromNow();

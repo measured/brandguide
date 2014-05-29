@@ -27,12 +27,14 @@ var SectionEditor = module.exports = React.createClass({
     clearInterval(this.mtimeTicker);
   },
   deleteSection: function() {
-    var self = this;
-    var guide = GuideStore.find(this.props.guide.slug);
+    if(confirm('Are you sure?')) {
+      var self = this;
+      var guide = GuideStore.find(this.props.guide.slug);
 
-    guide.deleteSection(this.props.section.slug, function() {
-      Dispatcher.emit('navigate', '/'+self.props.guide.slug);
-    });
+      guide.deleteSection(this.props.section.slug, function() {
+        Dispatcher.emit('navigate', '/'+self.props.guide.slug);
+      });
+    }
   },
   changeTitle: function(event) {
     var guide = GuideStore.find(this.props.guide.slug);
