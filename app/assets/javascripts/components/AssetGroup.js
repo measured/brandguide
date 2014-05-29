@@ -181,7 +181,7 @@ var AssetGroup = module.exports = React.createClass({
         <header>
           <div className="symbol"></div>
           <div className="title">
-            <input value={this.props.assetGroup.title} onKeyUp={this.handleInputKeyUp} onChange={this.changeTitle} />
+            <input value={this.props.assetGroup.title} onKeyUp={this.handleInputKeyUp} onChange={this.changeTitle} readOnly={this.props.public} />
           </div>
           <div className="buttons">
             <Button icon="email" className="email plain" onClick={this.handleEmail} />
