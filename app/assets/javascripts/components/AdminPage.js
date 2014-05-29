@@ -25,17 +25,6 @@ var AdminPage = module.exports = React.createClass({
   componentWillUnmount: function() {
     Dispatcher.rmoveListener('navigate');
   },
-  onBeforeNavigation: function() {
-    $(this.getDOMNode()).hide();
-  },
-  onNavigation: function() {
-    // This is a hideous hackfix for a troublesome layout bug
-    var self = this;
-    
-    setTimeout(function() {
-      $(self.getDOMNode()).show();
-    }, 1);
-  },
   render: function() {
     return (
       <div className="AdminPage">
