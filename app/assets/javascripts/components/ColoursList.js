@@ -1,7 +1,10 @@
 /** @jsx React.DOM */
 
-var React = require('react');
+var React = require('react/addons');
+
 var Colour = require('./Colour');
+
+var ReactCSSTransitionGroup = React.addons.CSSTransitionGroup;
 
 var ColoursList = module.exports = React.createClass({
   render: function() {
@@ -9,15 +12,15 @@ var ColoursList = module.exports = React.createClass({
 
     var colours = (this.props.colours || []).map(function(colour) {
       return (
-        <Colour public={self.props.public} key={colour.id} colour={colour} guide={self.props.guide} section={self.props.section} />
+        <Colour public={self.props.public} key={colour.id || colour.key} colour={colour} guide={self.props.guide} section={self.props.section} />
       );
     });
 
     return (
       <div className="ColoursList" data-show={this.props.show}>
-        <div className="container">
+        <ReactCSSTransitionGroup className="container" component={React.DOM.div} transitionName="pop">
           {colours}
-        </div>
+        </ReactCSSTransitionGroup>
       </div>
     );
   }

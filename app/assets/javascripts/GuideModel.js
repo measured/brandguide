@@ -129,7 +129,8 @@ var GuideModel = module.exports = function(attributes) {
 
     section.asset_groups.push({
       title: 'Untitled',
-      assets: []
+      assets: [],
+      key: +new Date()
     });
 
     GuideStore.trigger('change');
@@ -139,10 +140,11 @@ var GuideModel = module.exports = function(attributes) {
     var section = this.findSection(id);
     section.colours.push({
       title: 'Untitled',
-      hex: '#000000'
+      hex: '#000000',
+      key: +new Date()
     });
 
-    this.sync();
+    GuideStore.trigger('change');
   }
 
   this.updateSectionColour = function(sectionId, colourId, attributes) {

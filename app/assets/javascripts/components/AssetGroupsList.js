@@ -1,8 +1,10 @@
 /** @jsx React.DOM */
 
-var React = require('react');
+var React = require('react/addons');
 
 var AssetGroup = require('./AssetGroup');
+
+var ReactCSSTransitionGroup = React.addons.CSSTransitionGroup;
 
 var AssetGroupsList = module.exports = React.createClass({
   render: function() {
@@ -11,7 +13,7 @@ var AssetGroupsList = module.exports = React.createClass({
     var assetGroups = (this.props.asset_groups || this.props.section.asset_groups || []).map(function(group) {
       return (
         <AssetGroup
-          key={group.id}
+          key={group.id || group.key}
           assetGroup={group}
           section={self.props.section}
           guide={self.props.guide}
@@ -23,9 +25,9 @@ var AssetGroupsList = module.exports = React.createClass({
 
     if(assetGroups.length) {
       assetGroupsContainer = (
-        <div className="container">
+        <ReactCSSTransitionGroup className="container" component={React.DOM.div} transitionName="pop">
           {assetGroups}
-        </div>
+        </ReactCSSTransitionGroup>
       );
     }
 

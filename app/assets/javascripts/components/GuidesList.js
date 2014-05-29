@@ -1,9 +1,11 @@
 /** @jsx React.DOM */
 
-var React = require('react');
+var React = require('react/addons');
 var Button = require('./Button');
 var GuideModel = require('../GuideModel');
 var GuidesListItem = require('./GuidesListItem');
+
+var ReactCSSTransitionGroup = React.addons.CSSTransitionGroup;
 
 var GuidesList = module.exports = React.createClass({
   createGuide: function() {
@@ -30,9 +32,9 @@ var GuidesList = module.exports = React.createClass({
 
     return (
       <div className="GuidesList">
-        <div className="grid">
+        <ReactCSSTransitionGroup className="grid" component={React.DOM.div} transitionName="pop">
           {guidesListItems}
-        </div>
+        </ReactCSSTransitionGroup>
         <footer>
           <Button onClick={this.createGuide} className="green" text="Create New Guide" icon="compose" />
         </footer>
