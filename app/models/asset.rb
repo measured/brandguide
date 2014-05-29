@@ -17,10 +17,10 @@ class Asset < ActiveRecord::Base
   def api_attributes
     {
       id: id,
-      name: file.name,
-      type: file.mime_type,
+      name: file_name,
+      type: file_mime_type,
       format: file_format,
-      size: number_to_human_size(file.size),
+      size: number_to_human_size(file_size),
       pick: is_image?,
       images: {
         thumbnail: thumbnail
@@ -31,11 +31,11 @@ class Asset < ActiveRecord::Base
   end
 
   def extension
-    file.name.split('.').pop
+    file_name.split('.').pop
   end
 
   def is_image?
-    !!file.mime_type.match(/image/) && !file.mime_type.match(/svg/)
+    !!file_mime_type.match(/image/) && !file_mime_type.match(/svg/)
   end
 
   def thumbnail
