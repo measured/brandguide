@@ -9,7 +9,7 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
-  <header id="banner" style="<% if @guide.slug == 'test' %>background-image: url(<%= asset_path('headers/huxtaburger.jpg') %>);<% end %>">
+  <header id="banner" style="<% if @guide.slug == 'huxtaburger' %>background-image: url(<%= asset_path('headers/huxtaburger.jpg') %>);<% end %>">
     <div class="inner">
       <span class="mtime">Last updated <%= time_ago_in_words(@guide.updated_at) %> ago</span>
       <div class="titles">
