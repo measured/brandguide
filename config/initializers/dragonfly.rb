@@ -19,6 +19,22 @@ Dragonfly.app.configure do
       fog_storage_options: {
         path_style: true
       }
+
+    define_url do |app, job, opts|
+      thumb = Thumb.find_by_signature(job.signature)
+
+      if thumb
+        app.datastore.url_for(thumb.uid)
+      else
+        app.server.url_for(job)
+      end
+    end
+
+    before_serve do |job, env|
+      uid = job.store
+
+      Thumb.create!(uid: uid, signature: job.signature)
+    end
   else
     datastore :file,
       root_path: Rails.root.join('public/system/dragonfly', Rails.env),
