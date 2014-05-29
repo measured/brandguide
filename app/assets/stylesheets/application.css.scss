@@ -23,8 +23,6 @@
   color: inherit;
 }
 
-$easeOutExpo: cubic-bezier(0.190, 1.000, 0.220, 1.000);
-
 body {
   font-family: "Whitney", sans-serif;
   font-size: 16px;
@@ -131,138 +129,6 @@ em {
 .Location {
   flex: 1;
   display: flex;
-}
-
-.Drawer {
-  $drawerBackgroundColor: lighten(black, 85%);
-  $drawerForegroundColor: black;
-  $drawerWidth: 360px;
-
-  display: flex;
-  
-  header {
-    position: relative;
-    background: darken($drawerBackgroundColor, 10%);
-    padding: 24px;
-    padding-bottom: 18px;
-
-    h2 {
-      font-size: 20px;
-      font-weight: bold;
-      text-align: center;
-    }
-    .Button {
-      font-size: 120%;
-      position: absolute;
-      top: 24px;
-      color: darken($drawerBackgroundColor, 20%);
-    }
-    .Button:hover {
-      color: darken($drawerBackgroundColor, 35%);
-    }
-    .back {
-      left: 24px;
-    }
-    .settings {
-      right: 24px;
-    }
-  }
-
-  h3 {
-    font-weight: bold;
-    margin-bottom: 12px;
-  }
-  
-  .contents {
-    width: $drawerWidth;
-    transition: margin-left 0.5s $easeOutExpo;
-    background: $drawerBackgroundColor;
-    color: $drawerForegroundColor;
-    border-radius: 0 4px 0 0;
-    overflow: hidden;
-  }
-  &[data-open="false"] .contents {
-    margin-left: -$drawerWidth+24px;
-  }
-  &[data-open="false"] .contents {
-    cursor: pointer;
-  }
-
-  .toggle {
-    flex: 1;
-    display: flex;
-    width: 0;
-    position: relative;
-    z-index: 0;
-    left: -12px;
-    a {
-      margin: auto;
-      background: $drawerBackgroundColor;
-      padding: 8px 0 8px 3px;
-      width: 24px;
-      border-radius: 0 4px 4px 0;
-      position: absolute;
-      top: 62px;
-
-      i {
-        display: block;
-        width: 8px; height: 8px;
-        margin: 4px;
-        background-color: darken($drawerBackgroundColor, 10%);
-        border-radius: 100%;
-      }
-      &:hover i {
-        background-color: darken($drawerBackgroundColor, 25%);
-      }
-    }
-  }
-
-  .DrawerSectionsList {
-    border-top: 1px solid darken($drawerBackgroundColor, 10%);
-    .Icon {
-      font-size: 75%;
-      position: relative;
-      top: 2px;
-    }
-    li[data-selected="false"] ul {
-      display: none;
-    }
-    a, .addSection {
-      display: block;
-      padding: 8px 0;
-      border-bottom: 1px solid darken($drawerBackgroundColor, 10%);
-    }
-    ul {
-      margin-left: 12px;
-    }
-    a {
-      display: flex;
-      span {
-        flex: 1;
-      }
-      .Icon {
-        top: 3px;
-        color: darken($drawerBackgroundColor, 25%);
-      }
-    }
-    .addSection {
-      display: flex;
-      color: darken($drawerBackgroundColor, 25%);
-      .Icon {
-        margin-right: 6px;
-      }
-      input {
-        background: none;
-        border: none;
-        flex: 1;
-        outline: none;
-        cursor: pointer;
-        &::placeholder {
-          color: inherit;
-        }
-      }
-    }
-  }
 }
 
 .SectionEditor {
@@ -483,4 +349,5 @@ em {
 
 @import "components/Button";
 @import "components/Spinner";
+@import "components/Drawer";
 @import "components/AssetGroupsList";
