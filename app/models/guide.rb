@@ -21,6 +21,18 @@ class Guide < ActiveRecord::Base
 
   default_scope { order(created_at: :asc) }
 
+  def self.available_headers
+    %w(huxtaburger bex)
+  end
+
+  def has_header?
+    Guide.available_headers.include?(slug)
+  end
+
+  def header_path
+    "headers/#{slug}.jpg" if has_header?
+  end
+
   def content_html
     Redcarpet::Markdown.new(Redcarpet::Render::HTML, autolink: true).render(content) if content.present?
   end
