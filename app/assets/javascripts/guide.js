@@ -23,9 +23,13 @@ $(document).ready(function() {
 
   var primary = tinycolor(window.guide.primary);
 
+  var textColour = tinycolor.mostReadable(primary, ['white', 'black']);
+
+  if(window.location.host.split('.')[0] === 'bex') textColour = 'white';
+
   $('header#banner').css({
     backgroundColor: '#'+primary.toHex(),
-    color: tinycolor.mostReadable(primary, ['white', 'black'])
+    color: textColour
   });
 });
 
