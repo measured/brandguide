@@ -22,7 +22,7 @@ class Guide < ActiveRecord::Base
   default_scope { order(created_at: :asc) }
 
   def self.available_headers
-    %w(huxtaburger bex)
+    %w(huxtaburger bex hive)
   end
 
   def has_header?
